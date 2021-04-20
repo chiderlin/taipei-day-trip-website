@@ -76,12 +76,12 @@ class DB_controller:
         except Exception as e:
             return e
 
-    def show_data(self, table_name, username):
+    def show_data(self, table_name, column_name, value):
         '''show all data base on specific db&table'''
         try:
             self.mycursor.execute(f"use {self.db}")
             self.mycursor.execute(
-                f"select * from {table_name} where username='{username}'")
+                f"select * from {table_name} where {column_name}='{value}'")
             result = self.mycursor.fetchone()
             return result
         except Exception as e:
@@ -96,6 +96,20 @@ class DB_controller:
             return "db name update successful"
         except Exception as e:
             return e
+
+    def count_data(self, table_name):
+        '''count all the data in specific table.'''
+        try:
+            self.mycursor.execute(f"use {self.db}")
+            sql = f"select count(*) from {table_name}"
+            self.mycursor.execute(sql)
+            result = self.mycursor.fetchone()
+            result = str(result).replace("(","").replace(",)","")
+            return result
+        except Exception as e:
+            return e
+
+
 
     def delete(self):
         pass
@@ -113,19 +127,20 @@ if __name__ == '__main__':
     # print(db.read_db())
     # print(db.create_db("taipeitravel"))
 
-    print(db.create_table(
-        '''
-        create table attractions (id int auto_increment primary key,
-        name varchar(50) unique not null, 
-        category varchar(10),
-        description varchar(2000),
-        address varchar(255),
-        transport varchar(5000),
-        mrt varchar(20),
-        latitude DECIMAL(9,6),
-        longitude DECIMAL(9,6),
-        images varchar(5000))
-        CHARSET=utf8mb4'''))
+    # print(db.create_table(
+    #     '''
+    #     create table attractions (id int auto_increment primary key,
+    #     name varchar(50) unique not null, 
+    #     category varchar(10),
+    #     description varchar(2000),
+    #     address varchar(255),
+    #     transport varchar(5000),
+    #     mrt varchar(20),
+    #     latitude DECIMAL(9,6),
+    #     longitude DECIMAL(9,6),
+    #     images varchar(5000))
+    #     CHARSET=utf8mb4'''))
 
     # print(db.read_table())
-
+    print(db.count_data("attractions"))
+    print(db.show_data("attractions","id",1))
