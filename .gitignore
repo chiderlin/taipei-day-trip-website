@@ -1,5 +1,5 @@
-# config file
-./data/config.json
+# 忽略 config 目錄下的 config.json 檔案
+data/config.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
