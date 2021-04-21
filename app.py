@@ -82,6 +82,10 @@ def attractions():
 
         data = []
         tmp_db = []
+
+        # page 規律
+        start = 12 * page
+        end = start + 12
         if keyword:
             result = db.relative_data("attractions", "name", keyword)
             for ans in result:
@@ -107,9 +111,6 @@ def attractions():
                 return jsonify(one_page)
 
             else:
-                # page 規律
-                start = 12 * page
-                end = start + 12
                 last_page, last_page_data = count_pages(count_data)
                 if page < last_page:
                     for i in range(start, end):
