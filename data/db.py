@@ -121,8 +121,23 @@ class DB_controller:
         except Exception as e:
             return e
 
+    def limit_data(self, table_name, start, data_num):
+        '''limit page'''
+        try:
+            self.mycursor.execute(f"use {self.db}")
+            sql = f"select * from {table_name} limit {start},{data_num}"
+            self.mycursor.execute(sql)
+            result = self.mycursor.fetchall()
+            return result
+        except Exception as e:
+            return e
+
     def delete(self):
         pass
+
+
+
+
 
 
 if __name__ == '__main__':
@@ -154,7 +169,5 @@ if __name__ == '__main__':
     # print(db.read_table())
     # print(db.count_data("attractions"))
     # print(db.show_data("attractions","id",1))
-    result = db.relative_data("attractions", "name", "藝術")
-    for ans in result:
-        print(ans)
-        
+
+    print(db.limit_data("attractions",0,12))

@@ -72,10 +72,7 @@ def attractions():
 		if page < 0: # page填負數的話
 			return jsonify({"error": True, "message": "page number must >0"}), 500
 
-		# page 規律
-		start = 12 * page
-		end = start + 12
-		
+
 		data = []
 		tmp_db = []
 		if keyword:
@@ -103,6 +100,11 @@ def attractions():
 				return jsonify(one_page)
 
 			else:
+
+				# page 規律
+				start = 12 * page
+				end = start + 12
+				
 				last_page, last_page_data = count_pages(count_data)
 				if page < last_page:
 					for i in range(start, end):
@@ -136,24 +138,23 @@ def attractions():
 			count_data = db.count_data("attractions")
 			count_data = int(count_data)
 			last_page, last_page_data = count_pages(count_data)
+			result = db.limit_data("attractions", start, 12) #改limit分頁
+			for res in result: # 塞入12筆資料
+				data_dict = {
+						"id": res[0],
+						"name": res[1],
+						"category": res[2],
+						"description": res[3],
+						"address": res[4],
+						"transport": res[5],
+						"mrt": res[6],
+						"latitude": res[7],
+						"longitude": res[8],
+						"images": res[9],
+					}
+				data.append(data_dict)
 
-			if page < last_page:
-				for i in range(start, end): # 塞入12筆資料
-					result = db.show_data("attractions", "id", i+1)
-					data_dict = {
-							"id": result[0],
-							"name": result[1],
-							"category": result[2],
-							"description": result[3],
-							"address": result[4],
-							"transport": result[5],
-							"mrt": result[6],
-							"latitude": result[7],
-							"longitude": result[8],
-							"images": result[9],
-						}
-					data.append(data_dict)
-					
+			if page < last_page:	
 				one_page = {
 					"nextPage": page+1,
 					"data": data,
@@ -161,21 +162,6 @@ def attractions():
 				return jsonify(one_page)
 
 			elif page == last_page: # 最後一頁
-				for i in range(start, start+last_page_data):
-					result = db.show_data("attractions", "id", i+1)
-					data_dict = {
-							"id": result[0],
-							"name": result[1],
-							"category": result[2],
-							"description": result[3],
-							"address": result[4],
-							"transport": result[5],
-							"mrt": result[6],
-							"latitude": result[7],
-							"longitude": result[8],
-							"images": result[9],
-						}
-					data.append(data_dict)
 					
 				one_page = {
 					"nextPage": None,
