@@ -109,7 +109,17 @@ class DB_controller:
         except Exception as e:
             return e
 
+    def relative_data(self, table_name, column_name, value):
+        '''search relative data using "like". '''
+        try:
+            self.mycursor.execute(f"use {self.db}")
+            sql = f"select * from {table_name} where {column_name} like '%{value}%'"
+            self.mycursor.execute(sql)
+            result = self.mycursor.fetchall()
+            return result
 
+        except Exception as e:
+            return e
 
     def delete(self):
         pass
@@ -142,5 +152,9 @@ if __name__ == '__main__':
     #     CHARSET=utf8mb4'''))
 
     # print(db.read_table())
-    print(db.count_data("attractions"))
-    print(db.show_data("attractions","id",1))
+    # print(db.count_data("attractions"))
+    # print(db.show_data("attractions","id",1))
+    result = db.relative_data("attractions", "name", "藝術")
+    for ans in result:
+        print(ans)
+        

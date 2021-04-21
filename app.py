@@ -32,20 +32,34 @@ def thankyou():
 	return render_template("thankyou.html")
 
 
+# function 
+def count_pages(count_data):
+	''' count pages '''
+	if count_data % 12 != 0: # 12筆一頁
+		last_page = count_data // 12 +1-1 # 餘數+1 page從0開始-1 # 有餘數就表示有下頁
+		last_page_data = count_data % 12 # 最後一頁剩七筆
+	else:
+		last_page = count_data / 12 -1 # page從0開始-1
+	
+	return last_page, last_page_data
+
+
 # Api 
 @app.route("/api/attractions")
 def attractions():
 	'''
-	Parameter:page (int)
+	Parameter:page (int), keyword(string)
 	each page have 12 data,
-	input the page you wanna search, and get the data.
+	input the page and keyword you wanna search, and get the data.
 	'''
 
 	if request.method == "GET":
 		page = request.args.get("page")
+		keyword = request.args.get("keyword")
 		if not page:
 			return jsonify({"error":True, "message":"請輸入參數page"}), 500
-		
+
+		# 有 page ， page輸入判斷
 		try:
 			page = int(page)
 		except ValueError: 
@@ -54,79 +68,134 @@ def attractions():
 				page = int(page)
 			except ValueError: # 不是的話直接顯示error
 				return jsonify({"error":True, "message":"請輸入數字"}), 500
+		
+		if page < 0: # page填負數的話
+			return jsonify({"error": True, "message": "page number must >0"}), 500
 
-		count_data = db.count_data("attractions")
-		count_data = int(count_data)
+		# page 規律
+		start = 12 * page
+		end = start + 12
+		
 		data = []
-		if count_data % 12 != 0:
-			last_page = count_data // 12 + 1 # 有餘數就表示有下頁
-			last_page_data = count_data % 12 # 最後一頁剩七筆
-		else:
-			last_page = count_data / 12
-
-		end = 12 * page
-		start = end - 11
-		if page < 1: # page填負數的話
-			return jsonify({"error": True, "message": "page number must >1"}), 500
-		
-		
-		if page < last_page:
-			for i in range(start, end+1): # 塞入12筆資料
-				result = db.show_data("attractions", "id", i)
+		tmp_db = []
+		if keyword:
+			result = db.relative_data("attractions", "name", keyword)
+			for ans in result:
 				data_dict = {
-						"id": result[0],
-						"name": result[1],
-						"category": result[2],
-						"description": result[3],
-						"address": result[4],
-						"transport": result[5],
-						"mrt": result[6],
-						"latitude": result[7],
-						"longitude": result[8],
-						"images": result[9],
+						"id": ans[0],
+						"name": ans[1],
+						"category": ans[2],
+						"description": ans[3],
+						"address": ans[4],
+						"transport": ans[5],
+						"mrt": ans[6],
+						"latitude": ans[7],
+						"longitude": ans[8],
+						"images": ans[9],
 					}
-				data.append(data_dict)
-				
-			one_page = {
-				"nextPage": page+1,
-				"data": data,
-			}
-			return jsonify(one_page)
+				tmp_db.append(data_dict)
+			count_data = len(tmp_db)
+			if count_data < 12:
+				one_page = {
+					"nextPage": None,
+					"data": tmp_db,
+				}
+				return jsonify(one_page)
 
-		elif page == last_page: # 最後一頁
-			for i in range(start, start+last_page_data):
-				result = db.show_data("attractions", "id", i)
-				data_dict = {
-						"id": result[0],
-						"name": result[1],
-						"category": result[2],
-						"description": result[3],
-						"address": result[4],
-						"transport": result[5],
-						"mrt": result[6],
-						"latitude": result[7],
-						"longitude": result[8],
-						"images": result[9],
+			else:
+				last_page, last_page_data = count_pages(count_data)
+				if page < last_page:
+					for i in range(start, end):
+						data.append(tmp_db[i])
+					
+					one_page = {
+						"nextPage": page+1,
+						"data": data,
 					}
-				data.append(data_dict)
-				
-			one_page = {
-				"nextPage": page+1,
-				"data": data,
-			}
-			return jsonify(one_page)
+					return jsonify(one_page)
 
-		elif page > last_page: #大於現有頁數
-			return jsonify({
-				"error":True,
-				"message":f"Total Page only up to {last_page}",
-				}), 500
-		else:
-			return jsonify({"error":True, "message":"Something wrong"}), 500
+				elif page == last_page:
+					for i in range(start, start+last_page_data):
+						data.append(tmp_db[i])
+					
+					one_page = {
+						"nextPage": None,
+						"data": data,
+					}
+					return jsonify(one_page)
+
+				else: # page > last_page
+					return jsonify({
+						"error":True,
+						"message":f"Total Page only up to {last_page}",
+						}), 500
+
+
+		else: # 沒有keyword
+			# 查詢資料庫目前有幾筆資料
+			count_data = db.count_data("attractions")
+			count_data = int(count_data)
+			last_page, last_page_data = count_pages(count_data)
+
+			if page < last_page:
+				for i in range(start, end): # 塞入12筆資料
+					result = db.show_data("attractions", "id", i+1)
+					data_dict = {
+							"id": result[0],
+							"name": result[1],
+							"category": result[2],
+							"description": result[3],
+							"address": result[4],
+							"transport": result[5],
+							"mrt": result[6],
+							"latitude": result[7],
+							"longitude": result[8],
+							"images": result[9],
+						}
+					data.append(data_dict)
+					
+				one_page = {
+					"nextPage": page+1,
+					"data": data,
+				}
+				return jsonify(one_page)
+
+			elif page == last_page: # 最後一頁
+				for i in range(start, start+last_page_data):
+					result = db.show_data("attractions", "id", i+1)
+					data_dict = {
+							"id": result[0],
+							"name": result[1],
+							"category": result[2],
+							"description": result[3],
+							"address": result[4],
+							"transport": result[5],
+							"mrt": result[6],
+							"latitude": result[7],
+							"longitude": result[8],
+							"images": result[9],
+						}
+					data.append(data_dict)
+					
+				one_page = {
+					"nextPage": None,
+					"data": data,
+				}
+				return jsonify(one_page)
+
+			elif page > last_page: #大於現有頁數
+				return jsonify({
+					"error":True,
+					"message":f"Total Page only up to {last_page}",
+					}), 500
+			else:
+				return jsonify({"error":True, "message":"Something wrong"}), 500
 
 
 @app.route("/api/attraction/<int:atrractionId>")
 def view(atrractionId):
+	'''restful-api, select single data using id.'''
+
 	if request.method == "GET":
 		count_data = db.count_data("attractions")
 		result = db.show_data("attractions","id", atrractionId)
