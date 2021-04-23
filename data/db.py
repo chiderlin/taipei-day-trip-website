@@ -122,7 +122,7 @@ class DB_controller:
             return e
 
     def limit_data(self, table_name, start, data_num):
-        '''limit page'''
+        '''limit page data'''
         try:
             self.mycursor.execute(f"use {self.db}")
             sql = f"select * from {table_name} limit {start},{data_num}"
@@ -135,7 +135,14 @@ class DB_controller:
     def delete(self):
         pass
 
-
+    def close(self):
+        ''' close database'''
+        try:
+            self.mycursor.close()
+            self.mydb.close()
+            return "close db success"
+        except Exception as e:
+            return e
 
 
 
@@ -170,4 +177,5 @@ if __name__ == '__main__':
     # print(db.count_data("attractions"))
     # print(db.show_data("attractions","id",1))
 
-    print(db.limit_data("attractions",0,12))
+    res = db.limit_data("attractions",400,12)
+    print(type(res))

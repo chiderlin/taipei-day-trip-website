@@ -5,21 +5,11 @@ from data.db import DB_controller
 with open("./data/config.json", mode="r", encoding="utf-8") as f:
     conf = json.load(f)
 
-
-db = DB_controller(
-    host=conf["HOST"],
-    user=conf["USER"],
-    password=conf["PWD"],
-    db=conf["DB"]
-)
-
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Pages
-
-
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -43,6 +33,7 @@ def thankyou():
 # function
 def count_pages(count_data):
     ''' count pages '''
+    count_data = int(count_data)
     if count_data % 12 != 0:  # 12筆一頁
         last_page = count_data // 12 + 1-1  # 餘數+1 page從0開始-1 # 有餘數就表示有下頁
         last_page_data = count_data % 12  # 最後一頁剩七筆
@@ -87,7 +78,18 @@ def attractions():
         start = 12 * page
         end = start + 12
         if keyword:
+            try:
+                db = DB_controller(
+                    host=conf["HOST"],
+                    user=conf["USER"],
+                    password=conf["PWD"],
+                    db=conf["DB"]
+                )
+            except Exception as e:
+                return e
+
             result = db.relative_data("attractions", "name", keyword)
+            db.close()
             for ans in result:
                 data_dict = {
                     "id": ans[0],
@@ -103,16 +105,23 @@ def attractions():
                 }
                 tmp_db.append(data_dict)
             count_data = len(tmp_db)
-            if count_data < 12:
-                one_page = {
-                    "nextPage": None,
-                    "data": tmp_db,
-                }
-                return jsonify(one_page)
+            if count_data <= 12: 
+                if page == 0: # 必須在第0頁顯示
+                    one_page = {
+                        "nextPage": None,
+                        "data": tmp_db,
+                    }
+                    return jsonify(one_page)
+                else:
+                    one_page = {
+                        "nextPage": None,
+                        "data": None,
+                    }
+                    return jsonify(one_page)
 
-            else:
+            else: # 大於12筆資料
                 last_page, last_page_data = count_pages(count_data)
-                if page < last_page:
+                if page < last_page: # 但不是最後一頁
                     for i in range(start, end):
                         data.append(tmp_db[i])
 
@@ -122,7 +131,7 @@ def attractions():
                     }
                     return jsonify(one_page)
 
-                elif page == last_page:
+                elif page == last_page: # 最後一頁
                     for i in range(start, start+last_page_data):
                         data.append(tmp_db[i])
 
@@ -133,17 +142,28 @@ def attractions():
                     return jsonify(one_page)
 
                 else:  # page > last_page
-                    return jsonify({
-                        "error": True,
-                        "message": f"Total Page only up to {last_page}",
-                    }), 500
+                    one_page = {
+                        "nextPage": None,
+                        "data": None,
+                    }
+                    return jsonify(one_page)
 
         else:  # 沒有keyword
             # 查詢資料庫目前有幾筆資料
+            try:
+                db = DB_controller(
+                    host=conf["HOST"],
+                    user=conf["USER"],
+                    password=conf["PWD"],
+                    db=conf["DB"]
+                )
+            except Exception as e:
+                return jsonify({"error": True, "message": e}), 500
+
             count_data = db.count_data("attractions")
-            count_data = int(count_data)
             last_page, last_page_data = count_pages(count_data)
-            result = db.limit_data("attractions", start, 12)  # 改limit分頁
+            result = db.limit_data("attractions", start, 12)  # 改limit分頁 LIMITE優點是假如最後一頁不足12筆資料也不會報錯，就顯示剩下的全部
+            db.close() 
             for res in result:  # 塞入12筆資料
                 data_dict = {
                     "id": res[0],
@@ -174,10 +194,11 @@ def attractions():
                 return jsonify(one_page)
 
             elif page > last_page:  # 大於現有頁數
-                return jsonify({
-                    "error": True,
-                    "message": f"Total Page only up to {last_page}",
-                }), 500
+                one_page = {
+                    "nextPage": None,
+                    "data": None,
+                }
+                return jsonify(one_page)
 
             else:
                 return jsonify({"error": True, "message": "Something wrong"}), 500
@@ -188,10 +209,20 @@ def view(atrractionId):
     '''restful-api, select single data using id.'''
 
     if request.method == "GET":
-        count_data = db.count_data("attractions")
+        try:
+            db = DB_controller(
+                host=conf["HOST"],
+                user=conf["USER"],
+                password=conf["PWD"],
+                db=conf["DB"]
+            )
+        except Exception as e:
+            return jsonify({"error": True, "message": e})
+
         result = db.show_data("attractions", "id", atrractionId)
+        db.close()
         if not result:
-            return jsonify({"error": True, "message": f"Data only up to {count_data}"}), 400
+            return jsonify({"data": None})
 
         data = {
             "data": {
