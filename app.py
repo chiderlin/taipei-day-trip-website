@@ -9,6 +9,16 @@ app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
+
+db = DB_controller(
+    host=conf["HOST"],
+    user=conf["USER"],
+    password=conf["PWD"],
+    db=conf["DB"]
+)
+
+
+
 # Pages
 @app.route("/")
 def index():
@@ -78,18 +88,18 @@ def attractions():
         start = 12 * page
         end = start + 12
         if keyword:
-            try:
-                db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
-                )
-            except Exception as e:
-                return e
+            # try:
+            #     db = DB_controller(
+            #         host=conf["HOST"],
+            #         user=conf["USER"],
+            #         password=conf["PWD"],
+            #         db=conf["DB"]
+            #     )
+            # except Exception as e:
+            #     return e
 
             result = db.relative_data("attractions", "name", keyword)
-            db.close()
+            # db.close()
             for ans in result:
                 data_dict = {
                     "id": ans[0],
@@ -150,20 +160,20 @@ def attractions():
 
         else:  # 沒有keyword
             # 查詢資料庫目前有幾筆資料
-            try:
-                db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
-                )
-            except Exception as e:
-                return jsonify({"error": True, "message": e}), 500
+            # try:
+            #     db = DB_controller(
+            #         host=conf["HOST"],
+            #         user=conf["USER"],
+            #         password=conf["PWD"],
+            #         db=conf["DB"]
+            #     )
+            # except Exception as e:
+            #     return jsonify({"error": True, "message": e}), 500
 
             count_data = db.count_data("attractions")
             last_page, last_page_data = count_pages(count_data)
             result = db.limit_data("attractions", start, 12)  # 改limit分頁 LIMITE優點是假如最後一頁不足12筆資料也不會報錯，就顯示剩下的全部
-            db.close() 
+            # db.close() 
             for res in result:  # 塞入12筆資料
                 data_dict = {
                     "id": res[0],
@@ -207,38 +217,39 @@ def attractions():
 @app.route("/api/attraction/<int:atrractionId>")
 def view(atrractionId):
     '''restful-api, select single data using id.'''
-
+    
     if request.method == "GET":
         try:
-            db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
-            )
-        except Exception as e:
-            return jsonify({"error": True, "message": e})
+            # db = DB_controller(
+            #     host=conf["HOST"],
+            #     user=conf["USER"],
+            #     password=conf["PWD"],
+            #     db=conf["DB"]
+            # )
+            result = db.show_data("attractions", "id", atrractionId)
+            # db.close()
+            if not result:
+                return jsonify({"data": None})
 
-        result = db.show_data("attractions", "id", atrractionId)
-        db.close()
-        if not result:
-            return jsonify({"data": None})
-
-        data = {
-            "data": {
-                "id": result[0],
-                "name": result[1],
-                "category": result[2],
-                "description": result[3],
-                "address": result[4],
-                "transport": result[5],
-                "mrt": result[6],
-                "latitude": result[7],
-                "longitude": result[8],
-                "images": result[9],
+            data = {
+                "data": {
+                    "id": result[0],
+                    "name": result[1],
+                    "category": result[2],
+                    "description": result[3],
+                    "address": result[4],
+                    "transport": result[5],
+                    "mrt": result[6],
+                    "latitude": result[7],
+                    "longitude": result[8],
+                    "images": result[9],
+                }
             }
-        }
-        return jsonify(data)
+            return jsonify(data)
+        except Exception as e:
+            return jsonify({"error": True, "message": str(e)}), 500
+
+
 
 
 if __name__ == "__main__":

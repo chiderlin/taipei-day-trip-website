@@ -1,22 +1,37 @@
 import mysql.connector
+from mysql.connector import pooling # 還在測試中
 import json
 
 
 class DB_controller:
-    '''connect to your mysql'''
+    '''connect to your mysql, using connection pool'''
 
     def __init__(self, host, user, password, db=None):
         self.db = db
+        dbconfig = {
+            "host": host,
+            "user": user,
+            "password": password,
+            "db": self.db
+        }
         try:
-            self.mydb = mysql.connector.connect(  # 一開始mydb沒有self，連不到資料庫
-                host=host,
-                user=user,
-                password=password,
-                database=self.db
+            # 改成connection pool 試試看
+            self.mydb = mysql.connector.pooling.MySQLConnectionPool(
+                pool_name="mysql_pooling",
+                pool_size=10,
+                **dbconfig
             )
-            self.mycursor = self.mydb.cursor()
+            self.cnx = self.mydb.get_connection()
+            self.mycursor = self.cnx.cursor()
+            # self.mydb = mysql.connector.connect(  # 一開始mydb沒有self，連不到資料庫
+            #     host=host,
+            #     user=user,
+            #     password=password,
+            #     database=self.db,
+            # )
+            # self.mycursor = self.mydb.cursor()
         except Exception as e:
-            print(e)
+            return str(e)
 
     def create_db(self, db_name):
         '''method: create database if not exists.'''
