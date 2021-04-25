@@ -26,7 +26,7 @@ class DB_controller:
                 **dbconfig
             )
             self.cnx = self.mydb.get_connection()
-            self.connect = self.cnx.is_connected()
+            # self.connect = self.cnx.is_connected()
             self.mycursor = self.cnx.cursor()
             # self.mydb = mysql.connector.connect(  # 一開始mydb沒有self，連不到資料庫
             #     host=host,
@@ -40,8 +40,6 @@ class DB_controller:
 
     def create_db(self, db_name):
         '''method: create database if not exists.'''
-        if self.connect is False:
-            DB_controller(self.host, self.user, self.password, self.db)
         try:
             self.mycursor.execute(f"create database {db_name}")
             return f"created {db_name} successful."
@@ -51,9 +49,6 @@ class DB_controller:
     # "create table user (id int auto_increment primary key, name varchar(255), account varchar(255), password varchar(30))"
     def create_table(self, sql):
         '''method: base on specific database create table'''
-        if self.connect is False:
-            DB_controller(self.host, self.user, self.password, self.db)
-
         if self.db is None:
             print("when instance constroller, give a specific database.")
         else:
@@ -66,8 +61,6 @@ class DB_controller:
 
     def read_db(self):
         '''method: show all the db list'''
-        if self.connect is False:
-            DB_controller(self.host, self.user, self.password, self.db)
         try:
             self.mycursor.execute("show databases")
             self.db_list = []
@@ -81,8 +74,6 @@ class DB_controller:
 
     def read_table(self):
         '''method: base on specific database, show all the table list'''
-        if self.connect is False:
-            DB_controller(self.host, self.user, self.password, self.db)
         try:
             self.mycursor.execute(f"use {self.db}")
             self.mycursor.execute("show tables")
@@ -97,8 +88,6 @@ class DB_controller:
 
     def insert_data(self, name, category, description, address, transport, mrt, latitude, longitude, images):
         '''add new data'''
-        if self.connect is False:
-            DB_controller(self.host, self.user, self.password, self.db)
         try:
             self.mycursor.execute(
                 f'insert into attractions (name, category, description, address, transport, mrt, latitude, longitude, images) values ("{name}", "{category}", "{description}", "{address}", "{transport}", "{mrt}", {latitude}, {longitude}, "{images}")')
@@ -110,8 +99,6 @@ class DB_controller:
 
     def show_data(self, table_name, column_name, value):
         '''show all data base on specific db&table'''
-        if self.connect is False:
-            DB_controller(self.host, self.user, self.password, self.db)
         try:
             self.mycursor.execute(f"use {self.db}")
             self.mycursor.execute(
@@ -123,8 +110,6 @@ class DB_controller:
 
     def update_name(self, origin_name, new_name):
         '''update name to db'''
-        if self.connect is False:
-            DB_controller(self.host, self.user, self.password, self.db)
         try:
             sql = f"update user set name='{new_name}' where name='{origin_name}'"
             self.mycursor.execute(sql)
@@ -136,8 +121,6 @@ class DB_controller:
 
     def count_data(self, table_name):
         '''count all the data in specific table.'''
-        if self.connect is False:
-            DB_controller(self.host, self.user, self.password, self.db)
         try:
             self.mycursor.execute(f"use {self.db}")
             sql = f"select count(*) from {table_name}"
@@ -150,8 +133,6 @@ class DB_controller:
 
     def relative_data(self, table_name, column_name, value):
         '''search relative data using "like". '''
-        if self.connect is False:
-            DB_controller(self.host, self.user, self.password, self.db)
         try:
             self.mycursor.execute(f"use {self.db}")
             sql = f"select * from {table_name} where {column_name} like '%{value}%'"
@@ -164,8 +145,6 @@ class DB_controller:
 
     def limit_data(self, table_name, start, data_num):
         '''limit page data'''
-        if self.connect is False:
-            DB_controller(self.host, self.user, self.password, self.db)
         try:
             self.mycursor.execute(f"use {self.db}")
             sql = f"select * from {table_name} limit {start},{data_num}"
