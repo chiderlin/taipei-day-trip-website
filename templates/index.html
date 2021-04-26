@@ -1,1 +1,345 @@
-<h1>HELLO 測試</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+    <title>Taipei Trip 台北一日遊</title>
+    <script>
+        window.onload = function() {
+            let url = "http://35.73.36.129:3000/api/attractions?page=0"
+            let req = new XMLHttpRequest();
+            req.open("get", url);
+            req.onload = function() {
+                // json APIs
+                let data = JSON.parse(this.response);
+                console.log(data);
+            }
+            req.send();
+            // fetch(url).then(function(res) {
+            //     return res.json();     
+            // }).then(function(info) {
+            //     console.log(info);
+            // })
+        }
+    </script>
+    <style>
+        body {margin: 0px;}
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .title a {
+            text-decoration: none;
+            color: #448899;
+        }
+        .flexbox {
+            width:1200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .title {
+            flex:none;
+            font-size:30px;
+            font-weight:bold;
+            margin:10px 10px 10px; /* top | right,left | bottom   */
+            
+        }
+        .blank {
+            flex: auto;
+            height: 34px;
+        }
+        .items {
+            flex: none;
+            /*margin: 20px 370px 20px 0;*/ /* top | right | bottom | left */
+            color: #666666;
+            font-size: 16px;
+        }
+        .item {
+            margin:0 10px 0; /* top | right,left | bottom   */
+        }
+
+        nav {
+            height: 320px;
+            /* 為了讓漸層效果表現成功率更高，建議使用各種瀏覽器適用前綴 */
+            background: -webkit-linear-gradient(left top,#AADDEE, #66AABB); /* Google Chrome 與 Apple Safari 使用 -webkit-*/
+            background: -moz-linear-gradient(bottom right, #AADDEE, #66AABB); /* Mozilla FireFox 使用 -moz- */
+            background: -o-linear-gradient(bottom right, #AADDEE, #66AABB); /* Opera 使用 -o- */
+            background: linear-gradient(to bottom right, #AADDEE, #66AABB);
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .background-img {
+            width:650px; height:320px;
+            position:absolute;top:60px;right:12%;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-image: url("../static/png/welcome1.png");
+            z-index: 1;
+        }
+
+        .slogan {
+            margin: 75px 360px 76px;
+            z-index: 2;
+            width:1200px;
+            max-width:100%;
+        }
+        .description1 {
+            color: white;
+            font-size: 28px;font-weight:bold;
+            margin:10px;
+        }
+        .description2 {
+            font-size: 16px;
+            color: white;
+            margin:10px;
+        }
+        .search-block {
+            margin:10px;
+            display:flex;
+        }
+
+       /* all input */
+        ::placeholder {
+            width:370px; height:20px;
+            color: #757575;
+            font-size: 16px;
+            /* font-family: Body-bold; */ /* font-family 字型設定 */
+            font-weight: bold;
+            padding: 15px;
+        }
+        
+        .text {
+            width:396px;height:44px;
+            border-radius: 5px 0 0 5px; /* 左上 右上 右下 左下*/
+            border: 0; /* 邊框不要有黑色 */
+            font-size: 25px; /* 輸入時文字的大小 */
+        }
+        .search-icon-block {
+            border-radius: 0 5px 5px 0; /* 左上 右上 右下 左下*/
+            border: 0;
+            width:60px;height:46px;
+            background-color: #448899;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #search-icon-checkbox {display:none;}
+
+        main {
+            margin-top:55px;
+            display:flex;flex-wrap: wrap; /* flex-wrap 會自動換行 (讓container變三行) */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            display:inline-block;
+            /* background-color: #448899; */
+            width:270px;
+            margin:0 10px 30px;
+            border-radius: 5px;
+            
+        }
+        img {
+            display:block;
+            max-width:100%;
+            height:auto;
+        }
+        .attraction-name {
+            color: black;
+            margin:10px;
+            font-weight:bold;
+        }
+        .att-about {
+            display:flex;
+            margin:10px;
+        }
+        .mrt {
+            width:50%;
+            text-align: left;
+            color: black;
+        }
+        .category {
+            width:50%;
+            text-align: right;
+            color: black;
+        }
+        @media (max-width:1200px) {
+            .box {
+                width:45%;
+            }
+            .container {
+                margin-left: 25px;
+            }
+        }
+        @media (max-width:600px) {
+            .box {
+                width:90%
+            }
+            .text {
+                width:230px;height:44px;
+            }
+            .background-img {
+                width:400px;height:200px;
+                position:absolute;top:183px;right:-150px;
+            }
+
+        }
+        footer {
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background-color: #757575;
+            height:104px;
+            color:white;
+            font-weight:bold;font-size:16px;
+            margin-top:25px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="flexbox">
+            <div class="title">
+                <a href="#">台北一日遊</a>
+            </div>
+            <div class="blank"></div>
+            <div class="items">
+                <span class="item">預定行程</span>
+                <span class="item">登入/註冊</span>
+            </div>
+        </div>
+    </header>
+    <nav>
+
+        <div class="slogan">
+            <div class="description1">輕鬆享受台北一日悠閒</div>
+            <div class="description2">探索角落，體驗城市的深度旅遊行程</div>
+            <div class="search-block">
+                <input type="text" placeholder="輸入景點名稱查詢" class="text">
+                <div class="search-icon-block">
+                    <label for="search-icon-checkbox">
+                        <img src="../static/png/icon/icon_search.png">
+                    </label>
+                    <input type="checkbox" name="search-icon" id="search-icon-checkbox">        
+                </div>
+            </div>
+
+        </div>
+        <div class="background-img"></div>
+    </nav>
+    <main>
+        <div class="container">
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+            <div class="box">
+                <img src="../static/png/test.png" alt="">
+                <div class="attraction-name">平安鐘</div>
+                <div class="att-about">
+                    <div class="mrt">忠孝復興</div>
+                    <div class="category">公共藝術</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div>COPYRIGHT © 2021 台北一日遊</div>
+    </footer>
+</body>
+</html>

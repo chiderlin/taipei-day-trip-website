@@ -1,5 +1,9 @@
 import json
-from db import DB_controller
+import sys
+sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
+from model.db import DB_controller # 原本會有紅紅的底線，但在該檔案中加上__init__.py 錯誤就消失了
+
+
 
 with open("config.json", mode="r", encoding="utf-8") as config:
     conf = json.load(config)

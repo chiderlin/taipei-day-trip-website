@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request, render_template
 from flask_restful import Resource
 import json
-from data.db import DB_controller
+from model.db import DB_controller
 with open("./data/config.json", mode="r", encoding="utf-8") as f:
     conf = json.load(f)
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/", static_folder="static")
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
