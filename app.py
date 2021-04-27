@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, make_response
 from flask_restful import Resource
 import json
 from model.db import DB_controller
@@ -118,13 +118,17 @@ def attractions():
                             "nextPage": None,
                             "data": tmp_db,
                         }
-                        return jsonify(one_page)
+                        res = make_response(jsonify(one_page))
+                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        return res
                     else:
                         one_page = {
                             "nextPage": None,
                             "data": None,
                         }
-                        return jsonify(one_page)
+                        res = make_response(jsonify(one_page))
+                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        return res
 
                 else: # 大於12筆資料
                     last_page, last_page_data = count_pages(count_data)
@@ -136,7 +140,9 @@ def attractions():
                             "nextPage": page+1,
                             "data": data,
                         }
-                        return jsonify(one_page)
+                        res = make_response(jsonify(one_page))
+                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        return res
 
                     elif page == last_page: # 最後一頁
                         for i in range(start, start+last_page_data):
@@ -146,14 +152,17 @@ def attractions():
                             "nextPage": None,
                             "data": data,
                         }
-                        return jsonify(one_page)
-
+                        res = make_response(jsonify(one_page))
+                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        return res
                     else:  # page > last_page
                         one_page = {
                             "nextPage": None,
                             "data": None,
                         }
-                        return jsonify(one_page)
+                        res = make_response(jsonify(one_page))
+                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        return res
 
             except Exception as e:
                 return jsonify({"error": True, "message": str(e)}), 500
@@ -194,21 +203,27 @@ def attractions():
                     "nextPage": page+1,
                     "data": data,
                 }
-                return jsonify(one_page)
+                res = make_response(jsonify(one_page))
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res
 
             elif page == last_page:  # 最後一頁
                 one_page = {
                     "nextPage": None,
                     "data": data,
                 }
-                return jsonify(one_page)
+                res = make_response(jsonify(one_page))
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res
 
             elif page > last_page:  # 大於現有頁數
                 one_page = {
                     "nextPage": None,
                     "data": None,
                 }
-                return jsonify(one_page)
+                res = make_response(jsonify(one_page))
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res
 
             else:
                 return jsonify({"error": True, "message": "Something wrong"}), 500
@@ -245,7 +260,9 @@ def view(atrractionId):
                     "images": result[9],
                 }
             }
-            return jsonify(data)
+            res = make_response(jsonify(data))
+            res.headers['Access-Control-Allow-Origin'] = '*'
+            return res
         except Exception as e:
             return jsonify({"error": True, "message": str(e)}), 500
 

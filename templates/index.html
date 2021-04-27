@@ -1,27 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="/css/style.css"> -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">  <!-- 加入 思源字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet"> <!-- 加入 思源字體 -->
     <title>Taipei Trip 台北一日遊</title>
     <script>
         window.onload = function() {
             let url = "http://35.73.36.129:3000/api/attractions?page=0"
-            let req = new XMLHttpRequest();
-            req.open("get", url);
-            req.onload = function() {
-                // json APIs
-                let data = JSON.parse(this.response);
-                console.log(data);
-            }
-            req.send();
-            // fetch(url).then(function(res) {
-            //     return res.json();     
-            // }).then(function(info) {
-            //     console.log(info);
+            // let myHeaders = new Headers();
+            // myHeaders.append('Access-Control-Allow-Origin: http://35.73.36.129:3000/', 'application/json')
+            // myHeaders.get('Access-Control-Allow-Origin: http://35.73.36.129:3000/')
+            // fetch(url, {
+            //     method: 'GET',
+            //     mode: 'cors',
+            //     headers: new Headers({
+            //         'Access-Control-Allow-Origin': 'http://35.73.36.129:3000/',
+            //         'Content-Type': 'application/json'
+            //     })
+            // }).then(function(res) {
+            //     console.log(res);    
             // })
+            // let req = new XMLHttpRequest();
+            // req.open("get", url);
+            // req.onload = function() {
+            //     // json APIs
+            //     let data = JSON.parse(this.response);
+            //     console.log(data);
+            // }
+            // req.send();
+
         }
     </script>
     <style>
@@ -144,18 +155,21 @@
             width:270px;
             margin:0 10px 30px;
             border-radius: 5px;
-            
+            border: 1px solid #E8E8E8;
         }
         img {
             display:block;
             max-width:100%;
             height:auto;
         }
+
         .attraction-name {
-            color: black;
+            color: #757575;
             margin:10px;
-            font-weight:bold;
+            font-family: 'Noto Sans TC', sans-serif; /* 加入 思源字體 */
         }
+
+
         .att-about {
             display:flex;
             margin:10px;
@@ -163,12 +177,12 @@
         .mrt {
             width:50%;
             text-align: left;
-            color: black;
+            color: #757575;
         }
         .category {
             width:50%;
             text-align: right;
-            color: black;
+            color: #757575;
         }
         @media (max-width:1200px) {
             .box {
