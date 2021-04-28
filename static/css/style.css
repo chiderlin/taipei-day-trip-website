@@ -4,6 +4,10 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    position:fixed;top:0px;width:100%; /*固定選單*/
+    box-sizing: border-box;
+    background-color: white;
+    z-index:101;
 }
 .title a {
     text-decoration: none;
@@ -11,6 +15,7 @@ header {
 }
 .flexbox {
     width:1200px;
+    height:54px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,6 +42,7 @@ header {
 }
 
 nav {
+    margin-top:54px;
     height: 320px;
     /* 為了讓漸層效果表現成功率更高，建議使用各種瀏覽器適用前綴 */
     background: -webkit-linear-gradient(left top,#AADDEE, #66AABB); /* Google Chrome 與 Apple Safari 使用 -webkit-*/
@@ -50,7 +56,7 @@ nav {
 
 .background-img {
     width:650px; height:320px;
-    position:absolute;top:60px;right:12%;
+    position:absolute;top:54px;right:12%;
     background-repeat: no-repeat;
     background-size: contain;
     background-image: url("../png/welcome1.png"); /*css為當前目錄去推算*/
