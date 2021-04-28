@@ -114,18 +114,20 @@ main {margin-top:55px;}
     align-items: center;
     color: #777777;
     font-size:24px;
+
 }
 
 .box {
     display:inline-block;
-    /* width:278px; height:250px; */
-    width: 15%; padding-top: 14%; /* padding-top 設定高度*/
+    width:278px; height:250px;
     position:relative;
     margin:0 10px 30px;
     border-radius: 5px;
     border: 1px solid #E8E8E8;
     box-sizing: border-box;
 }
+
+
 .box img {
     display:block;
     max-width:100%;
@@ -167,7 +169,7 @@ main {margin-top:55px;}
     color: #757575;
 }
 
-@media (max-width:1200px) {
+@media (max-width:1210px) {
     .box {
         width:45%; /*45/15 = 3倍 */
         padding-top: 42% 
