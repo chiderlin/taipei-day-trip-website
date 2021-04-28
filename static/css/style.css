@@ -140,13 +140,17 @@ main {margin-top:55px;}
 
 .attraction-name {
     display:block;
+    white-space:nowrap; /*死都不換行*/
+    overflow:hidden; /* 如果超出範圍，用...*/
+    text-overflow: ellipsis;
+    width:276px;
     color: #757575;
     padding:10px;
     box-sizing: border-box;
     font-family: 'Noto Sans TC', sans-serif; /* 加入 思源字體 */
     position: absolute;
     top:70%;
-    font-size:11px;
+    font-size:16px;
 }
 
 .att-about {
@@ -156,7 +160,7 @@ main {margin-top:55px;}
     padding:10px;
     top:82%;
     box-sizing:border-box;
-    font-size:12px;
+    font-size:16px;
 }
 .mrt {
     width:50%;
@@ -174,13 +178,7 @@ main {margin-top:55px;}
         width:45%; /*45/15 = 3倍 */
         padding-top: 42% 
     }
-    .att-about {
-        font-size: 16px;
-        top:87%; /* 微調 字的距離 */
-    } 
-    .attraction-name {
-        font-size: 16px;
-    }
+    .att-about {top:87%;}  /* 微調 字的距離 */
 
 }
 @media (max-width:600px) {
