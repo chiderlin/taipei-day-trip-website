@@ -58,7 +58,7 @@ window.onload = function() {
         fetch(url).then(function(res) {
             return res.json();
         }).then(function(api_data) {
-            console.log(api_data);
+            // console.log(api_data);
             const data = api_data.data;
             if(keyword_page === 0 && data.length === 0) {
                 renderNoData();
@@ -152,6 +152,9 @@ window.onload = function() {
         category.className = "category";
         img.setAttribute("src", img_url[count_view]);
         name.appendChild(document.createTextNode(title_list[count_view]));
+        if(mrt_list[count_view] === "None") {
+            mrt_list[count_view] = ""
+        }
         mrt.appendChild(document.createTextNode(mrt_list[count_view]));
         category.appendChild(document.createTextNode(category_list[count_view]));
         att_about.appendChild(mrt);

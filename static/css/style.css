@@ -119,7 +119,7 @@ main {margin-top:55px;}
 .box {
     display:inline-block;
     /* width:278px; height:250px; */
-    width: 21%; padding-top: 20%; /* padding-top 設定高度*/
+    width: 15%; padding-top: 14%; /* padding-top 設定高度*/
     position:relative;
     margin:0 10px 30px;
     border-radius: 5px;
@@ -144,7 +144,7 @@ main {margin-top:55px;}
     font-family: 'Noto Sans TC', sans-serif; /* 加入 思源字體 */
     position: absolute;
     top:70%;
-    font-size:16px;
+    font-size:11px;
 }
 
 .att-about {
@@ -152,9 +152,9 @@ main {margin-top:55px;}
     width:100%; /* 照box */
     position: absolute;
     padding:10px;
-    top:85%;
+    top:82%;
     box-sizing:border-box;
-    font-size:16px;
+    font-size:12px;
 }
 .mrt {
     width:50%;
@@ -169,15 +169,22 @@ main {margin-top:55px;}
 
 @media (max-width:1200px) {
     .box {
-        width:45%; /*45/21 = 2.14倍 */
-        padding-top: 40% 
+        width:45%; /*45/15 = 3倍 */
+        padding-top: 42% 
     }
-    .att-about {top:87%;} /* 微調 字的距離 */
+    .att-about {
+        font-size: 16px;
+        top:87%; /* 微調 字的距離 */
+    } 
+    .attraction-name {
+        font-size: 16px;
+    }
+
 }
 @media (max-width:600px) {
     .box {
-        width:90%; /*90/21 = 4.28倍 */
-        padding-top: 80% 
+        width:90%; /*90/15 = 6倍 */
+        padding-top: 84% 
     }
     .text {
         width:230px;height:44px;
