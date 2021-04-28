@@ -144,6 +144,7 @@ main {margin-top:55px;}
     font-family: 'Noto Sans TC', sans-serif; /* 加入 思源字體 */
     position: absolute;
     top:70%;
+    font-size:16px;
 }
 
 .att-about {
@@ -153,7 +154,7 @@ main {margin-top:55px;}
     padding:10px;
     top:85%;
     box-sizing:border-box;
-    
+    font-size:16px;
 }
 .mrt {
     width:50%;
