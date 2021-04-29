@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    font-family: 'Noto Sans TC', sans-serif;
 }
 
 body {
@@ -28,8 +29,8 @@ header {
 .title {
     flex:none;
     font-size:30px;
-    font-weight:bold;
     margin:10px 10px 10px; /* top | right,left | bottom   */
+    font-weight: bold;
     
 }
 .blank {
@@ -95,7 +96,7 @@ nav {
     color: #757575;
     font-size: 16px;
     font-weight: bold;
-    padding: 15px;
+    padding: 10px;
 }
 
 .text {
@@ -155,7 +156,7 @@ main {margin-top:55px;}
     width:276px;
     color: #757575;
     padding:10px;
-    font-family: 'Noto Sans TC', sans-serif; /* 加入 思源字體 */
+    font-weight: bold;
     position: absolute;
     top:70%;
     font-size:16px;
