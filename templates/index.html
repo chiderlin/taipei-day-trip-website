@@ -1,1 +1,60 @@
-<h1>HELLO 測試</h1>
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
+    <link rel="shortcut icon" href="#"/>      <!-- favicon.ico問題 -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com">   -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&display=swap" rel="stylesheet">  -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet"> -->
+    <title>Taipei Trip 台北一日遊</title>
+</head>
+<body>
+    <header>
+        <div class="flexbox">
+            <div class="title">
+                <a href="#">台北一日遊</a>
+            </div>
+            <div class="blank"></div>
+            <div class="items">
+                <span class="item">預定行程</span>
+                <span class="item">登入/註冊</span>
+            </div>
+        </div>
+    </header>
+    <nav>
+
+        <div class="slogan">
+            <div class="description1">輕鬆享受台北一日悠閒</div>
+            <div class="description2">探索角落，體驗城市的深度旅遊行程</div>
+            <div class="search-block">
+                <form id="keyword-form">
+                    <input id="keyword" type="text" placeholder="輸入景點名稱查詢" class="text">
+                    <div class="search-icon-block">
+                        <label for="search-icon-button">
+                            <img src="/png/icon/icon_search.png">
+                        </label>
+                        <input type="submit" name="search-icon" id="search-icon-button">        
+                    </div>
+                </form>
+            </div>
+
+
+
+        </div>
+        <div class="background-img"></div>
+    </nav>
+    <main>
+        <div id="attractions">
+        </div>
+        <div class="loading"></div>
+    </main>
+    <footer>
+        <div>COPYRIGHT © 2021 台北一日遊</div>
+    </footer>
+    <script src="/js/index.js"></script>     <!-- 載入js檔案 -->
+</body>
+</html>

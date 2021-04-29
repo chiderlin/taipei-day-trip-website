@@ -1,25 +1,24 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, make_response
 from flask_restful import Resource
 import json
-from data.db import DB_controller
+from model.db import DB_controller
 with open("./data/config.json", mode="r", encoding="utf-8") as f:
     conf = json.load(f)
 
-
-db = DB_controller(
-    host=conf["HOST"],
-    user=conf["USER"],
-    password=conf["PWD"],
-    db=conf["DB"]
-)
-
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/", static_folder="static")
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
+
+# db = DB_controller(
+#     host=conf["HOST"],
+#     user=conf["USER"],
+#     password=conf["PWD"],
+#     db=conf["DB"]
+# )
+
+
 # Pages
-
-
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -43,6 +42,7 @@ def thankyou():
 # function
 def count_pages(count_data):
     ''' count pages '''
+    count_data = int(count_data)
     if count_data % 12 != 0:  # 12筆一頁
         last_page = count_data // 12 + 1-1  # 餘數+1 page從0開始-1 # 有餘數就表示有下頁
         last_page_data = count_data % 12  # 最後一頁剩七筆
@@ -87,63 +87,102 @@ def attractions():
         start = 12 * page
         end = start + 12
         if keyword:
-            result = db.relative_data("attractions", "name", keyword)
-            for ans in result:
-                data_dict = {
-                    "id": ans[0],
-                    "name": ans[1],
-                    "category": ans[2],
-                    "description": ans[3],
-                    "address": ans[4],
-                    "transport": ans[5],
-                    "mrt": ans[6],
-                    "latitude": ans[7],
-                    "longitude": ans[8],
-                    "images": ans[9],
-                }
-                tmp_db.append(data_dict)
-            count_data = len(tmp_db)
-            if count_data < 12:
-                one_page = {
-                    "nextPage": None,
-                    "data": tmp_db,
-                }
-                return jsonify(one_page)
+            try:
+                db = DB_controller(
+                    host=conf["HOST"],
+                    user=conf["USER"],
+                    password=conf["PWD"],
+                    db=conf["DB"]
+                    )
 
-            else:
-                last_page, last_page_data = count_pages(count_data)
-                if page < last_page:
-                    for i in range(start, end):
-                        data.append(tmp_db[i])
-
-                    one_page = {
-                        "nextPage": page+1,
-                        "data": data,
+                result = db.relative_data("attractions", "name", keyword)
+                db.close()
+                for ans in result:
+                    data_dict = {
+                        "id": ans[0],
+                        "name": ans[1],
+                        "category": ans[2],
+                        "description": ans[3],
+                        "address": ans[4],
+                        "transport": ans[5],
+                        "mrt": ans[6],
+                        "latitude": ans[7],
+                        "longitude": ans[8],
+                        "images": ans[9],
                     }
-                    return jsonify(one_page)
+                    tmp_db.append(data_dict)
+                count_data = len(tmp_db)
+                if count_data <= 12: 
+                    if page == 0: # 必須在第0頁顯示
+                        one_page = {
+                            "nextPage": None,
+                            "data": tmp_db,
+                        }
+                        res = make_response(jsonify(one_page))
+                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        return res
+                    else:
+                        one_page = {
+                            "nextPage": None,
+                            "data": None,
+                        }
+                        res = make_response(jsonify(one_page))
+                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        return res
 
-                elif page == last_page:
-                    for i in range(start, start+last_page_data):
-                        data.append(tmp_db[i])
+                else: # 大於12筆資料
+                    last_page, last_page_data = count_pages(count_data)
+                    if page < last_page: # 但不是最後一頁
+                        for i in range(start, end):
+                            data.append(tmp_db[i])
 
-                    one_page = {
-                        "nextPage": None,
-                        "data": data,
-                    }
-                    return jsonify(one_page)
+                        one_page = {
+                            "nextPage": page+1,
+                            "data": data,
+                        }
+                        res = make_response(jsonify(one_page))
+                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        return res
 
-                else:  # page > last_page
-                    return jsonify({
-                        "error": True,
-                        "message": f"Total Page only up to {last_page}",
-                    }), 500
+                    elif page == last_page: # 最後一頁
+                        for i in range(start, start+last_page_data):
+                            data.append(tmp_db[i])
+
+                        one_page = {
+                            "nextPage": None,
+                            "data": data,
+                        }
+                        res = make_response(jsonify(one_page))
+                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        return res
+                    else:  # page > last_page
+                        one_page = {
+                            "nextPage": None,
+                            "data": None,
+                        }
+                        res = make_response(jsonify(one_page))
+                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        return res
+
+            except Exception as e:
+                return jsonify({"error": True, "message": str(e)}), 500
 
         else:  # 沒有keyword
             # 查詢資料庫目前有幾筆資料
+            try:
+                db = DB_controller(
+                    host=conf["HOST"],
+                    user=conf["USER"],
+                    password=conf["PWD"],
+                    db=conf["DB"]
+                )
+            except Exception as e:
+                return jsonify({"error": True, "message": str(e)}), 500
+
             count_data = db.count_data("attractions")
-            count_data = int(count_data)
             last_page, last_page_data = count_pages(count_data)
-            result = db.limit_data("attractions", start, 12)  # 改limit分頁
+            result = db.limit_data("attractions", start, 12)  # 改limit分頁 LIMITE優點是假如最後一頁不足12筆資料也不會報錯，就顯示剩下的全部
+            db.close() 
             for res in result:  # 塞入12筆資料
                 data_dict = {
                     "id": res[0],
@@ -164,20 +203,27 @@ def attractions():
                     "nextPage": page+1,
                     "data": data,
                 }
-                return jsonify(one_page)
+                res = make_response(jsonify(one_page))
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res
 
             elif page == last_page:  # 最後一頁
                 one_page = {
                     "nextPage": None,
                     "data": data,
                 }
-                return jsonify(one_page)
+                res = make_response(jsonify(one_page))
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res
 
             elif page > last_page:  # 大於現有頁數
-                return jsonify({
-                    "error": True,
-                    "message": f"Total Page only up to {last_page}",
-                }), 500
+                one_page = {
+                    "nextPage": None,
+                    "data": None,
+                }
+                res = make_response(jsonify(one_page))
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res
 
             else:
                 return jsonify({"error": True, "message": "Something wrong"}), 500
@@ -186,28 +232,41 @@ def attractions():
 @app.route("/api/attraction/<int:atrractionId>")
 def view(atrractionId):
     '''restful-api, select single data using id.'''
-
+    
     if request.method == "GET":
-        count_data = db.count_data("attractions")
-        result = db.show_data("attractions", "id", atrractionId)
-        if not result:
-            return jsonify({"error": True, "message": f"Data only up to {count_data}"}), 400
+        try:
+            db = DB_controller(
+                host=conf["HOST"],
+                user=conf["USER"],
+                password=conf["PWD"],
+                db=conf["DB"]
+            )
+            result = db.show_data("attractions", "id", atrractionId)
+            db.close()
+            if not result:
+                return jsonify({"data": None})
 
-        data = {
-            "data": {
-                "id": result[0],
-                "name": result[1],
-                "category": result[2],
-                "description": result[3],
-                "address": result[4],
-                "transport": result[5],
-                "mrt": result[6],
-                "latitude": result[7],
-                "longitude": result[8],
-                "images": result[9],
+            data = {
+                "data": {
+                    "id": result[0],
+                    "name": result[1],
+                    "category": result[2],
+                    "description": result[3],
+                    "address": result[4],
+                    "transport": result[5],
+                    "mrt": result[6],
+                    "latitude": result[7],
+                    "longitude": result[8],
+                    "images": result[9],
+                }
             }
-        }
-        return jsonify(data)
+            res = make_response(jsonify(data))
+            res.headers['Access-Control-Allow-Origin'] = '*'
+            return res
+        except Exception as e:
+            return jsonify({"error": True, "message": str(e)}), 500
+
+
 
 
 if __name__ == "__main__":

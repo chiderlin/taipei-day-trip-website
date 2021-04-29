@@ -1,22 +1,42 @@
 import mysql.connector
+from mysql.connector import pooling # 還在測試中
 import json
 
 
 class DB_controller:
-    '''connect to your mysql'''
+    '''connect to your mysql, using connection pool'''
 
     def __init__(self, host, user, password, db=None):
+        self.host = host
+        self.user = user
+        self.password = password
         self.db = db
+
+        dbconfig = {
+            "host": self.host,
+            "user": self.user,
+            "password": self.password,
+            "db": self.db
+        }
         try:
-            self.mydb = mysql.connector.connect(  # 一開始mydb沒有self，連不到資料庫
-                host=host,
-                user=user,
-                password=password,
-                database=self.db
+            # 改成connection pool 試試看
+            self.mydb = mysql.connector.pooling.MySQLConnectionPool(
+                pool_name="mysql_pooling",
+                pool_size=10,
+                **dbconfig
             )
-            self.mycursor = self.mydb.cursor()
+            self.cnx = self.mydb.get_connection()
+            # self.connect = self.cnx.is_connected()
+            self.mycursor = self.cnx.cursor()
+            # self.mydb = mysql.connector.connect(  # 一開始mydb沒有self，連不到資料庫
+            #     host=host,
+            #     user=user,
+            #     password=password,
+            #     database=self.db,
+            # )
+            # self.mycursor = self.mydb.cursor()
         except Exception as e:
-            print(e)
+            print(str(e))
 
     def create_db(self, db_name):
         '''method: create database if not exists.'''
@@ -71,7 +91,8 @@ class DB_controller:
         try:
             self.mycursor.execute(
                 f'insert into attractions (name, category, description, address, transport, mrt, latitude, longitude, images) values ("{name}", "{category}", "{description}", "{address}", "{transport}", "{mrt}", {latitude}, {longitude}, "{images}")')
-            self.mydb.commit()
+            self.cnx.commit()
+            # self.mydb.commit()
             return (self.mycursor.rowcount, "record inserted.")
         except Exception as e:
             return e
@@ -92,7 +113,8 @@ class DB_controller:
         try:
             sql = f"update user set name='{new_name}' where name='{origin_name}'"
             self.mycursor.execute(sql)
-            self.mydb.commit()
+            self.cnx.commit()
+            # self.mydb.commit()
             return "db name update successful"
         except Exception as e:
             return e
@@ -122,7 +144,7 @@ class DB_controller:
             return e
 
     def limit_data(self, table_name, start, data_num):
-        '''limit page'''
+        '''limit page data'''
         try:
             self.mycursor.execute(f"use {self.db}")
             sql = f"select * from {table_name} limit {start},{data_num}"
@@ -135,7 +157,15 @@ class DB_controller:
     def delete(self):
         pass
 
-
+    def close(self):
+        ''' close database'''
+        try:
+            self.mycursor.close()
+            self.cnx.close()
+            # self.mydb.close()
+            return "close db success"
+        except Exception as e:
+            return e
 
 
 
@@ -166,8 +196,9 @@ if __name__ == '__main__':
     #     images varchar(5000))
     #     CHARSET=utf8mb4'''))
 
-    # print(db.read_table())
-    # print(db.count_data("attractions"))
-    # print(db.show_data("attractions","id",1))
+    print(db.read_table())
+    print(db.count_data("attractions"))
+    print(db.show_data("attractions","id",1))
 
-    print(db.limit_data("attractions",0,12))
+    # res = db.limit_data("attractions",400,12)
+    # print(res)
