@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
 * {
     box-sizing: border-box;
     font-family: 'Noto Sans TC', sans-serif;
@@ -62,17 +63,25 @@ nav {
 
 .background-img {
     width:650px; height:320px;
-    position:absolute;top:54px;right:12%;
+    position:absolute;top:54px;right:5%;
     background-image: url("../png/welcome1.png"); /*css為當前目錄去推算*/
     background-repeat: no-repeat;
     background-size: contain;
     z-index: 1;
 }
 
+@media (max-width:1000px) {
+    .background-img {
+        width:450px;height:250px;
+        position:absolute;top:153px;right:10px; /*想不到辦法*/
+    }
+}
+
 .slogan {
     /* margin: 75px 360px 76px; */ /*取消掉反而可以對齊*/
     z-index: 2;
-    width:1200px;
+    width: 1200px;
+    margin-right: 30px;
 }
 .description1 {
     color: white;
@@ -102,8 +111,9 @@ nav {
 .text {
     width:396px;height:46px;
     border-radius: 5px 0 0 5px; /* 左上 右上 右下 左下*/
-    border: 0; /* 邊框不要有黑色 */
-    font-size: 25px; /* 輸入時文字的大小 */
+    border: none; /*邊框不要有黑色*/
+    outline:medium; /*在鼠标点击时，会有黑色or藍色的边框，去掉。*/
+    font-size: 16px; /* 輸入時文字的大小 */
 }
 .search-icon-block {
     border-radius: 0 5px 5px 0; /* 左上 右上 右下 左下*/
@@ -122,10 +132,11 @@ main {margin-top:55px;}
 .container {
     display:flex;flex-wrap: wrap; /* flex-wrap 會自動換行 (讓container變三行) */
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     color: #777777;
     font-size:24px;
-
+    /* background-color: #666666; */
+    /* margin:10px; */
 }
 
 .box {
@@ -208,7 +219,7 @@ main {margin-top:55px;}
     }
     .background-img {
         width:350px;height:200px;
-        position:absolute;top:202px;right:-100px; /*想不到辦法*/
+        position:absolute;top:202px;right:-150px; /*想不到辦法*/
     }
 }
 

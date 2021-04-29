@@ -6,7 +6,7 @@ window.onload = function() {
     let img_url = [];
     let mrt_list = [];
     let category_list = [];
-    let count_view = 0;
+    let count_view = 0; //8
     let next_page_count = 1;
     let keyword_page = 0;
     const loading = document.querySelector(".loading"); // for lazy loading
@@ -35,7 +35,7 @@ window.onload = function() {
     keyword_search.addEventListener("submit", (event)=> {
         event.preventDefault(); // 防止網頁重load
         attractions.innerHTML = ""; // 重新載入，把內容先取消掉
-        keyword_page = 0
+        keyword_page = 0;
         getKeyWordData();
     })
     
@@ -64,6 +64,12 @@ window.onload = function() {
                 renderNoData();
             }
             if(data !== null) {
+                // console.log(img_url);
+                title_list = [];
+                img_url = [];
+                mrt_list = [];
+                category_list = [];
+                count_view = 0
                 etlData(data);
                 render(data); // render新畫面
                 keyword_page++;
@@ -112,18 +118,18 @@ window.onload = function() {
     function render(data) {
         let data_length = data.length;
         let container_block = Math.floor(data_length/4); //藝術:1
-        let box_block = data_length%4; //藝術:1
-
-        for(let i=0; i<container_block; i++) {
-            const container = render_container();
-            for(let j=0; j<4; j++) {
-                render_box(container);
-            }
-        }
+        let box_block = data_length % 4;
         if(box_block !== 0) {
-            for(let i=0; i<1; i++) {
+            for(let i=0; i<container_block+1; i++) {
                 const container = render_container();
-                for(let j=0; j<box_block; j++) {
+                for(let j=0; j<4; j++) {
+                    render_box(container);
+                }
+            }
+        }else {
+            for(let i=0; i<container_block; i++) {
+                const container = render_container();
+                for(let j=0; j<4; j++) {
                     render_box(container);
                 }
             }
@@ -150,19 +156,26 @@ window.onload = function() {
         att_about.className = "att-about";
         mrt.className = "mrt";
         category.className = "category";
-        img.setAttribute("src", img_url[count_view]);
-        name.appendChild(document.createTextNode(title_list[count_view]));
+
+        if(img_url[count_view] === undefined) {
+            box.style.border = "none";
+            container.appendChild(box);
+        } else {
+            img.setAttribute("src", img_url[count_view]);
+            name.appendChild(document.createTextNode(title_list[count_view]));
+            mrt.appendChild(document.createTextNode(mrt_list[count_view]));
+            category.appendChild(document.createTextNode(category_list[count_view]));
+            box.appendChild(img);
+            box.appendChild(name);
+            box.appendChild(att_about);
+            att_about.appendChild(mrt);
+            att_about.appendChild(category);
+            container.appendChild(box);
+        }
+
         if(mrt_list[count_view] === "None") {
             mrt_list[count_view] = ""
         }
-        mrt.appendChild(document.createTextNode(mrt_list[count_view]));
-        category.appendChild(document.createTextNode(category_list[count_view]));
-        att_about.appendChild(mrt);
-        att_about.appendChild(category);
-        box.appendChild(img);
-        box.appendChild(name);
-        box.appendChild(att_about);
-        container.appendChild(box);
         count_view++;
     }
 
