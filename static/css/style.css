@@ -57,17 +57,17 @@ nav {
 .background-img {
     width:650px; height:320px;
     position:absolute;top:54px;right:12%;
+    background-image: url("../png/welcome1.png"); /*css為當前目錄去推算*/
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url("../png/welcome1.png"); /*css為當前目錄去推算*/
     z-index: 1;
 }
 
 .slogan {
-    margin: 75px 360px 76px;
+    /* margin: 75px 360px 76px; */ /*取消掉反而可以對齊*/
     z-index: 2;
     width:1200px;
-    max-width:100%;
+
 }
 .description1 {
     color: white;
@@ -180,6 +180,12 @@ main {margin-top:55px;}
 }
 
 @media (max-width:1210px) {
+    .title {
+        margin-left: 20px; /*文字和搜尋框，左邊和上面的標題以及下面的景點列表切齊*/
+    }
+    .slogan {
+        margin-left: 20px; /*文字和搜尋框，左邊和上面的標題以及下面的景點列表切齊*/
+    }
     .box {
         width:45%; /*45/15 = 3倍 */
         padding-top: 42% 
@@ -196,8 +202,10 @@ main {margin-top:55px;}
         width:230px;height:44px;
     }
     .background-img {
-        width:400px;height:200px;
-        position:absolute;top:183px;right:-150px;
+        width:350px;height:200px;
+
+        position:absolute;top:202px;right:-100px;
+
     }
 
 }
