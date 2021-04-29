@@ -52,9 +52,7 @@ window.addEventListener("scroll", ()=> {
         if(keyword.value === "") {
             getNextPage();
         }else {
-            console.log(checkProcess);
             if(checkProcess === false) {
-                console.log("test")
                 getKeyWordData();
             }
         }
@@ -132,17 +130,34 @@ function render(data) {
     let container_block = Math.floor(data_length/4); //藝術:1
     let box_block = data_length % 4;
     if(box_block !== 0) {
-        for(let i=0; i<container_block+1; i++) {
+        for(let i=0; i<container_block; i++) {
             const container = render_container();
+            const bigbox = document.createElement("div");
+            bigbox.className = "bigbox";
+            container.appendChild(bigbox);
             for(let j=0; j<4; j++) {
-                render_box(container);
+                render_box(bigbox);
             }
         }
+        for(let i=0; i<1; i++) {
+            const container = render_container();
+            const bigbox = document.createElement("div");
+            bigbox.className = "bigbox";
+            container.appendChild(bigbox);
+            for(let j=0; j<box_block; j++) {
+                render_box(bigbox);
+            }
+        }
+
+
     }else {
         for(let i=0; i<container_block; i++) {
             const container = render_container();
+            const bigbox = document.createElement("div");
+            bigbox.className = "bigbox";
+            container.appendChild(bigbox);
             for(let j=0; j<4; j++) {
-                render_box(container);
+                render_box(bigbox);
             }
         }
     }
@@ -156,23 +171,23 @@ function render_container() {
     return container;
 };
 
-function render_box(container) {
-    const box = document.createElement("div");
+function render_box(bigbox) {
+    const smallbox = document.createElement("div");
     const img = document.createElement("img");
     const name = document.createElement("div");
     const att_about = document.createElement("div");
     const mrt = document.createElement("div");
     const category = document.createElement("div");
-    box.className = "box";
+    smallbox.className = "smallbox";
     name.className = "attraction-name";
     att_about.className = "att-about";
     mrt.className = "mrt";
     category.className = "category";
 
-    if(img_url[count_view] === undefined) {
-        box.style.border = "none";
-        container.appendChild(box);
-    } else {
+    // if(img_url[count_view] === undefined) {
+    //     box.style.border = "none";
+    //     container.appendChild(box);
+    // } else {
         img.setAttribute("src", img_url[count_view]);
         name.appendChild(document.createTextNode(title_list[count_view]));
         
@@ -181,13 +196,14 @@ function render_box(container) {
         }
         mrt.appendChild(document.createTextNode(mrt_list[count_view]));
         category.appendChild(document.createTextNode(category_list[count_view]));
-        box.appendChild(img);
-        box.appendChild(name);
-        box.appendChild(att_about);
+        smallbox.appendChild(img);
+        smallbox.appendChild(name);
+        smallbox.appendChild(att_about);
         att_about.appendChild(mrt);
         att_about.appendChild(category);
-        container.appendChild(box);
-    }
+        bigbox.appendChild(smallbox);
+        
+    // }
     count_view++;
 }
 
