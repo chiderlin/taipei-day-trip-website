@@ -8,7 +8,8 @@ let keyword_page = 0;
 const loading = document.querySelector(".loading"); // for lazy loading
 const attractions = document.getElementById('attractions'); // 為了createElement
 const keyword = document.getElementById("keyword"); // 為了抓keyword的值
-    
+let checkProcess = false;
+
 init(); // => 接getNextPage
 
 function init() {
@@ -38,11 +39,9 @@ keyword_form.addEventListener("submit", (event)=> {
         setTimeout(getKeyWordData(), 1000);
         setTimeout(function() {
             isClick = true;
-        }, 3000);
+        }, 300);
     }
 })
-
-
 
 
     
@@ -53,18 +52,27 @@ window.addEventListener("scroll", ()=> {
         if(keyword.value === "") {
             getNextPage();
         }else {
-            getKeyWordData();
+            console.log(checkProcess);
+            if(checkProcess === false) {
+                console.log("test")
+                getKeyWordData();
+            }
         }
     }
+
+
 });
+
 
 
 // Model
 function getKeyWordData() {
+    checkProcess = true;
     const url = `http://35.73.36.129:3000/api/attractions?page=${keyword_page}&keyword=${keyword.value}`
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
+        checkProcess = false;
         const data = api_data.data;
         if(keyword_page === 0 && data.length === 0) { // 完全0筆資料
             renderNoData();
