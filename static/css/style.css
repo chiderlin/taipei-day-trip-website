@@ -1,11 +1,16 @@
+* {
+    box-sizing: border-box;
+}
 
-body {margin: 0px;}
+body {
+    margin: 0px;
+    overflow-x:hidden;
+}
 header {
     display: flex;
     justify-content: center;
     align-items: center;
     position:fixed;top:0px;width:100%; /*固定選單*/
-    box-sizing: border-box;
     background-color: white;
     z-index:101;
 }
@@ -67,7 +72,6 @@ nav {
     /* margin: 75px 360px 76px; */ /*取消掉反而可以對齊*/
     z-index: 2;
     width:1200px;
-
 }
 .description1 {
     color: white;
@@ -95,7 +99,7 @@ nav {
 }
 
 .text {
-    width:396px;height:44px;
+    width:396px;height:46px;
     border-radius: 5px 0 0 5px; /* 左上 右上 右下 左下*/
     border: 0; /* 邊框不要有黑色 */
     font-size: 25px; /* 輸入時文字的大小 */
@@ -130,7 +134,6 @@ main {margin-top:55px;}
     margin:0 10px 30px;
     border-radius: 5px;
     border: 1px solid #E8E8E8;
-    box-sizing: border-box;
 }
 
 
@@ -152,7 +155,6 @@ main {margin-top:55px;}
     width:276px;
     color: #757575;
     padding:10px;
-    box-sizing: border-box;
     font-family: 'Noto Sans TC', sans-serif; /* 加入 思源字體 */
     position: absolute;
     top:70%;
@@ -165,7 +167,6 @@ main {margin-top:55px;}
     position: absolute;
     padding:10px;
     top:82%;
-    box-sizing:border-box;
     font-size:16px;
 }
 .mrt {
@@ -198,17 +199,13 @@ main {margin-top:55px;}
         width:90%; /*90/15 = 6倍 */
         padding-top: 84% 
     }
-    .text {
-        width:230px;height:44px;
-    }
     .background-img {
         width:350px;height:200px;
-
-        position:absolute;top:202px;right:-100px;
-
+        position:absolute;top:202px;right:-100px; /*想不到辦法 硬調*/
     }
 
 }
+
 footer {
     display:flex;
     justify-content:center;
