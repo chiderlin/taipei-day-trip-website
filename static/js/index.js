@@ -27,13 +27,24 @@ function init() {
 
 // controller
 // 偵測輸入關鍵字時
-const keyword_search = document.getElementById("keyword-form");
-keyword_search.addEventListener("submit", (event)=> {
+var isClick = true;
+const keyword_form = document.getElementById("keyword-form");
+console.log(keyword_form);
+keyword_form.addEventListener("submit", (event)=> {
+    console.log(event);
     event.preventDefault(); // 防止網頁重load
     attractions.innerHTML = ""; // 重新載入，把內容先取消掉
     keyword_page = 0; // 每次搜尋頁數歸零
-    setTimeout(getKeyWordData(), 2000);
+    if(isClick) { //防止短時間重複提交
+        isClick = false;
+        setTimeout(getKeyWordData(), 2000);
+        setTimeout(function() {
+            isClick = true;
+        }, 3000);
+    }
 })
+
+
 
 
     
