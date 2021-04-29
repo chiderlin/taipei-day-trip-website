@@ -183,27 +183,19 @@ function render_box(bigbox) {
     att_about.className = "att-about";
     mrt.className = "mrt";
     category.className = "category";
-
-    // if(img_url[count_view] === undefined) {
-    //     box.style.border = "none";
-    //     container.appendChild(box);
-    // } else {
-        img.setAttribute("src", img_url[count_view]);
-        name.appendChild(document.createTextNode(title_list[count_view]));
-        
-        if(mrt_list[count_view] === "None") {
-            mrt_list[count_view] = "";
-        }
-        mrt.appendChild(document.createTextNode(mrt_list[count_view]));
-        category.appendChild(document.createTextNode(category_list[count_view]));
-        smallbox.appendChild(img);
-        smallbox.appendChild(name);
-        smallbox.appendChild(att_about);
-        att_about.appendChild(mrt);
-        att_about.appendChild(category);
-        bigbox.appendChild(smallbox);
-        
-    // }
+    img.setAttribute("src", img_url[count_view]);
+    name.appendChild(document.createTextNode(title_list[count_view]));
+    if(mrt_list[count_view] === "None") {
+        mrt_list[count_view] = "";
+    }
+    mrt.appendChild(document.createTextNode(mrt_list[count_view]));
+    category.appendChild(document.createTextNode(category_list[count_view]));
+    smallbox.appendChild(img);
+    smallbox.appendChild(name);
+    smallbox.appendChild(att_about);
+    att_about.appendChild(mrt);
+    att_about.appendChild(category);
+    bigbox.appendChild(smallbox);
     count_view++;
 }
 
