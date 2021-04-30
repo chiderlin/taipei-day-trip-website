@@ -4,11 +4,13 @@
     font-family: 'Noto Sans TC', sans-serif;
 }
 html {
+    width:100%;
     overflow-x: hidden;
 }
 body {
+    width:100%;
     margin: 0px;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 header {
     display: flex;
