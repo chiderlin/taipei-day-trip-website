@@ -1,0 +1,100 @@
+* {
+    color: #666666;
+}
+.flexbox {
+    border-bottom:1px solid #E8E8E8;
+}
+
+main {
+    margin-top: 54px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.head {
+    width:1200px;height:auto;
+}
+
+.fixed {
+    width:100%;height:100%;
+}
+
+.upper-block {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    height:534px;width:1200px;
+    /* background-color:black; */
+}
+
+.image {
+    margin:37px 15px 37px;
+    background-color: rgb(82, 74, 74);
+    /* width:45%;height:37.59%; */
+    width:540px;height:406px;
+    color:black;
+}
+
+.booking-block {
+    margin:37px 15px 37px;
+    /* width:50%;height:25.17%; */
+    width:540px;height:406px;
+    /* background-color: red; */
+    color:black;
+}
+
+.attr-name {
+    width:100%; /* 跟著父元素 */
+    font-size:24px;font-weight:bold;
+    margin-bottom:15px;
+}
+
+.about {
+    margin-bottom:20px;
+    font-size: 16px;
+}
+
+.booking-area {
+    background-color: #E8E8E8;
+    width:100%;height:302px;
+    z-index:100;
+    margin: 0 0 11px;
+    border-radius: 5px;
+}
+
+.booking-detail {
+    font-size:16px;
+    padding: 7.5px 20px ;
+}
+
+button {
+    margin:16.5px 426px 41px 20px;
+    width:154px;height:36px;
+    color:white;
+    background-color:#448899;
+    border: none;
+    border-radius: 5px;
+}
+
+hr {
+    color:#E8E8E8;
+}
+
+.downer-block {
+    width:1200px;height:442px;
+    /* background-color: red; */
+}
+
+.desc {
+    margin-top:50px
+}
+
+.address {
+
+}
+
+.inner-title {
+    margin-top:20px;
+    font-weight: bold;
+}

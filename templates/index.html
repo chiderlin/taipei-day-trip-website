@@ -1,54 +1,34 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
-    <link rel="shortcut icon" href="#"/>      <!-- favicon.ico問題 -->
-    <link rel="stylesheet" href="/css/index.css">
-    <title>Taipei Trip 台北一日遊</title>
-</head>
-<body>
-    <header>
-        <div class="flexbox">
-            <div class="title">
-                <a href="#">台北一日遊</a>
-            </div>
-            <div class="blank"></div>
-            <div class="items">
-                <span class="item">預定行程</span>
-                <span class="item">登入/註冊</span>
-            </div>
-        </div>
-    </header>
-    <nav>
+{% extends "base.html" %}
 
-        <div class="slogan">
-            <div class="description1">輕鬆享受台北一日悠閒</div>
-            <div class="description2">探索角落，體驗城市的深度旅遊行程</div>
-            <div class="search-block">
-                <form id="keyword-form">
-                    <input id="keyword" type="text" placeholder="輸入景點名稱查詢" class="text">
-                    <div class="search-icon-block">
-                        <label for="search-icon-button">
-                            <img src="/png/icon/icon_search.png">
-                        </label>
-                        <input type="submit" name="search-icon" id="search-icon-button">        
-                    </div>
-                </form>
-            </div>
+{% block head %}
+<link rel="stylesheet" href="/css/index.css">
+{% endblock %}
+
+{% block content %}
+<nav>
+    <div class="slogan">
+        <div class="description1">輕鬆享受台北一日悠閒</div>
+        <div class="description2">探索角落，體驗城市的深度旅遊行程</div>
+        <div class="search-block">
+            <form id="keyword-form">
+                <input id="keyword" type="text" placeholder="輸入景點名稱查詢" class="text">
+                <div class="search-icon-block">
+                    <label for="search-icon-button">
+                        <img src="/png/icon/icon_search.png">
+                    </label>
+                    <input type="submit" name="search-icon" id="search-icon-button">        
+                </div>
+            </form>
         </div>
-        <div class="backgroundbox">
-            <div class="background-img"></div>
-        </div>
-    </nav>
-    <main>
-        <div id="attractions">
-        </div>
-        <div class="loading"></div>
-    </main>
-    <footer>
-        <div>COPYRIGHT © 2021 台北一日遊</div>
-    </footer>
-    <script src="/js/index.js"></script>     <!-- 載入js檔案 -->
-</body>
-</html>
+    </div>
+    <div class="backgroundbox">
+        <div class="background-img"></div>
+    </div>
+</nav>
+<main>
+    <div id="attractions">
+    </div>
+    <div class="loading"></div>
+</main>
+<script src="/js/index.js"></script>     <!-- 載入js檔案 -->
+{% endblock %}

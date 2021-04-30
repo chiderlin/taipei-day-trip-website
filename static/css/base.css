@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+body {
+    margin: 0px;
+}
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:fixed;top:0px;width:100%; /*固定選單*/
+    background-color: white;
+    z-index:101;
+}
+.title a {
+    text-decoration: none;
+    color: #448899;
+}
+.flexbox {
+    width:1200px;
+    height:54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.title {
+    flex:none;
+    font-size:30px;
+    margin:10px 10px 10px; /* top | right,left | bottom   */
+    font-weight: bold;
+    
+}
+.blank {
+    flex: auto;
+    height: 34px;
+}
+.items {
+    flex: none;
+    /*margin: 20px 370px 20px 0;*/ /* top | right | bottom | left */
+    color: #666666;
+    font-size: 16px;
+}
+.item {
+    margin:0 10px 0; /* top | right,left | bottom   */
+}
+
+footer {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color: #757575;
+    height:104px;
+    color:white;
+    font-weight:bold;font-size:16px;
+    margin-top:25px;
+}
