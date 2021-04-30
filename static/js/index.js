@@ -13,6 +13,8 @@ let checkProcess = false;
 init(); // => 接getNextPage
 
 function init() {
+    // 新增 getData()=>裡面放fetch 來當controller 
+
     const url = `http://35.73.36.129:3000/api/attractions?page=0`
     fetch(url).then(function(res) {
         return res.json();
@@ -41,12 +43,12 @@ keyword_form.addEventListener("submit", (event)=> {
             isClick = true;
         }, 300);
     }
-})
+});
 
 // 偵測滾輪事件
 window.addEventListener("scroll", ()=> {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    if(clientHeight+scrollTop >= scrollHeight-5) {
+    if(clientHeight+scrollTop >= scrollHeight) {
         if(keyword.value === "") {
             getNextPage();
         }else {
