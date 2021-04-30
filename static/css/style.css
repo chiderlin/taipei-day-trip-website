@@ -110,7 +110,7 @@ nav {
     width:396px;height:46px;
     border-radius: 5px 0 0 5px; /* 左上 右上 右下 左下*/
     border: none; /*邊框不要有黑色*/
-    outline:medium; /*在鼠标点击时，会有黑色or藍色的边框，去掉。*/
+    outline:medium; /*medium*//*在鼠标点击时，会有黑色or藍色的边框，去掉。*/
     font-size: 16px; /* 輸入時文字的大小 */
 }
 .search-icon-block {
@@ -138,17 +138,14 @@ main {margin-top:55px;}
     /* margin:10px; */
 }
 
-.bigbox {
-    display:inline-block;/* flex-wrap 會自動換行 (讓container變三行) */
-    justify-content: center;
-    align-items: center;
-    width:1200px;
-    /* background-color: black; */
+.bigbox { 
+    /*因為要設定寬度而設置，因為container設flex不能再設定寬度 
+    也不會因為原本的box(現在smallbox)只有一個而置中*/
+    width:1200px; 
 }
 
 .smallbox {
     display:inline-block;
-    justify-content: center;
     width:278px; height:250px;
     position:relative;
     margin:0 10px 30px;
@@ -169,7 +166,6 @@ main {margin-top:55px;}
 }
 
 .attraction-name {
-    display:block;
     white-space:nowrap; /*死都不換行*/
     overflow:hidden; /* 如果超出範圍，用...*/
     text-overflow: ellipsis;

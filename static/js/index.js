@@ -43,12 +43,10 @@ keyword_form.addEventListener("submit", (event)=> {
     }
 })
 
-
-    
 // 偵測滾輪事件
 window.addEventListener("scroll", ()=> {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    if(clientHeight+scrollTop >= scrollHeight) {
+    if(clientHeight+scrollTop >= scrollHeight-5) {
         if(keyword.value === "") {
             getNextPage();
         }else {
@@ -57,8 +55,6 @@ window.addEventListener("scroll", ()=> {
             }
         }
     }
-
-
 });
 
 
@@ -141,21 +137,15 @@ function render(data) {
         }
         for(let i=0; i<1; i++) {
             const container = render_container();
-            const bigbox = document.createElement("div");
-            bigbox.className = "bigbox";
-            container.appendChild(bigbox);
+            const bigbox = render_bigbox(container);
             for(let j=0; j<box_block; j++) {
                 render_box(bigbox);
             }
         }
-
-
     }else {
         for(let i=0; i<container_block; i++) {
             const container = render_container();
-            const bigbox = document.createElement("div");
-            bigbox.className = "bigbox";
-            container.appendChild(bigbox);
+            const bigbox = render_bigbox(container)
             for(let j=0; j<4; j++) {
                 render_box(bigbox);
             }
@@ -170,6 +160,14 @@ function render_container() {
     attractions.appendChild(container);
     return container;
 };
+
+function render_bigbox(container) {
+    const bigbox = document.createElement("div");
+    bigbox.className = "bigbox";
+    container.appendChild(bigbox);
+    return bigbox;
+};
+
 
 function render_box(bigbox) {
     const smallbox = document.createElement("div");
