@@ -59,8 +59,6 @@ window.addEventListener("scroll", ()=> {
     }
 });
 
-
-
 // Model
 function getKeyWordData() {
     checkProcess = true;

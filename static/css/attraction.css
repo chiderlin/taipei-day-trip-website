@@ -10,6 +10,7 @@ main {
     display:flex;
     justify-content: center;
     align-items: center;
+        overflow-x: hidden;
 }
 
 .head {
@@ -18,26 +19,33 @@ main {
 
 .fixed {
     width:100%;height:100%;
+    display:flex;flex-wrap:wrap;
+    justify-content:center;
+    align-items: center;
 }
 
 .upper-block {
-    display:flex;
+    display:flex;flex-wrap:wrap;
     justify-content:center;
     align-items: center;
-    height:534px;width:1200px;
+    height:49%;width:100%;
+    border-bottom:1px solid #E8E8E8 ;
     /* background-color:black; */
 }
 
 .image {
     margin:37px 15px 37px;
-    background-color: rgb(82, 74, 74);
+    /* background-color: rgb(82, 74, 74); */
     /* width:45%;height:37.59%; */
     width:540px;height:406px;
     color:black;
 }
+.image img {
+    width:100%;height:100%;
+}
 
 .booking-block {
-    margin:37px 15px 37px;
+    /* margin:37px 15px 37px; */
     /* width:50%;height:25.17%; */
     width:540px;height:406px;
     /* background-color: red; */
@@ -61,40 +69,108 @@ main {
     z-index:100;
     margin: 0 0 11px;
     border-radius: 5px;
+    position:relative;
 }
 
-.booking-detail {
+.booking-title {
     font-size:16px;
-    padding: 7.5px 20px ;
+    padding: 15px 20px;
+    font-weight:bold;
 }
 
+.booking-detailstate { /* 說明文字 */
+    font-weight:400;
+    font-size:16px;
+    padding: 0 20px ;
+}
+
+.booking-detail-day { /* 日期 */
+    font-size:16px;
+    margin: 24px 5px 24px 20px;
+    font-weight:bold;
+}
+
+.block input{ /* 日曆 */
+    outline:medium;
+    border:none;
+    padding: 0;
+    height: 35px;width:193px;
+}
+
+.input-btn { /* 自製 radio選擇鈕外觀 */
+    display:inline-block;
+    background:#ffffff;
+    width:18px;height:18px;
+    border-radius:50%;
+    margin:4px;
+}
+
+.input-block { /*上半天 下半天*/
+    margin: 0 10px;
+    display:flex;
+    align-items: center;
+}
+
+.block { /* 選擇日期,選擇時間的block */
+    display:flex;
+    align-items: center;
+}
+
+.booking-detail-time { /*選擇時間*/
+    font-size:16px;
+    margin: 0 10px 0 20px;
+    font-weight:bold;
+}
+
+.booking-detail-fee { /*導覽費用*/
+    font-size:16px;
+    margin: 15px 5px 15px 20px;
+    font-weight:bold;
+}
+.btn { /*btn block */
+    margin-top:10px;
+    width:154px;height:36px;
+    /* position:relative; */
+}
 button {
-    margin:16.5px 426px 41px 20px;
+    margin:0;padding:0;
     width:154px;height:36px;
     color:white;
     background-color:#448899;
     border: none;
     border-radius: 5px;
-}
-
-hr {
-    color:#E8E8E8;
+    position:absolute;left:20px;bottom: 15px;
 }
 
 .downer-block {
-    width:1200px;height:442px;
+    width:100%;height:auto;
+    margin:0 20px;
+    /* margin-bottom: 120px; */
     /* background-color: red; */
+    letter-spacing:1.5px; /*預設normal=>0px*/
 }
 
-.desc {
-    margin-top:50px
+.desc { /* 景點介紹欄位 */
+    margin-top:50px;
+    width:100%;  
 }
 
-.address {
 
-}
-
-.inner-title {
+.inner-title { /* 景點地址,交通方式 */
     margin-top:20px;
     font-weight: bold;
+}
+
+
+@media(max-width:1200px) {
+    .booking-block {
+        width:90%;height:100%;
+    }
+    .image {
+        width:100%;height:100%;
+        margin: 40px 0;
+    }
+    .booking-area {
+        margin: 0 0 40px;
+    }
 }
