@@ -55,9 +55,7 @@ window.addEventListener("scroll", ()=> {
 window.addEventListener("click", (e)=>{
     let id = parseInt(e.path[1].children[0].innerText);
     let check_id_value = isNaN(id);
-    // console.log(check_id_value);
     if(check_id_value === false) {
-        // exports = { id };
         location.replace(`http://127.0.0.1:3000/attraction/${id}`);
     }
 });
@@ -75,7 +73,6 @@ window.addEventListener("click", (e)=>{
 function getData(page, keyword) {
     let url;
     checkProcess = true;
-    console.log(keyword_tag.value);
     if(keyword_tag.value === "") {
         url = `http://35.73.36.129:3000/api/attractions?page=${page}`
     } else {

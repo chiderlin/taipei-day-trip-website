@@ -18,22 +18,22 @@
                         <div class="booking-detailstate">以此景點為中心的一日行程，帶您探索城市角落故事</div>
                         <div class="block">
                             <div class="booking-detail-day">選擇日期 :</div>
-                            <input type="date">
+                            <input type="date" class="format">
                         </div>
                         <div class="block">
                             <div class="booking-detail-time">選擇時間 :</div>
                             <div class="input-block">
-                                <div class="input-btn"></div>
+                                <div class="input-btn" id="morning"></div>
                                 <span>上半天</span>
                             </div>
                             <div class="input-block">
-                                <div class="input-btn"></div>
+                                <div class="input-btn" id="afternoon"></div>
                                 <span>下半天</span>
                             </div>
                         </div>
-                        <div class="block">
+                        <div class="block" id="fee-block">
                             <div class="booking-detail-fee">導覽費用 :</div>
-                            <p>新台幣2000元</p>
+                            <p id="price" class="format">--</p>
                         </div>
                         <div class="btn">
                             <button>開始預訂行程</button>

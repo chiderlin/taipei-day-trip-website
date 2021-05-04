@@ -1,13 +1,10 @@
-// import {id} from "./index.js";
-// const { id } = require('./index');
 
-
-getData();
+let get_route = location.pathname
+getData(get_route);
 
 // model
-function getData(id) {
-    // let url = `http://35.73.36.129:3000/api/attraction/${id}`
-    let url = `http://35.73.36.129:3000/api/attraction/1`
+function getData(path) {
+    let url = `http://35.73.36.129:3000/api${path}`
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
@@ -29,9 +26,34 @@ function getData(id) {
 };
 
 
-
-
 //controller
+// 按上半天 下半天
+let morning_btn = document.getElementById("morning");
+let afternoon_btn = document.getElementById("afternoon");
+let fee_block = document.getElementById("fee-block");
+let show_price = document.getElementById("price");
+
+console.log(morning_btn);
+morning_btn.addEventListener("click", ()=> {
+    morning_btn.style.background = "#448899";
+    morning_btn.style.border = "2px solid #fff";
+    afternoon_btn.style = "none";
+    show_price.innerHTML = "";
+    show_price.appendChild(document.createTextNode("新台幣2000元"));
+    fee_block.appendChild(show_price);
+})
+afternoon_btn.addEventListener("click", ()=> {
+    afternoon_btn.style.background = "#448899";
+    afternoon_btn.style.border = "2px solid #fff";
+    morning_btn.style = "none";
+    show_price.innerHTML = "";
+    show_price.appendChild(document.createTextNode("新台幣2500元"));
+    fee_block.appendChild(show_price);
+
+})
+
+
+
 //view
 function renderUpperBlock(images, name, category, mrt) {
         //上
