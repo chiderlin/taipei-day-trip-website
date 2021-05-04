@@ -145,6 +145,7 @@ button {
 .downer-block {
     width:100%;height:auto;
     margin:0 20px;
+    margin-bottom: 10%;
     /* margin-bottom: 120px; */
     /* background-color: red; */
     letter-spacing:1.5px; /*預設normal=>0px*/
