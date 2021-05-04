@@ -52,22 +52,6 @@ window.addEventListener("scroll", ()=> {
     }
 });
 
-window.addEventListener("click", (e)=>{
-    let id = parseInt(e.path[1].children[0].innerText);
-    let check_id_value = isNaN(id);
-    if(check_id_value === false) {
-        location.replace(`http://127.0.0.1:3000/attraction/${id}`);
-    }
-});
-
-// function test() {
-//     let smallbox_tag = document.getElementsByClassName("smallbox");
-//     for(let i=0; i<smallbox_tag.length; i++) {
-//         let page_number = smallbox_tag[i].childNodes
-//         console.log(page_number[0].innerText);
-//     }
-//     console.log(smallbox_tag);
-// };
 
 // Model
 function getData(page, keyword) {
@@ -201,14 +185,13 @@ function render_box(bigbox) {
     const att_about = document.createElement("div");
     const mrt = document.createElement("div");
     const category = document.createElement("div");
-    const id = document.createElement("div");
-    id.style.display="none";
+    const link = document.createElement("a");
     smallbox.className = "smallbox";
     name.className = "attraction-name";
     att_about.className = "att-about";
     mrt.className = "mrt";
     category.className = "category";
-    id.appendChild(document.createTextNode(id_list[count_view]))
+    link.setAttribute("href", `/attraction/${id_list[count_view]}`) 
     img.setAttribute("src", img_url[count_view]);
     name.appendChild(document.createTextNode(title_list[count_view]));
     if(mrt_list[count_view] === "None") {
@@ -216,13 +199,13 @@ function render_box(bigbox) {
     }
     mrt.appendChild(document.createTextNode(mrt_list[count_view]));
     category.appendChild(document.createTextNode(category_list[count_view]));
-    smallbox.appendChild(id);
     smallbox.appendChild(img);
     smallbox.appendChild(name);
     smallbox.appendChild(att_about);
     att_about.appendChild(mrt);
     att_about.appendChild(category);
-    bigbox.appendChild(smallbox);
+    link.appendChild(smallbox); // 把超連結包在smallbox外面就可以做區塊連結
+    bigbox.appendChild(link);
     count_view++;
 }
 
