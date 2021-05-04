@@ -115,7 +115,3 @@ function renderDownerBlock(desc, address, transport) {
     downer_block.insertBefore(desc_tag, transport_class);
     downer_block.insertBefore(desc_tag, address_class);
 };
-
-function imgProcess() {
-
-}

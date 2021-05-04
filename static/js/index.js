@@ -68,25 +68,30 @@ function getData(page, keyword) {
         checkProcess = false;
         next_page = api_data.nextPage;
         let data = api_data.data;
-        data.forEach(ele => {
-            id_list.push(ele.id) // 紀錄id 
-        })
+
         if(keyword_tag.value !== "") { // 關鍵字查詢
             if(page === 0 && data.length === 0) { // 完全0筆資料
                 renderNoData();
             }
             if(data !== null) { // 如果新頁數沒資料就不會處理了
-                console.log(keyword_page);
                 title_list = []; // 重新搜尋要恢復空array
                 img_url = [];
                 mrt_list = [];
                 category_list = [];
+                id_list = []; // 先清空再塞新id
+                data.forEach(ele => {
+                    id_list.push(ele.id) 
+                })
+                console.log(id_list);
                 count_view = 0
                 etlData(data); // 再把資料推進去
                 render(data); 
                 keyword_page++; //要放這才不會多加
             }
         }else {
+            data.forEach(ele => {
+                id_list.push(ele.id) // 紀錄id 
+            })
             if(page !== 0) { // 下一頁
                 if(data !== null) {
                     etlData(data);
