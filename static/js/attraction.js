@@ -33,7 +33,6 @@ let afternoon_btn = document.getElementById("afternoon");
 let fee_block = document.getElementById("fee-block");
 let show_price = document.getElementById("price");
 
-console.log(morning_btn);
 morning_btn.addEventListener("click", ()=> {
     morning_btn.style.background = "#448899";
     morning_btn.style.border = "2px solid #fff";
@@ -41,7 +40,7 @@ morning_btn.addEventListener("click", ()=> {
     show_price.innerHTML = "";
     show_price.appendChild(document.createTextNode("新台幣2000元"));
     fee_block.appendChild(show_price);
-})
+});
 afternoon_btn.addEventListener("click", ()=> {
     afternoon_btn.style.background = "#448899";
     afternoon_btn.style.border = "2px solid #fff";
@@ -50,25 +49,47 @@ afternoon_btn.addEventListener("click", ()=> {
     show_price.appendChild(document.createTextNode("新台幣2500元"));
     fee_block.appendChild(show_price);
 
-})
+});
 
+// 輪播效果切換
+let left_arrow = document.getElementById("left-arrow");
+let right_arrow = document.getElementById("right-arrow");
+let count = 1;
+left_arrow.addEventListener("click",()=> {
+    count--;
+    if(count === 0) {
+        count = 5;
+    }
+    document.querySelector(`#control-${count}`).checked = true;
+});
+
+right_arrow.addEventListener("click",()=> {
+    count++;
+    if(count === 6) {
+        count = 1;
+    }
+    document.querySelector(`#control-${count}`).checked = true;
+});
 
 
 //view
 function renderUpperBlock(images, name, category, mrt) {
-        //上
-        const upper_block = document.querySelector(".upper-block");
-        const image_block = document.querySelector(".image");
         const booking_block = document.querySelector(".booking-block");
         const booking_area = document.querySelector(".booking-area");
         const atte_name = document.querySelector(".attr-name");
         const about = document.querySelector(".about");
-        const img = document.createElement("img");
-        img.setAttribute("src", images[0]);
+        for(let i=0; i<5; i++) { //取五張圖片
+            const image_block = document.querySelector(`.slide${i+1}`);
+            const img = document.createElement("img");
+            img.className = "attaction-img";
+            img.setAttribute("src", images[i]);
+            image_block.appendChild(img);
+        }
+
         atte_name.appendChild(document.createTextNode(name));
         about.appendChild(document.createTextNode(`${category} at ${mrt}`));
 
-        image_block.appendChild(img);
+        
         booking_block.appendChild(atte_name);
         booking_block.appendChild(about);
         booking_block.insertBefore(atte_name, booking_area); // (先,後)
@@ -77,8 +98,6 @@ function renderUpperBlock(images, name, category, mrt) {
 
 
 function renderDownerBlock(desc, address, transport) {
-        
-    // 下
     const downer_block = document.querySelector(".downer-block");
     const desc_tag = document.querySelector(".desc");
     const address_class = document.querySelector(".address");
@@ -97,4 +116,6 @@ function renderDownerBlock(desc, address, transport) {
     downer_block.insertBefore(desc_tag, address_class);
 };
 
+function imgProcess() {
 
+}
