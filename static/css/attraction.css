@@ -258,6 +258,7 @@ input[type="radio"] {
     margin: 0 10px;
     display:flex;
     align-items: center;
+    cursor:pointer;
 }
 
 .block { /* 選擇日期,選擇時間的block */

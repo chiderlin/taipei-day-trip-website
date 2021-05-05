@@ -32,13 +32,15 @@ function getData(path) {
 
 
 //controller
-// 按上半天 下半天
-let morning_btn = document.getElementById("morning");
-let afternoon_btn = document.getElementById("afternoon");
+// 按上半天 下半天 => 按字就可以觸發效果
+let morning_block = document.getElementById("morning");
+let afternoon_block = document.getElementById("afternoon");
+let morning_btn = document.getElementById("morning-btn");
+let afternoon_btn = document.getElementById("afternoon-btn");
 let fee_block = document.getElementById("fee-block");
 let show_price = document.getElementById("price");
 
-morning_btn.addEventListener("click", ()=> {
+morning_block.addEventListener("click", ()=> {
     morning_btn.style.background = "#448899";
     morning_btn.style.border = "2px solid #fff";
     afternoon_btn.style = "none";
@@ -46,7 +48,7 @@ morning_btn.addEventListener("click", ()=> {
     show_price.appendChild(document.createTextNode("新台幣2000元"));
     fee_block.appendChild(show_price);
 });
-afternoon_btn.addEventListener("click", ()=> {
+afternoon_block.addEventListener("click", ()=> {
     afternoon_btn.style.background = "#448899";
     afternoon_btn.style.border = "2px solid #fff";
     morning_btn.style = "none";
