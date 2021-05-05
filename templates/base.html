@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
+    <link rel="shortcut icon" href="#"/>      <!-- favicon.ico問題 -->
+    <link rel="stylesheet" href="/css/base.css">
+    {% block head %}
+    {% endblock %}
+    <title>Taipei Trip 台北一日遊</title>
+</head>
+<body>
+    <header>
+        <div class="flexbox">
+            <div class="title">
+                <a href="/">台北一日遊</a>
+            </div>
+            <div class="blank"></div>
+            <div class="items">
+                <span class="item">預定行程</span>
+                <span class="item">登入/註冊</span>
+            </div>
+        </div>
+    </header>
+    {% block content %}
+    {% endblock %}
+    <footer>
+        <div>COPYRIGHT © 2021 台北一日遊</div>
+    </footer>
+</body>
+</html>

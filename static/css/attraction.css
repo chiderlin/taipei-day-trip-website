@@ -1,0 +1,332 @@
+* {
+    color: #666666;
+}
+.flexbox {
+    border-bottom:1px solid #E8E8E8;
+}
+
+main {
+    margin-top: 54px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.head {
+    width:1200px;height:auto;
+}
+
+.fixed {
+    width:100%;height:100%;
+    display:flex;flex-wrap:wrap;
+    justify-content:center;
+    align-items: center;
+}
+
+.upper-block {
+    display:flex;flex-wrap:wrap;
+    justify-content:center;
+    align-items: center;
+    height:49%;width:100%;
+    border-bottom:1px solid #E8E8E8 ;
+    /* background-color:black; */
+}
+
+#slider {
+    display:flex;
+    position:relative;
+    /* width:45%;height:37.59%; */
+    width:540px;height:406px;
+    margin:37px 15px 37px;
+    overflow:hidden;
+}
+
+.slide {
+    margin:0; padding:0;
+    width:100%;height:100%;
+    position:absolute;
+    top:0;left:0;
+    transition: .5s transform ease-in-out;
+}
+
+/* .slide1 {
+    background-color:#984B4B;
+}
+
+.slide2 {
+    background-color:#949449;
+    left:100%;
+} */
+
+
+input[type="radio"] {
+    position:relative;
+    z-index:200;
+    display:none;
+}
+
+.control-dots {
+    position:absolute;
+    width:100%;
+    bottom:12px;
+    text-align:center;
+}
+
+.control-dots label {
+    width:10px;height:10px;
+    border:2px solid #fff;
+    background-color: #fff;
+    display:inline-block;
+    margin: 0 6px;
+    border-radius: 50%;
+}
+
+#slider input[type="radio"]:nth-of-type(1):checked ~ .control-dots label:nth-of-type(1) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(2):checked ~ .control-dots label:nth-of-type(2) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(3):checked ~ .control-dots label:nth-of-type(3) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(4):checked ~ .control-dots label:nth-of-type(4) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(5):checked ~ .control-dots label:nth-of-type(5) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(6):checked ~ .control-dots label:nth-of-type(6) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(7):checked ~ .control-dots label:nth-of-type(7) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(8):checked ~ .control-dots label:nth-of-type(8) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(9):checked ~ .control-dots label:nth-of-type(9) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(10):checked ~ .control-dots label:nth-of-type(10) {
+    background-color: #000000;
+}
+
+
+#slider input[type="radio"]:nth-of-type(1):checked ~ .slide {
+    transform:translateX(0%);
+}
+#slider input[type="radio"]:nth-of-type(2):checked ~ .slide {
+    transform:translateX(-100%);
+}
+#slider input[type="radio"]:nth-of-type(3):checked ~ .slide {
+    transform:translateX(-200%);
+}
+#slider input[type="radio"]:nth-of-type(4):checked ~ .slide {
+    transform:translateX(-300%);
+}
+#slider input[type="radio"]:nth-of-type(5):checked ~ .slide {
+    transform:translateX(-400%);
+}
+#slider input[type="radio"]:nth-of-type(6):checked ~ .slide {
+    transform:translateX(-500%);
+}
+#slider input[type="radio"]:nth-of-type(7):checked ~ .slide {
+    transform:translateX(-600%);
+}
+#slider input[type="radio"]:nth-of-type(8):checked ~ .slide {
+    transform:translateX(-700%);
+}
+#slider input[type="radio"]:nth-of-type(9):checked ~ .slide {
+    transform:translateX(-800%);
+}
+#slider input[type="radio"]:nth-of-type(10):checked ~ .slide {
+    transform:translateX(-900%);
+}
+
+.image {
+    width:540px;height:406px;
+    margin:37px 15px 37px;
+    background-color: rgb(82, 74, 74);
+    /* width:45%;height:37.59%; */
+    color:black;
+    position:relative;
+    
+}
+.attaction-img {
+    height:100%;
+    width:100%;
+    display:block;
+    object-fit:cover; /*圖片rwd 重要*/
+    position: absolute;
+}
+
+#left-arrow {
+    position:absolute;
+    top:50%;left:3%;
+    cursor:pointer;
+    opacity: 0.7;
+    z-index:101;
+}
+
+#right-arrow {
+    position:absolute;
+    top:50%;right:3%;
+    cursor:pointer;
+    opacity: 0.7;
+    z-index:102;
+}
+
+#right-arrow:hover {
+    opacity:1;
+} 
+
+#left-arrow:hover {
+    opacity:1;
+}
+
+.booking-block {
+    width:540px;height:406px;
+    color:black;
+}
+
+.attr-name {
+    width:100%; /* 跟著父元素 */
+    font-size:24px;font-weight:bold;
+    margin-bottom:15px;
+}
+
+.about {
+    margin-bottom:20px;
+    font-size: 16px;
+}
+
+.booking-area {
+    background-color: #E8E8E8;
+    width:100%;height:302px;
+    z-index:100;
+    margin: 0 0 11px;
+    border-radius: 5px;
+    position:relative;
+}
+
+.booking-title {
+    font-size:16px;
+    padding: 15px 20px;
+    font-weight:bold;
+}
+
+.booking-detailstate { /* 說明文字 */
+    font-weight:400;
+    font-size:16px;
+    padding: 0 20px ;
+}
+
+.booking-detail-day { /* 日期 */
+    font-size:16px;
+    margin: 24px 5px 24px 20px;
+    font-weight:bold;
+}
+
+.block input{ /* 日曆 */
+    outline:medium;
+    border:none;
+    padding: 0;
+    height: 35px;width:193px;
+}
+
+.format {
+    /* padding: 0 10px; 上下|左右 */
+    margin: 0 8px 0;
+}
+
+.input-btn { /* 自製 radio選擇鈕外觀 */
+    display:inline-block;
+    background:#ffffff;
+    width:22px;height:22px;
+    border-radius:50%;
+    margin:4px;
+}
+.input-btn:hover {
+    border: 2px solid #fff;
+    background-color: #448899;
+    opacity: 0.5;
+}
+
+.input-block { /*上半天 下半天*/
+    margin: 0 10px;
+    display:flex;
+    align-items: center;
+    cursor:pointer;
+}
+
+.block { /* 選擇日期,選擇時間的block */
+    display:flex;
+    align-items: center;
+}
+
+.booking-detail-time { /*選擇時間*/
+    font-size:16px;
+    margin: 0 10px 0 20px;
+    font-weight:bold;
+}
+
+.booking-detail-fee { /*導覽費用*/
+    font-size:16px;
+    margin: 15px 5px 15px 20px;
+    font-weight:bold;
+}
+.btn { /*btn block */
+    margin-top:10px;
+    width:154px;height:36px;
+}
+
+button {
+    margin:0;padding:0;
+    width:154px;height:36px;
+    color:white;
+    background-color:#448899;
+    border: none;
+    border-radius: 5px;
+    position:absolute;left:20px;bottom: 15px;
+    cursor:pointer;
+}
+
+.downer-block {
+    width:100%;height:auto;
+    margin:0 20px;
+    margin-bottom: 10%;
+    /* margin-bottom: 120px; */
+    /* background-color: red; */
+    letter-spacing:1.5px; /*預設normal=>0px*/
+}
+
+.desc { /* 景點介紹欄位 */
+    margin-top:50px;
+    width:100%;  
+}
+
+
+.inner-title { /* 景點地址,交通方式 */
+    margin-top:20px;
+    font-weight: bold;
+}
+
+
+@media(max-width:1200px) {
+    .booking-block {
+        width:90%;height:100%;
+    }
+    .upper-block {
+        height:49%;width:100%;
+    }
+    #slider {
+        width:100%;
+        margin:40px 0 20px;
+        padding-top: 42%  /* 高度    圖片rwd 重要*/
+    }
+    .booking-area {
+        margin: 0 0 40px;
+    }
+}

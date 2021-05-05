@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/css/attraction.css">
+{% endblock %}
+{% block content %}
+<main>
+    <div class="head">
+        <div class="fixed">
+            <div class="upper-block">
+                <div id="slider">
+                    <img src="/png/icon/btn_leftArrow.png" id="left-arrow" alt="">
+                    <input type="radio" id="control-1" name="control" checked>
+                    <!-- <input type="radio" id="control-2" name="control" > -->
+
+
+                    <div class="slide slide1"></div>
+                    <!-- <div class="slide slide2"></div> -->
+
+
+                    <div class="control-dots">
+                        <label for="control-1"></label>
+                        <!-- <label for="control-2"></label> -->
+
+                    </div>
+                    <img src="/png/icon/btn_rightArrow.png" id="right-arrow" alt="">
+                </div>
+                
+                <div class="booking-block">
+                    <div class="attr-name"></div>
+                    <div class="about"></div>
+                    <div class="booking-area">
+                        <div class="booking-title">訂購導覽行程</div>
+                        <div class="booking-detailstate">以此景點為中心的一日行程，帶您探索城市角落故事</div>
+                        <div class="block">
+                            <div class="booking-detail-day">選擇日期 :</div>
+                            <input type="date" class="format">
+                        </div>
+                        <div class="block">
+                            <div class="booking-detail-time">選擇時間 :</div>
+                            <div class="input-block" id="morning" >
+                                <div class="input-btn" id="morning-btn"></div>
+                                <span>上半天</span>
+                            </div>
+                            <div class="input-block" id="afternoon">
+                                <div class="input-btn" id="afternoon-btn"></div>
+                                <span>下半天</span>
+                            </div>
+                        </div>
+                        <div class="block" id="fee-block">
+                            <div class="booking-detail-fee">導覽費用 :</div>
+                            <p id="price" class="format">--</p>
+                        </div>
+                        <div class="btn">
+                            <button>開始預訂行程</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="downer-block">
+                <div class="desc">
+                </div>
+                <div class="address">
+                    <div class="inner-title">景點地址 : </div>
+                    <!-- <div class="content"></div> -->
+                </div>
+                <div class="transport">
+                    <div class="inner-title">交通方式 :</div>
+                    <!-- <div class="content"></div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="/js/attraction.js"></script>
+<!-- <script type="module" src="/js/index.js"></script> -->
+{% endblock %}
