@@ -114,7 +114,10 @@ function renderDownerBlock(desc, address, transport) {
 };
 
 function imageSlider() {
-    for(let i=0; i<images.length; i++) { //看長度
+    if(images.length > 10) {
+        images.length = 10;
+    }
+    for(let i=0; i<images.length; i++) { //看長度，限定最多10張照片
         const image_block = document.querySelector(`.slide${i+1}`);
         const dots_block = document.querySelector(`.control-dots`);   
         if(image_block === null) { // 預設html一個標籤 如果圖片超過一張在這裡新增

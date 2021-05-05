@@ -250,7 +250,7 @@ input[type="radio"] {
 }
 .input-btn:hover {
     border: 2px solid #fff;
-    background: #448899;
+    background-color: #448899;
     opacity: 0.5;
 }
 
