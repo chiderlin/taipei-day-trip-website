@@ -2,6 +2,8 @@
 let get_route = location.pathname
 getData(get_route);
 
+let images; //click也抓images
+
 // model
 function getData(path) {
     let url = `http://35.73.36.129:3000/api${path}`
@@ -10,7 +12,7 @@ function getData(path) {
     }).then(function(api_data) {
         // getData
         let data = api_data.data;
-        let images = data.images;
+        images = data.images;
         const name = data.name;
         const category = data.category;
         const mrt = data.mrt;
@@ -58,14 +60,14 @@ let count = 1;
 left_arrow.addEventListener("click",()=> {
     count--;
     if(count === 0) {
-        count = 5;
+        count = images.length;
     }
     document.querySelector(`#control-${count}`).checked = true;
 });
 
 right_arrow.addEventListener("click",()=> {
     count++;
-    if(count === 6) {
+    if(count === images.length+1) {
         count = 1;
     }
     document.querySelector(`#control-${count}`).checked = true;
@@ -74,28 +76,18 @@ right_arrow.addEventListener("click",()=> {
 
 //view
 function renderUpperBlock(images, name, category, mrt) {
-        const booking_block = document.querySelector(".booking-block");
-        const booking_area = document.querySelector(".booking-area");
-        const atte_name = document.querySelector(".attr-name");
-        const about = document.querySelector(".about");
-        for(let i=0; i<5; i++) { //取五張圖片
-            const image_block = document.querySelector(`.slide${i+1}`);
-            const img = document.createElement("img");
-            img.className = "attaction-img";
-            img.setAttribute("src", images[i]);
-            image_block.appendChild(img);
-        }
-
-        atte_name.appendChild(document.createTextNode(name));
-        about.appendChild(document.createTextNode(`${category} at ${mrt}`));
-
-        
-        booking_block.appendChild(atte_name);
-        booking_block.appendChild(about);
-        booking_block.insertBefore(atte_name, booking_area); // (先,後)
-        booking_block.insertBefore(about, booking_area);
+    const booking_block = document.querySelector(".booking-block");
+    const booking_area = document.querySelector(".booking-area");
+    const atte_name = document.querySelector(".attr-name");
+    const about = document.querySelector(".about");
+    imageSlider(images);
+    atte_name.appendChild(document.createTextNode(name));
+    about.appendChild(document.createTextNode(`${category} at ${mrt}`)); 
+    booking_block.appendChild(atte_name);
+    booking_block.appendChild(about);
+    booking_block.insertBefore(atte_name, booking_area); // (先,後)
+    booking_block.insertBefore(about, booking_area);
 };
-
 
 function renderDownerBlock(desc, address, transport) {
     const downer_block = document.querySelector(".downer-block");
@@ -114,4 +106,40 @@ function renderDownerBlock(desc, address, transport) {
     downer_block.appendChild(desc_tag);
     downer_block.insertBefore(desc_tag, transport_class);
     downer_block.insertBefore(desc_tag, address_class);
+};
+
+function imageSlider() {
+    for(let i=0; i<images.length; i++) { //看長度
+        const image_block = document.querySelector(`.slide${i+1}`);
+        const dots_block = document.querySelector(`.control-dots`);   
+        if(image_block === null) { // 預設html一個標籤 如果圖片超過一張在這裡新增
+            // 新增.slide
+            const slider = document.getElementById("slider");
+            const slide_slide1 = document.querySelector(".slide.slide1");
+            const slide = document.createElement("div");
+            const radio_input = document.createElement("input");
+            const dot_control = document.createElement("label");
+            slide.className = `slide`; 
+            slide.style.left = `${i}00%`; //後面新增的就不用給slide3,4,5 直接加%給它
+            const img = document.createElement("img");
+            img.className = "attaction-img";
+            img.setAttribute("src", images[i]);
+            radio_input.setAttribute("type", "radio");
+            radio_input.setAttribute("id", `control-${i+1}`);
+            radio_input.setAttribute("name","control");
+            dot_control.setAttribute("for",`control-${i+1}`)
+            slide.appendChild(img);
+            slider.appendChild(radio_input);
+            slider.appendChild(slide);
+            dots_block.appendChild(dot_control);
+            slider.insertBefore(radio_input, dots_block);
+            slider.insertBefore(slide, radio_input);
+            slider.insertBefore(radio_input, slide_slide1);
+        } else { // 照片只有一張
+            const img = document.createElement("img");
+            img.className = "attaction-img";
+            img.setAttribute("src", images[i]);
+            image_block.appendChild(img);
+        }
+    }
 };

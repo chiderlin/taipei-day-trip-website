@@ -82,7 +82,6 @@ function getData(page, keyword) {
                 data.forEach(ele => {
                     id_list.push(ele.id) 
                 })
-                console.log(id_list);
                 count_view = 0
                 etlData(data); // 再把資料推進去
                 render(data); 

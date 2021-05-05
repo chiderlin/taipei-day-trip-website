@@ -34,53 +34,35 @@ main {
 }
 
 #slider {
-    /* display:flex; */
+    display:flex;
     position:relative;
     /* width:45%;height:37.59%; */
     width:540px;height:406px;
     margin:37px 15px 37px;
     overflow:hidden;
 }
-.rwd {
-    display:flex;
-    width:100%;height:100%;
-}
 
 .slide {
     margin:0; padding:0;
-    width:100%;
-    height:100%;
+    width:100%;height:100%;
     position:absolute;
     top:0;left:0;
     transition: .5s transform ease-in-out;
 }
 
-.slide1 {
-    /* background-color:#984B4B; */
+/* .slide1 {
+    background-color:#984B4B;
 }
 
 .slide2 {
-    /* background-color:#949449; */
+    background-color:#949449;
     left:100%;
-}
+} */
 
-.slide3 {
-    /* background-color:#4F9D9D; */
-    left:200%;
-}
-
-.slide4 {
-    /* background-color:#7373B9; */
-    left:300%;
-}
-.slide5 {
-    /* background-color:#9F4D95; */
-    left:400%;
-}
 
 input[type="radio"] {
     position:relative;
-    z-index:100;
+    z-index:200;
     display:none;
 }
 
@@ -115,6 +97,22 @@ input[type="radio"] {
 #slider input[type="radio"]:nth-of-type(5):checked ~ .control-dots label:nth-of-type(5) {
     background-color: #000000;
 }
+#slider input[type="radio"]:nth-of-type(6):checked ~ .control-dots label:nth-of-type(6) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(7):checked ~ .control-dots label:nth-of-type(7) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(8):checked ~ .control-dots label:nth-of-type(8) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(9):checked ~ .control-dots label:nth-of-type(9) {
+    background-color: #000000;
+}
+#slider input[type="radio"]:nth-of-type(10):checked ~ .control-dots label:nth-of-type(10) {
+    background-color: #000000;
+}
+
 
 #slider input[type="radio"]:nth-of-type(1):checked ~ .slide {
     transform:translateX(0%);
@@ -131,20 +129,37 @@ input[type="radio"] {
 #slider input[type="radio"]:nth-of-type(5):checked ~ .slide {
     transform:translateX(-400%);
 }
+#slider input[type="radio"]:nth-of-type(6):checked ~ .slide {
+    transform:translateX(-500%);
+}
+#slider input[type="radio"]:nth-of-type(7):checked ~ .slide {
+    transform:translateX(-600%);
+}
+#slider input[type="radio"]:nth-of-type(8):checked ~ .slide {
+    transform:translateX(-700%);
+}
+#slider input[type="radio"]:nth-of-type(9):checked ~ .slide {
+    transform:translateX(-800%);
+}
+#slider input[type="radio"]:nth-of-type(10):checked ~ .slide {
+    transform:translateX(-900%);
+}
 
-/* .image {
+.image {
     width:540px;height:406px;
     margin:37px 15px 37px;
     background-color: rgb(82, 74, 74);
-    width:45%;height:37.59%;
+    /* width:45%;height:37.59%; */
     color:black;
     position:relative;
     
-} */
+}
 .attaction-img {
-    width:100%;height:100%;
+    height:100%;
+    width:100%;
     display:block;
-    position:absolute;
+    object-fit:cover; /*圖片rwd 重要*/
+    position: absolute;
 }
 
 #left-arrow {
@@ -172,10 +187,7 @@ input[type="radio"] {
 }
 
 .booking-block {
-    /* margin:37px 15px 37px; */
-    /* width:50%;height:25.17%; */
     width:540px;height:406px;
-    /* background-color: red; */
     color:black;
 }
 
@@ -267,8 +279,8 @@ input[type="radio"] {
 .btn { /*btn block */
     margin-top:10px;
     width:154px;height:36px;
-    /* position:relative; */
 }
+
 button {
     margin:0;padding:0;
     width:154px;height:36px;
@@ -305,12 +317,13 @@ button {
     .booking-block {
         width:90%;height:100%;
     }
-    /* .image {
-        width:100%;height:100%;
-        margin: 40px 0;
-    } */
+    .upper-block {
+        height:49%;width:100%;
+    }
     #slider {
-        max-width:100%;height:350px;
+        width:100%;
+        margin:40px 0 20px;
+        padding-top: 42%  /* 高度    圖片rwd 重要*/
     }
     .booking-area {
         margin: 0 0 40px;
