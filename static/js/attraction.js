@@ -18,7 +18,10 @@ function getData(path) {
         const mrt = data.mrt;
         const desc = data.description;
         const address = data.address;
-        const transport = data.transport;
+        let transport = data.transport;
+        if(transport === "None") {
+            transport = " ";
+        };
         images = images.replaceAll("\'", "").replace("[", "").replace("]", "");
         images = images.split(', ') // images陣列 object
 
