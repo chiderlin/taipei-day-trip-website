@@ -10,6 +10,25 @@
     <title>Taipei Trip 台北一日遊</title>
 </head>
 <body>
+    <div class="overlay">
+        <div class="loginout-register-page-block1">
+            <div class="loginout-register-page-block">
+                <div class="loginout-register-page">
+                    <label for="loginout-close-btn">
+                        <img id="close-btn-for-img" src="/png/icon/icon_close.png">
+                    </label>
+                    <input type="button" name="close" id="loginout-close-btn">
+                    <div class="login-title">登入會員帳號</div>
+                    <input id="account" class="input-format" type="text" placeholder="輸入電子信箱">
+                    <input id="pwd" class="input-format" type="password" placeholder="輸入密碼">
+                    <div style="text-align: center;">
+                        <button id="login-btn">登入帳戶</button>
+                    </div>
+                    <div class="login-state">還沒有帳戶?<a href="#">點此註冊</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <header>
         <div class="flexbox">
             <div class="title">
@@ -24,8 +43,10 @@
     </header>
     {% block content %}
     {% endblock %}
+    <script src="/js/base.js" type="module"></script>  
     <footer>
         <div>COPYRIGHT © 2021 台北一日遊</div>
     </footer>
+
 </body>
 </html>
