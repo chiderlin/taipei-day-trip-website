@@ -10,25 +10,50 @@
     <title>Taipei Trip 台北一日遊</title>
 </head>
 <body>
-    <div class="overlay">
-        <div class="loginout-register-page-block1">
-            <div class="loginout-register-page-block">
-                <div class="loginout-register-page">
-                    <label for="loginout-close-btn">
-                        <img id="close-btn-for-img" src="/png/icon/icon_close.png">
+    <div class="overlay-login">
+        <div class="login-page-block1">
+            <div class="login-page-block">
+                <div class="login-page">
+                    <label for="login-close-btn">
+                        <img id="close-btn-for-img-login" src="/png/icon/icon_close.png">
                     </label>
-                    <input type="button" name="close" id="loginout-close-btn">
+                    <input type="button" name="close" id="login-close-btn">
                     <div class="login-title">登入會員帳號</div>
-                    <input id="account" class="input-format" type="text" placeholder="輸入電子信箱">
-                    <input id="pwd" class="input-format" type="password" placeholder="輸入密碼">
+                    <input id="email-login" class="input-format" type="text" placeholder="輸入電子信箱">
+                    <input id="pwd-login" class="input-format" type="password" placeholder="輸入密碼">
                     <div style="text-align: center;">
                         <button id="login-btn">登入帳戶</button>
                     </div>
-                    <div class="login-state">還沒有帳戶?<a href="#">點此註冊</a></div>
+                    <div class="login-state">還沒有帳戶?
+                        <a href="#" id="register">點此註冊</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="overlay-register">
+        <div class="register-page-block1">
+            <div class="register-page-block">
+                <div class="register-page">
+                    <label for="register-close-btn">
+                        <img id="close-btn-for-img-register" src="/png/icon/icon_close.png">
+                    </label>
+                    <input type="button" name="close" id="register-close-btn">
+                    <div class="login-title">註冊會員帳號</div>
+                    <input id="name" class="input-format" type="text" placeholder="輸入姓名">
+                    <input id="email-register" class="input-format" type="text" placeholder="輸入電子信箱">
+                    <input id="pwd-register" class="input-format" type="password" placeholder="輸入密碼">
+                    <div style="text-align: center;">
+                        <button id="login-btn">註冊新帳戶</button>
+                    </div>
+                    <div class="login-state">已經有帳戶了?
+                        <a href="#" id="login">點此登入</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="flexbox">
             <div class="title">
