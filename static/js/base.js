@@ -1,5 +1,5 @@
+// controller
 // login 事件處理
-
 // 登入/註冊按鈕
 let item = document.querySelectorAll(".item");
 item[1].addEventListener("click", ()=> { // item[1]登入按鈕

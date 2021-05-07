@@ -118,7 +118,7 @@ header {
 }
 
 
-#login-btn {
+.login-btn {
     width:310px;
     height:47px;
     background-color: #448899;
@@ -128,6 +128,7 @@ header {
     border-radius: 5px;
     cursor: pointer;
     position:absolute;left:0;
+    font-size:19px;
 }
 .login-state {
     width:310px;
