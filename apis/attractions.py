@@ -99,7 +99,7 @@ def attractions():
                             "data": tmp_db,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        res.headers['Access-Control-Allow-Origin'] = 'http://35.73.36.129:3000/'
                         return res
                     else:
                         one_page = {
@@ -107,7 +107,7 @@ def attractions():
                             "data": None,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        res.headers['Access-Control-Allow-Origin'] = 'http://35.73.36.129:3000/'
                         return res
 
                 else: # 大於12筆資料
@@ -121,7 +121,7 @@ def attractions():
                             "data": data,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        res.headers['Access-Control-Allow-Origin'] = 'http://35.73.36.129:3000/'
                         return res
 
                     elif page == last_page: # 最後一頁
@@ -133,7 +133,7 @@ def attractions():
                             "data": data,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        res.headers['Access-Control-Allow-Origin'] = 'http://35.73.36.129:3000/'
                         return res
                     else:  # page > last_page
                         one_page = {
@@ -141,7 +141,7 @@ def attractions():
                             "data": None,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
+                        res.headers['Access-Control-Allow-Origin'] = 'http://35.73.36.129:3000/'
                         return res
 
             except Exception as e:
@@ -184,7 +184,7 @@ def attractions():
                     "data": data,
                 }
                 res = make_response(jsonify(one_page))
-                res.headers['Access-Control-Allow-Origin'] = '*'
+                res.headers['Access-Control-Allow-Origin'] = 'http://35.73.36.129:3000/'
                 return res
 
             elif page == last_page:  # 最後一頁
@@ -193,7 +193,7 @@ def attractions():
                     "data": data,
                 }
                 res = make_response(jsonify(one_page))
-                res.headers['Access-Control-Allow-Origin'] = '*'
+                res.headers['Access-Control-Allow-Origin'] = 'http://35.73.36.129:3000/'
                 return res
 
             elif page > last_page:  # 大於現有頁數
@@ -202,7 +202,7 @@ def attractions():
                     "data": None,
                 }
                 res = make_response(jsonify(one_page))
-                res.headers['Access-Control-Allow-Origin'] = '*'
+                res.headers['Access-Control-Allow-Origin'] = 'http://35.73.36.129:3000/'
                 return res
 
             else:
@@ -240,7 +240,8 @@ def view(attractionId):
                 }
             }
             res = make_response(jsonify(data))
-            res.headers['Access-Control-Allow-Origin'] = '*'
+            res.headers['Access-Control-Allow-Origin'] = 'http://35.73.36.129:3000/'
+            
             return res
         except Exception as e:
             return jsonify({"error": True, "message": str(e)}), 500

@@ -19,11 +19,13 @@
                     </label>
                     <input type="button" name="close" id="login-close-btn">
                     <div class="login-title">登入會員帳號</div>
-                    <input id="email-login" class="input-format" type="text" placeholder="輸入電子信箱">
-                    <input id="pwd-login" class="input-format" type="password" placeholder="輸入密碼">
-                    <div style="text-align: center;">
-                        <button class="login-btn">登入帳戶</button>
-                    </div>
+                    <form id="login-form">
+                        <input id="email-login" class="input-format" type="text" placeholder="輸入電子信箱">
+                        <input id="pwd-login" class="input-format" type="password" placeholder="輸入密碼">
+                        <div style="text-align: center;">
+                            <input type="submit" value="登入帳戶" class="login-btn"></input>
+                        </div>
+                    </form>
                     <div class="login-state">還沒有帳戶?
                         <a href="#" id="register">點此註冊</a>
                     </div>
@@ -40,12 +42,14 @@
                     </label>
                     <input type="button" name="close" id="register-close-btn">
                     <div class="login-title">註冊會員帳號</div>
-                    <input id="name" class="input-format" type="text" placeholder="輸入姓名">
-                    <input id="email-register" class="input-format" type="text" placeholder="輸入電子信箱">
-                    <input id="pwd-register" class="input-format" type="password" placeholder="輸入密碼">
-                    <div style="text-align: center;">
-                        <button class="login-btn">註冊新帳戶</button>
-                    </div>
+                    <form id="register-form">
+                        <input id="name" class="input-format" type="text" placeholder="輸入姓名">
+                        <input id="email-register" class="input-format" type="text" placeholder="輸入電子信箱">
+                        <input id="pwd-register" class="input-format" type="password" placeholder="輸入密碼">
+                        <div style="text-align: center;">
+                            <input type="submit" value="註冊新帳戶" class="login-btn"></input>
+                        </div>
+                    </form>
                     <div class="login-state">已經有帳戶了?
                         <a href="#" id="login">點此登入</a>
                     </div>
