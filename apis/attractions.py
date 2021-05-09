@@ -193,7 +193,7 @@ def attractions():
                     "data": data,
                 }
                 res = make_response(jsonify(one_page))
-                res.headers['Access-Control-Allow-Origin'] = 'http://35.73.36.129:3000/'
+                res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000/'
                 return res
 
             elif page > last_page:  # 大於現有頁數
