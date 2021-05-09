@@ -83,7 +83,7 @@ main {
     margin:0 10px 0;
 }
 #trash-btn {display:none;}
-
+#trash-img {cursor:pointer;}
 @media(max-width:600px) {
     .trash {
         width:100%;
@@ -174,4 +174,9 @@ main {
     border-radius: 5px;
     font-size:16px;
     padding:0;
+    cursor:pointer;
+}
+
+hr {
+    border:1px solid #E8E8E8;
 }
