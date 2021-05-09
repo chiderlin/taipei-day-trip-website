@@ -1,4 +1,97 @@
 {% extends "base.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="/css/booking.css">
+{% endblock %}
+
 {% block content %}
+<main>
+    <div class="head">
+        <div class="fix2">
+            <div class="fixed">
+                <div class="booking-status">您好，Yakko，待預訂的行程如下:</div>
+                <div class="upper-block">
+                    <div class="img-block">
+                        <img src="/png/test.png" id="booking-img">
+                    </div>
+                    <div class="right-status">
+                        <div class="booking-title">台北一日遊 : 平安鐘</div>
+                        <div class="block">
+                            <div class="booking-format">日期 : </div>
+                            <div class="booking-detail">2021-04-23</div>
+                        </div>
+                        <div class="block">
+                            <div class="booking-format">時間 : </div>
+                            <div class="booking-detail">早上9點到下午4點</div>
+                        </div>
+                        <div class="block">
+                            <div class="booking-format">費用 : </div>
+                            <div class="booking-detail">新台幣2000元</div>
+                        </div>
+                        <div class="block">
+                            <div class="booking-format">地點 : </div>
+                            <div class="booking-detail">臺北市 大安區忠孝東路4段</div>
+                        </div>
+                    </div>
+                    <div class="blank"></div>
+                    <div class="trash">
+                        <input type="button" name="trash-btn" id="trash-btn">
+                        <label for="trash-btn">
+                            <img src="/png/icon/icon_delete.png">
+                        </label>
+                    </div>
+                </div>
+                <hr />
+                <div class="middle-block">
+                    <div class="client-info">您的聯絡資訊</div>
+                    <div class="block">
+                        <div class="client-format">聯絡姓名 :</div>
+                        <input class="input" type="text" name="client-name" value="Yakko">
+                    </div>
+                    <div class="block">
+                        <div class="client-format">連絡信箱 :</div>
+                        <input class="input" type="text" name="client-email" value="imyakkowu@gmail.com">
+                    </div>
+                    <div class="block">
+                        <div class="client-format">手機號碼 :</div>
+                        <input class="input" type="text" name="client-phonenum">
+                    </div>
+                    <div class="state">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+                </div>
+                <hr />
+                <div class="downer-block">
+                    <div class="client-info">信用卡付款資訊</div>
+                    <div class="block">
+                        <div class="client-format">卡片號碼 :</div>
+                        <input class="input" type="password" placeholder="**** **** ****">
+                    </div>
+                    <div class="block">
+                        <div class="client-format">過期時間 :</div>
+                        <input class="input" type="text" placeholder="MM/YY">
+                    </div>
+                    <div class="block">
+                        <div class="client-format">驗證密碼 :</div>
+                        <input class="input" type="password" placeholder="CVV">
+                    </div>
+
+                </div>
+                <hr />
+                <div class="last-block">
+                    <div class="price-check">總價 : 新台幣2000元</div>
+                    <div class="btn-format">
+                        <input type="submit" value="確認訂購並付款" id="booking-btn">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        
+    </div>
+    
+    
+
+
+</main>
+
 {% endblock %}

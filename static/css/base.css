@@ -181,6 +181,12 @@ header {
 }
 
 
+main {
+    margin-top: 54px;
+
+}
+
+
 footer {
     display:flex;
     justify-content:center;
