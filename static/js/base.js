@@ -1,5 +1,5 @@
-// let url = `http://35.73.36.129:3000/api/user`;
-let url = `http://127.0.0.1:3000/api/user`;
+let url = `http://35.73.36.129:3000/api/user`;
+//let url = `http://127.0.0.1:3000/api/user`;
 let item = document.querySelectorAll(".item");
 
 init()
@@ -69,7 +69,7 @@ login_form.addEventListener("submit", (event)=> {
 // 提交註冊表單
 let register_form = document.getElementById("register-form");
 register_form.addEventListener("submit", (event)=> {
-    event.preventDefault();
+    // event.preventDefault();
     let register_name = document.getElementById("name")
     let register_email = document.getElementById("email-register");
     let register_pwd = document.getElementById("pwd-register");
@@ -181,6 +181,12 @@ function renderRegister(api_data) {
         register_msg.appendChild(document.createTextNode("註冊成功"));
         register_page.appendChild(register_msg);
         register_page.insertBefore(register_msg, register_state)
+        let register_name = document.getElementById("name")
+        let register_email = document.getElementById("email-register");
+        let register_pwd = document.getElementById("pwd-register");
+        register_name.value = ""; // 註冊成功清空input
+        register_email.value = "";
+        register_pwd.value = "";
 
     } else if(api_data.error === true) {
         register_msg = document.createElement("div");
@@ -190,12 +196,12 @@ function renderRegister(api_data) {
         register_page.appendChild(register_msg);
         register_page.insertBefore(register_msg, register_state)
     }
-
+    
 };
 
 
 function loginedRender() {
-    // overlay_login.style.display = "none";
+    overlay_login.style.display = "none";
     location.reload();
     item[1].classList.add("hide")
     item[2].classList.remove("hide")
