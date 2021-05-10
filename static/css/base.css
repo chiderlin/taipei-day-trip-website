@@ -48,7 +48,9 @@ header {
     margin:0 10px 0; /* top | right,left | bottom   */
     cursor: pointer;
 }
-
+.hide {
+    display: none;
+}
 
 .overlay-login {
     position:fixed;
@@ -62,14 +64,14 @@ header {
 }
 .login-page-block1 {
     display:flex;
-    width:100%;height:275px;
+    width:100%;height:290px;
     justify-content:center;
     position:absolute;top:80px;
     
 }
 .login-page-block {
     display:block;
-    width:340px;height:275px;
+    width:340px;height:100%;
     background: -webkit-linear-gradient(left,#66AABB,#337788 ); /* Google Chrome 與 Apple Safari 使用 -webkit-*/
     background: -moz-linear-gradient( right, #66AABB,#337788 ); /* Mozilla FireFox 使用 -moz- */
     background: -o-linear-gradient(right, #66AABB,#337788 ); /* Opera 使用 -o- */
@@ -80,7 +82,7 @@ header {
 .login-page {
     position:absolute;
     margin-top:10px;
-    width:340px;height:265px;
+    width:340px;height:280px;
     background-color: #fff;
     border-radius:0 0 5px 5px;
 }
@@ -130,6 +132,13 @@ header {
     position:absolute;left:0;
     font-size:19px;
 }
+.login-msg {
+    width:310px;
+    margin: 5px 15px 10px;
+    position:absolute;bottom:30px;
+    text-align: center;
+    color: red;
+}
 .login-state {
     width:310px;
     margin: 5px 15px 0;
@@ -150,13 +159,13 @@ header {
 
 .register-page-block1 {
     display:flex;
-    width:100%;
+    width:100%;height:337px;
     justify-content:center;
     position:absolute;top:80px;
     
 }
 .register-page-block {
-    width:340px;height:332px;
+    width:340px;height:100%;
     background: -webkit-linear-gradient(left,#66AABB,#337788 ); /* Google Chrome 與 Apple Safari 使用 -webkit-*/
     background: -moz-linear-gradient( right, #66AABB,#337788 ); /* Mozilla FireFox 使用 -moz- */
     background: -o-linear-gradient(right, #66AABB,#337788 ); /* Opera 使用 -o- */
@@ -167,7 +176,7 @@ header {
 .register-page {
     position:absolute;
     margin-top:10px;
-    width:340px;height:322px;
+    width:340px;height:100%;
     background-color: #fff;
     border-radius:0 0 5px 5px;
 }
