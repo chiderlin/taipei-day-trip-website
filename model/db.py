@@ -180,7 +180,7 @@ if __name__ == '__main__':
     #     )
     #     CHARSET=utf8mb4'''))
     
-    # print(db.insert_data(table_name='user', settingrow='name, email, password', settingvalue='"admin", "admin@admin.com", "test"'))
+    print(db.insert_data(table_name='user', settingrow='name, email, password', settingvalue='"admin", "admin@admin.com", "123"'))
     # print(db.read_table())
     # print(db.count_data("user"))
     # print(db.show_data("user", "id", 1))

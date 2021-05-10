@@ -1,4 +1,4 @@
-let url = `http://127.0.0.1:3000/api/user`;
+let url = `http://0.0.0.0:3000/api/user`;
 let item = document.querySelectorAll(".item");
 
 init()
