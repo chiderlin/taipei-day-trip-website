@@ -30,82 +30,83 @@ def get_logined_user():
                 )
                 data = db.show_data("user", "email", session.get("email"))
                 db.close()
-                return jsonify({
-                    "data": {
+                res = make_response(jsonify({"data": {
                         "id": data[0],
                         "name": data[1],
                         "email": data[2]
-                    }
-                })
+                    }}))
+
+                res.headers['Access-Control-Allow-Origin']='*'
+                return res
             except Exception as e:
-                return jsonify({"error":True, "message": str(e)}), 500
-                    
-                    
-@user.route("/user", methods=["POST"])
+                return jsonify({"error": True, "message": str(e)}), 500
+
+
+@ user.route("/user", methods=["POST"])
 def user_register():
     if request.method == "POST":
-        post_data = request.get_json()
+        post_data=request.get_json()
         print(post_data)
         # 登入才要給一個sessionId
-        name = post_data["name"]
-        email = post_data["email"]
-        pwd = post_data["password"]
+        name=post_data["name"]
+        email=post_data["email"]
+        pwd=post_data["password"]
         try:
-            db = DB_controller(
+            db=DB_controller(
                 host=conf["HOST"],
                 user=conf["USER"],
                 password=conf["PWD"],
                 db=conf["DB"]
             )
-            email_check = db.show_data("user", "email", email)
-            name_check = db.show_data("user", "name", name)
+            email_check=db.show_data("user", "email", email)
+            name_check=db.show_data("user", "name", name)
             if not email_check:
                 if not name_check:
-                    hash_ = conf["HASH"]
-                    hash_pwd = pwd + hash_
-                    hash_pwd = hashlib.sha256(hash_pwd.encode("utf-8")).hexdigest()
+                    hash_=conf["HASH"]
+                    hash_pwd=pwd + hash_
+                    hash_pwd=hashlib.sha256(
+                        hash_pwd.encode("utf-8")).hexdigest()
                     db.insert_data("user", "name, email, password",
                                 f'"{name}","{email}","{hash_pwd}"')
                     db.close()
-                    res = make_response(jsonify({"ok": True}))
+                    res=make_response(jsonify({"ok": True}))
+                    res.headers['Access-Control-Allow-Origin']='*'
                     # res.header["Access-Control-Allow-Origin"] = "http://35.73.36.129:3000/"
                     # res.header["Access-Control-Allow-Credentials"] = True
                     return res
                 else:
-                    return jsonify({"error":True, "message": "此暱稱已被使用"}), 400
+                    return jsonify({"error": True, "message": "此暱稱已被使用"}), 400
             else:
                 return jsonify({"error": True, "message": "此email已註冊過"}), 400
-
-
-
         except Exception as e:
             return jsonify({"error": True, "message": str(e)}), 500
 
 
-@user.route("/user", methods=["PATCH"])
+@ user.route("/user", methods=["PATCH"])
 def user_login():
     if request.method == "PATCH":
-        login_data = request.get_json()
+        login_data=request.get_json()
         print(login_data)
         # 這樣應該就會回傳sessionId到使用者Response Headers
-        session["email"] = login_data["email"]
+        session["email"]=login_data["email"]
         print(session["email"])
-        pwd = login_data["password"]
+        pwd=login_data["password"]
         try:
-            db = DB_controller(
+            db=DB_controller(
                 host=conf["HOST"],
                 user=conf["USER"],
                 password=conf["PWD"],
                 db=conf["DB"]
             )
-            data = db.show_data("user", "email", session["email"])
+            data=db.show_data("user", "email", session["email"])
             db.close()
             if data:
-                hash_ = conf["HASH"]
-                hash_pwd = pwd + hash_
-                hash_pwd = hashlib.sha256(hash_pwd.encode("utf-8")).hexdigest()
+                hash_=conf["HASH"]
+                hash_pwd=pwd + hash_
+                hash_pwd=hashlib.sha256(hash_pwd.encode("utf-8")).hexdigest()
                 if hash_pwd == data[3]:
-                    res = make_response(jsonify({"ok": True}))
+                    res=make_response(jsonify({"ok": True}))
+                    res.headers['Access-Control-Allow-Origin']='*'
                     return res
                 else:
                     return jsonify({"error": True, "message": "帳號或密碼錯誤"}), 400
@@ -115,7 +116,7 @@ def user_login():
             return jsonify({"error": True, "message": str(e)}), 500
 
 
-@user.route("/user", methods=["DELETE"])
+@ user.route("/user", methods=["DELETE"])
 def user_logout():
     if request.method == "DELETE":
         session.pop("email", None)
