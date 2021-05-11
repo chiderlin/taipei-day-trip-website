@@ -46,7 +46,6 @@ def get_logined_user():
 def user_register():
     if request.method == "POST":
         post_data = request.get_json()
-        print(post_data)
         # 登入才要給一個sessionId
         name = post_data["name"]
         email = post_data["email"]
@@ -84,10 +83,8 @@ def user_register():
 def user_login():
     if request.method == "PATCH":
         login_data = request.get_json()
-        print(login_data)
         # 這樣應該就會回傳sessionId到使用者Response Headers
         session["email"] = login_data["email"]
-        print(session["email"])
         pwd = login_data["password"]
         try:
             db = DB_controller(
