@@ -1,5 +1,5 @@
-let url = `http://35.73.36.129:3000/api/user`;
-//let url = `http://127.0.0.1:3000/api/user`;
+//let url = `http://35.73.36.129:3000/api/user`;
+let url = `http://127.0.0.1:3000/api/user`;
 let item = document.querySelectorAll(".item");
 
 init()
@@ -17,9 +17,9 @@ item[1].addEventListener("click", ()=> {
 //使用者登出
 item[2].addEventListener("click", ()=> {
     loginOut();
-    location.reload();
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
+    location.reload();
 });
 
 // 登入關閉
