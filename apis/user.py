@@ -50,8 +50,6 @@ def user_register():
         name = post_data["name"]
         email = post_data["email"]
         pwd = post_data["password"]
-        if name or email or pwd is None: # 預防沒輸入
-            return
         try:
             db = DB_controller(
                 host=conf["HOST"],
@@ -88,8 +86,6 @@ def user_login():
         # 這樣應該就會回傳sessionId到使用者Response Headers
         session["email"] = login_data["email"]
         pwd = login_data["password"]
-        if session["email"] or pwd is None: # 預防沒輸入
-            return 
         try:
             db = DB_controller(
                 host=conf["HOST"],
