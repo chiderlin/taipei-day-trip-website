@@ -1,5 +1,5 @@
-//let url = `http://35.73.36.129:3000/api/user`;
-let url = `http://127.0.0.1:3000/api/user`;
+let url = `http://35.73.36.129:3000/api/user`;
+//let url = `http://127.0.0.1:3000/api/user`;
 let item = document.querySelectorAll(".item");
 
 init()
@@ -82,7 +82,7 @@ register_form.addEventListener("submit", (event)=> {
 });
 
 function loginProcess(api_data) {
-    // 下面要跳轉 登入網頁之後的樣子
+    // 跳轉 登入網頁之後的樣子
     if(api_data.ok === true) {
         loginedRender(); 
 
@@ -198,7 +198,6 @@ function renderRegister(api_data) {
     }
     
 };
-
 
 function loginedRender() {
     overlay_login.style.display = "none";
