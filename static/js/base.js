@@ -1,5 +1,5 @@
-// let url = `http://35.73.36.129:3000/api/user`;
-let url = `http://127.0.0.1:3000/api/user`;
+let url = `http://35.73.36.129:3000/api/user`;
+//let url = `http://127.0.0.1:3000/api/user`;
 let item = document.querySelectorAll(".item");
 
 init()
@@ -9,7 +9,6 @@ function init() {
     getUserStatus();
 };
 
-
 //使用者登入
 item[1].addEventListener("click", ()=> {
     overlay_login.style.display = "block";
@@ -18,7 +17,6 @@ item[1].addEventListener("click", ()=> {
 //使用者登出
 item[2].addEventListener("click", ()=> {
     loginOut();
-    location.reload();
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
 });
@@ -29,6 +27,8 @@ let overlay_login = document.querySelector(".overlay-login");
 login_close_btn.addEventListener("click", ()=> {
     overlay_login.style.display = "none";
 });
+
+
 
 // 註冊關閉
 let register_close_btn = document.getElementById("close-btn-for-img-register");
@@ -109,8 +109,6 @@ function userRegister(name, email, pwd) {
         headers: {
             "Content-Type": "application/json"
         }
-        // credentials: "include", // 存取跨域cookie
-        // mode: "no-cors",
     }).then(function(res) {
         return res.json();
     }).then(function(api_data) {
@@ -124,6 +122,7 @@ function logIn(email, pwd) {
     let login_info = {"email": email, "password": pwd};
     fetch(url, {
         method: "PATCH",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
         },
@@ -141,12 +140,13 @@ function logIn(email, pwd) {
 
 function loginOut() {
     fetch(url, {
-        method: "DELETE"
+        method: "DELETE",
+        credentials: 'include'
     })
     .then(function(res) {
         return res.json();
     })
-
+    location.reload();
 };
 
 
