@@ -17,6 +17,7 @@ item[1].addEventListener("click", ()=> {
 //使用者登出
 item[2].addEventListener("click", ()=> {
     loginOut();
+    location.reload();
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
 });
@@ -146,7 +147,6 @@ function loginOut() {
     .then(function(res) {
         return res.json();
     })
-    location.reload();
 };
 
 
