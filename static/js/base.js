@@ -16,15 +16,16 @@ item[1].addEventListener("click", ()=> {
 });
 
 //使用者登出
+
 item[2].addEventListener("click", (event)=> {
     loginOut();
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
-    console.log("logout:"+logout_check);
     if(logout_check === false) { // 開關判斷是否處理完delete
-        location.reload();
+        window.location.reload();
     }
 });
+
 
 // 登入關閉
 let login_close_btn = document.getElementById("close-btn-for-img-login");
@@ -152,7 +153,6 @@ function loginOut() {
     .then(function(res) {
         return res.json();
     }).then(function(api_data) {
-        console.log(api_data);
         logout_check = false;
     })
 };
@@ -211,10 +211,8 @@ function loginedRender() {
     overlay_login.style.display = "none";
     item[1].classList.add("hide")
     item[2].classList.remove("hide")
-    console.log("login:"+load_check);
-    console.log("logout:"+logout_check);
     if(load_check === false) {
-        location.reload();
+        window.location.reload();
     }
 };
 
