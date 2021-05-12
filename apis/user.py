@@ -84,7 +84,7 @@ def user_login():
     if request.method == "PATCH":
         login_data = request.get_json()
         # 這樣應該就會回傳sessionId到使用者Response Headers
-        session["email"] = login_data["email"]
+        email = login_data["email"]
         pwd = login_data["password"]
         try:
             db = DB_controller(
@@ -93,10 +93,11 @@ def user_login():
                 password=conf["PWD"],
                 db=conf["DB"]
             )
-            data = db.show_data("user", "email", session["email"])
+            data = db.show_data("user", "email", email)
             db.close()
             if data:
-                if data[2] == session["email"]: # 帳號大小寫比對
+                if data[2] == email: # 帳號大小寫比對
+                    session["email"] = email # 有找到資料才把它存到session
                     hash_ = conf["HASH"]
                     hash_pwd = pwd + hash_
                     hash_pwd = hashlib.sha256(hash_pwd.encode("utf-8")).hexdigest()
