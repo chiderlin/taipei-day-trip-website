@@ -1,5 +1,5 @@
-let url = `http://35.73.36.129:3000/api/user`;
-//let url = `http://127.0.0.1:3000/api/user`;
+//let url = `http://35.73.36.129:3000/api/user`;
+let url = `http://127.0.0.1:3000/api/user`;
 let item = document.querySelectorAll(".item");
 
 init()
@@ -15,7 +15,6 @@ item[1].addEventListener("click", ()=> {
 });
 
 //使用者登出
-
 item[2].addEventListener("click", (event)=> {
     loginOut();
     item[1].classList.remove("hide");
@@ -132,7 +131,7 @@ function logIn(email, pwd) {
         return res.json();
     }).then(function(api_data) {
         loginProcess(api_data);
-        window.location.reload();
+
     }).catch(function(err) {
         console.log(err);
     })
@@ -207,6 +206,7 @@ function loginedRender() {
     overlay_login.style.display = "none";
     item[1].classList.add("hide")
     item[2].classList.remove("hide")
+    window.location.reload();
 };
 
 function loginErrorRender(api_data) {
