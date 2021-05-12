@@ -36,7 +36,7 @@ def get_logined_user():
                     "email": data[2]
                 }}))
 
-                res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
+                # res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
                 return res
             except Exception as e:
                 return jsonify({"error": True, "message": str(e)}), 500
@@ -69,7 +69,7 @@ def user_register():
                                    f'"{name}","{email}","{hash_pwd}"')
                     db.close()
                     res = make_response(jsonify({"ok": True}))
-                    res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
+                    # res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
                     return res
                 else:
                     return jsonify({"error": True, "message": "此暱稱已被使用"}), 400
@@ -103,9 +103,9 @@ def user_login():
                     hash_pwd = hashlib.sha256(hash_pwd.encode("utf-8")).hexdigest()
                     if hash_pwd == data[3]:
                         res = make_response(jsonify({"ok": True}))
-                        res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
-                        res.headers['Access-Control-Allow-Methods'] = 'PATCH'
-                        res.headers['Access-Control-Allow-Credentials'] = True
+                        # res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
+                        # res.headers['Access-Control-Allow-Methods'] = 'PATCH'
+                        # res.headers['Access-Control-Allow-Credentials'] = True
                         return res
                     else:
                         return jsonify({"error": True, "message": "帳號或密碼錯誤"}), 400
@@ -121,8 +121,8 @@ def user_login():
 def user_logout():
     if request.method == "DELETE":
         res = make_response(jsonify({"ok": True}))
-        res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
-        res.headers['Access-Control-Allow-Methods'] = 'DELETE'
-        res.headers['Access-Control-Allow-Credentials'] = True
+        # res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
+        # res.headers['Access-Control-Allow-Methods'] = 'DELETE'
+        # res.headers['Access-Control-Allow-Credentials'] = True
         session.pop("email", None)
         return res

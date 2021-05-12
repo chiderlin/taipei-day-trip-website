@@ -1,5 +1,5 @@
-let url = `http://35.73.36.129:3000/api/user`;
-//let url = `http://127.0.0.1:3000/api/user`;
+//let url = `http://35.73.36.129:3000/api/user`;
+let url = `http://127.0.0.1:3000/api/user`;
 let item = document.querySelectorAll(".item");
 let logout_check = false;
 let load_check = false;
@@ -128,7 +128,7 @@ function logIn(email, pwd) {
     let login_info = {"email": email, "password": pwd};
     fetch(url, {
         method: "PATCH",
-        credentials: "include",
+        // credentials: "include",
         headers: {
             "Content-Type": "application/json",
         },
@@ -147,7 +147,7 @@ function logIn(email, pwd) {
 function loginOut() {
     fetch(url, {
         method: "DELETE",
-        credentials: 'include'
+        // credentials: 'include'
     })
     .then(function(res) {
         return res.json();
