@@ -1,17 +1,14 @@
 let url = `http://35.73.36.129:3000/api/user`;
 //let url = `http://127.0.0.1:3000/api/user`;
 let item = document.querySelectorAll(".item");
-let load_check = true;
+
 init()
 
 // controller
 function init() {
     getUserStatus();
 };
-function reloadCheck() {
-    window.location.reload();
-    load_check = false;
-};
+
 //使用者登入
 item[1].addEventListener("click", ()=> {
     overlay_login.style.display = "block";
@@ -21,12 +18,8 @@ item[1].addEventListener("click", ()=> {
 
 item[2].addEventListener("click", (event)=> {
     loginOut();
-    load_check = false;
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
-    if(load_check === false) {
-        reloadCheck();
-    }
 });
 
 
@@ -91,7 +84,6 @@ register_form.addEventListener("submit", (event)=> {
 function loginProcess(api_data) {
     // 跳轉 登入網頁之後的樣子
     if(api_data.ok === true) {
-        load_check = false;
         loginedRender(); 
 
     } else if(api_data.error === true) {
@@ -140,7 +132,7 @@ function logIn(email, pwd) {
         return res.json();
     }).then(function(api_data) {
         loginProcess(api_data);
-
+        window.location.reload();
     }).catch(function(err) {
         console.log(err);
     })
@@ -154,6 +146,10 @@ function loginOut() {
     })
     .then(function(res) {
         return res.json();
+    }).then(function(api_data) {
+        if(api_data.ok === true) {
+            window.location.reload();
+        } 
     })
 };
 
@@ -211,10 +207,6 @@ function loginedRender() {
     overlay_login.style.display = "none";
     item[1].classList.add("hide")
     item[2].classList.remove("hide")
-    console.log(load_check);
-    if(load_check === false) {
-        reloadCheck();
-    }
 };
 
 function loginErrorRender(api_data) {
