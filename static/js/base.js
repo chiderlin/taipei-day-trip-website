@@ -1,7 +1,8 @@
 let url = `http://35.73.36.129:3000/api/user`;
 //let url = `http://127.0.0.1:3000/api/user`;
 let item = document.querySelectorAll(".item");
-let logout_check = true;
+let logout_check = false;
+let load_check = false;
 init()
 
 // controller
@@ -19,10 +20,10 @@ item[2].addEventListener("click", (event)=> {
     loginOut();
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
-    console.log(logout_check);
-    // if(logout_check === false) { // 開關判斷是否處理完delete
-    //     location.reload();
-    // }
+    console.log("logout:"+logout_check);
+    if(logout_check === false) { // 開關判斷是否處理完delete
+        location.reload();
+    }
 });
 
 // 登入關閉
@@ -86,6 +87,7 @@ register_form.addEventListener("submit", (event)=> {
 function loginProcess(api_data) {
     // 跳轉 登入網頁之後的樣子
     if(api_data.ok === true) {
+        load_check = false;
         loginedRender(); 
 
     } else if(api_data.error === true) {
@@ -122,6 +124,7 @@ function userRegister(name, email, pwd) {
 };
 
 function logIn(email, pwd) {
+    load_check = true;
     let login_info = {"email": email, "password": pwd};
     fetch(url, {
         method: "PATCH",
@@ -148,8 +151,10 @@ function loginOut() {
     })
     .then(function(res) {
         return res.json();
+    }).then(function(api_data) {
+        console.log(api_data);
+        logout_check = false;
     })
-    logout_check = false;
 };
 
 
@@ -204,9 +209,13 @@ function renderRegister(api_data) {
 
 function loginedRender() {
     overlay_login.style.display = "none";
-    // location.reload();
     item[1].classList.add("hide")
     item[2].classList.remove("hide")
+    console.log("login:"+load_check);
+    console.log("logout:"+logout_check);
+    if(load_check === false) {
+        location.reload();
+    }
 };
 
 function loginErrorRender(api_data) {
