@@ -21,6 +21,7 @@ item[1].addEventListener("click", ()=> {
 
 item[2].addEventListener("click", (event)=> {
     loginOut();
+    load_check = false;
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
     if(load_check === false) {
@@ -210,6 +211,7 @@ function loginedRender() {
     overlay_login.style.display = "none";
     item[1].classList.add("hide")
     item[2].classList.remove("hide")
+    console.log(load_check);
     if(load_check === false) {
         reloadCheck();
     }
