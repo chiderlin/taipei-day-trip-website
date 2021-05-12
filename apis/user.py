@@ -1,10 +1,10 @@
-from model.db import DB_controller
 from flask import Blueprint
 from flask import Flask, request, jsonify, make_response, session
 import json
-import sys
 import hashlib
+import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
+from model.db import DB_controller
 
 
 with open("./data/config.json", mode="r", encoding="utf-8") as f:
@@ -42,7 +42,7 @@ def get_logined_user():
                 return jsonify({"error": True, "message": str(e)}), 500
 
 
-@ user.route("/user", methods=["POST"])
+@user.route("/user", methods=["POST"])
 def user_register():
     if request.method == "POST":
         post_data = request.get_json()
@@ -79,7 +79,7 @@ def user_register():
             return jsonify({"error": True, "message": str(e)}), 500
 
 
-@ user.route("/user", methods=["PATCH"])
+@user.route("/user", methods=["PATCH"])
 def user_login():
     if request.method == "PATCH":
         login_data = request.get_json()
@@ -96,16 +96,19 @@ def user_login():
             data = db.show_data("user", "email", session["email"])
             db.close()
             if data:
-                hash_ = conf["HASH"]
-                hash_pwd = pwd + hash_
-                hash_pwd = hashlib.sha256(hash_pwd.encode("utf-8")).hexdigest()
-                if hash_pwd == data[3]:
-                    res = make_response(jsonify({"ok": True}))
-                    res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
-                    res.headers['Access-Control-Allow-Methods'] = 'PATCH'
-                    res.headers['Access-Control-Allow-Credentials'] = True
-                    return res
-                else:
+                if data[2] == session["email"]: # 帳號大小寫比對
+                    hash_ = conf["HASH"]
+                    hash_pwd = pwd + hash_
+                    hash_pwd = hashlib.sha256(hash_pwd.encode("utf-8")).hexdigest()
+                    if hash_pwd == data[3]:
+                        res = make_response(jsonify({"ok": True}))
+                        res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
+                        res.headers['Access-Control-Allow-Methods'] = 'PATCH'
+                        res.headers['Access-Control-Allow-Credentials'] = True
+                        return res
+                    else:
+                        return jsonify({"error": True, "message": "帳號或密碼錯誤"}), 400
+                else: 
                     return jsonify({"error": True, "message": "帳號或密碼錯誤"}), 400
             else:
                 return jsonify({"error": True, "message": "此email尚未被註冊"}), 400
@@ -113,7 +116,7 @@ def user_login():
             return jsonify({"error": True, "message": str(e)}), 500
 
 
-@ user.route("/user", methods=["DELETE"])
+@user.route("/user", methods=["DELETE"])
 def user_logout():
     if request.method == "DELETE":
         res = make_response(jsonify({"ok": True}))

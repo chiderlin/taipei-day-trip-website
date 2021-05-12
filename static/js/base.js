@@ -16,7 +16,6 @@ item[1].addEventListener("click", ()=> {
 
 //使用者登出
 item[2].addEventListener("click", (event)=> {
-    event.preventDefault();
     loginOut();
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
@@ -29,7 +28,6 @@ let overlay_login = document.querySelector(".overlay-login");
 login_close_btn.addEventListener("click", ()=> {
     overlay_login.style.display = "none";
 });
-
 
 
 // 註冊關閉
