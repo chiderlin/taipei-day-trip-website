@@ -1,15 +1,17 @@
-let url = `http://35.73.36.129:3000/api/user`;
-//let url = `http://127.0.0.1:3000/api/user`;
+//let url = `http://35.73.36.129:3000/api/user`;
+let url = `http://127.0.0.1:3000/api/user`;
 let item = document.querySelectorAll(".item");
-let logout_check = false;
-let load_check = false;
+let load_check = true;
 init()
 
 // controller
 function init() {
     getUserStatus();
 };
-
+function reloadCheck() {
+    window.location.reload();
+    load_check = false;
+};
 //使用者登入
 item[1].addEventListener("click", ()=> {
     overlay_login.style.display = "block";
@@ -21,8 +23,8 @@ item[2].addEventListener("click", (event)=> {
     loginOut();
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
-    if(logout_check === false) { // 開關判斷是否處理完delete
-        window.location.reload();
+    if(load_check === false) {
+        reloadCheck();
     }
 });
 
@@ -125,7 +127,6 @@ function userRegister(name, email, pwd) {
 };
 
 function logIn(email, pwd) {
-    load_check = true;
     let login_info = {"email": email, "password": pwd};
     fetch(url, {
         method: "PATCH",
@@ -152,8 +153,6 @@ function loginOut() {
     })
     .then(function(res) {
         return res.json();
-    }).then(function(api_data) {
-        logout_check = false;
     })
 };
 
@@ -212,7 +211,7 @@ function loginedRender() {
     item[1].classList.add("hide")
     item[2].classList.remove("hide")
     if(load_check === false) {
-        window.location.reload();
+        reloadCheck();
     }
 };
 
