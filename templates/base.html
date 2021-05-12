@@ -10,6 +10,56 @@
     <title>Taipei Trip 台北一日遊</title>
 </head>
 <body>
+    <div class="overlay-login">
+        <div class="login-page-block1">
+            <div class="login-page-block">
+                <div class="login-page">
+                    <label for="login-close-btn">
+                        <img id="close-btn-for-img-login" src="/png/icon/icon_close.png">
+                    </label>
+                    <input type="button" name="close" id="login-close-btn">
+                    <div class="login-title">登入會員帳號</div>
+                    <form id="login-form">
+                        <input id="email-login" class="input-format" type="text" placeholder="輸入電子信箱" required="required">
+                        <input id="pwd-login" class="input-format" type="password" placeholder="輸入密碼" required="required">
+                        <div style="text-align: center;">
+                            <input type="submit" value="登入帳戶" class="login-btn"></input>
+                        </div>
+                    </form>
+                    <!-- <div class="login-msg">帳號密碼錯誤</div> -->
+                    <div class="login-state">還沒有帳戶?
+                        <a href="#" id="register">點此註冊</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay-register">
+        <div class="register-page-block1">
+            <div class="register-page-block">
+                <div class="register-page">
+                    <label for="register-close-btn">
+                        <img id="close-btn-for-img-register" src="/png/icon/icon_close.png">
+                    </label>
+                    <input type="button" name="close" id="register-close-btn">
+                    <div class="login-title">註冊會員帳號</div>
+                    <form id="register-form">
+                        <input id="name" class="input-format" type="text" placeholder="輸入姓名" required="required">
+                        <input id="email-register" class="input-format" type="email" placeholder="輸入電子信箱" required="required">
+                        <input id="pwd-register" class="input-format" type="password" placeholder="輸入密碼" required="required">
+                        <div style="text-align: center;">
+                            <input type="submit" value="註冊新帳戶" class="login-btn"></input>
+                        </div>
+                    </form>
+                    <!-- <div class="login-msg">此帳號已註冊過</div> -->
+                    <div class="login-state">已經有帳戶了?
+                        <a href="#" id="login">點此登入</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="flexbox">
             <div class="title">
@@ -18,14 +68,17 @@
             <div class="blank"></div>
             <div class="items">
                 <span class="item">預定行程</span>
-                <span class="item">登入/註冊</span>
+                <span class="item hide">登入/註冊</span>
+                <span class="item hide">登出系統</span>
             </div>
         </div>
     </header>
     {% block content %}
     {% endblock %}
+    <script src="/js/base.js" type="module"></script>  
     <footer>
         <div>COPYRIGHT © 2021 台北一日遊</div>
     </footer>
+
 </body>
 </html>

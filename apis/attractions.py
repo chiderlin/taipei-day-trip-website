@@ -1,6 +1,8 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response
 import json
+import sys
+sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 from model.db import DB_controller
 
 with open("./data/config.json", mode="r", encoding="utf-8") as f:
@@ -239,6 +241,7 @@ def view(attractionId):
             }
             res = make_response(jsonify(data))
             res.headers['Access-Control-Allow-Origin'] = '*'
+            
             return res
         except Exception as e:
             return jsonify({"error": True, "message": str(e)}), 500

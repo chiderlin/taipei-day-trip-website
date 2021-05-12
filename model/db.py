@@ -1,5 +1,5 @@
 import mysql.connector
-from mysql.connector import pooling # 還在測試中
+from mysql.connector import pooling  # 還在測試中
 import json
 
 
@@ -19,22 +19,13 @@ class DB_controller:
             "db": self.db
         }
         try:
-            # 改成connection pool 試試看
-            self.mydb = mysql.connector.pooling.MySQLConnectionPool(
-                pool_name="mysql_pooling",
-                pool_size=10,
-                **dbconfig
+            self.mydb = mysql.connector.connect(  # 一開始mydb沒有self，連不到資料庫
+                host=host,
+                user=user,
+                password=password,
+                database=self.db,
             )
-            self.cnx = self.mydb.get_connection()
-            # self.connect = self.cnx.is_connected()
-            self.mycursor = self.cnx.cursor()
-            # self.mydb = mysql.connector.connect(  # 一開始mydb沒有self，連不到資料庫
-            #     host=host,
-            #     user=user,
-            #     password=password,
-            #     database=self.db,
-            # )
-            # self.mycursor = self.mydb.cursor()
+            self.mycursor = self.mydb.cursor()
         except Exception as e:
             print(str(e))
 
@@ -86,13 +77,13 @@ class DB_controller:
         except Exception as e:
             return e
 
-    def insert_data(self, name, category, description, address, transport, mrt, latitude, longitude, images):
+    def insert_data(self, table_name, settingrow, settingvalue):
         '''add new data'''
         try:
+            self.mycursor.execute(f"use {self.db}")
             self.mycursor.execute(
-                f'insert into attractions (name, category, description, address, transport, mrt, latitude, longitude, images) values ("{name}", "{category}", "{description}", "{address}", "{transport}", "{mrt}", {latitude}, {longitude}, "{images}")')
-            self.cnx.commit()
-            # self.mydb.commit()
+                f'insert into {table_name} ({settingrow}) values ({settingvalue})')
+            self.mydb.commit()
             return (self.mycursor.rowcount, "record inserted.")
         except Exception as e:
             return e
@@ -113,8 +104,7 @@ class DB_controller:
         try:
             sql = f"update user set name='{new_name}' where name='{origin_name}'"
             self.mycursor.execute(sql)
-            self.cnx.commit()
-            # self.mydb.commit()
+            self.mydb.commit()
             return "db name update successful"
         except Exception as e:
             return e
@@ -126,7 +116,7 @@ class DB_controller:
             sql = f"select count(*) from {table_name}"
             self.mycursor.execute(sql)
             result = self.mycursor.fetchone()
-            result = str(result).replace("(","").replace(",)","")
+            result = str(result).replace("(", "").replace(",)", "")
             return result
         except Exception as e:
             return e
@@ -161,17 +151,14 @@ class DB_controller:
         ''' close database'''
         try:
             self.mycursor.close()
-            self.cnx.close()
-            # self.mydb.close()
+            self.mydb.close()
             return "close db success"
         except Exception as e:
             return e
 
 
-
-
 if __name__ == '__main__':
-    with open("config.json", "r", encoding="utf-8") as f:
+    with open("../data/config.json", "r", encoding="utf-8") as f:
         conf = json.load(f)
 
     db = DB_controller(
@@ -184,21 +171,19 @@ if __name__ == '__main__':
 
     # print(db.create_table(
     #     '''
-    #     create table attractions (id int auto_increment primary key,
-    #     name varchar(50) unique not null, 
-    #     category varchar(10),
-    #     description varchar(2000),
-    #     address varchar(255),
-    #     transport varchar(5000),
-    #     mrt varchar(20),
-    #     latitude DECIMAL(9,6),
-    #     longitude DECIMAL(9,6),
-    #     images varchar(5000))
+    #     create table user (
+    #     id int auto_increment primary key,
+    #     name varchar(255) unique not null,
+    #     email varchar(255) unique not null,
+    #     password varchar(70) not null,
+    #     create_time datetime not null default now()
+    #     )
     #     CHARSET=utf8mb4'''))
-
-    print(db.read_table())
-    print(db.count_data("attractions"))
-    print(db.show_data("attractions","id",1))
+    
+    print(db.insert_data(table_name='user', settingrow='name, email, password', settingvalue='"admin", "admin@admin.com", "123"'))
+    # print(db.read_table())
+    # print(db.count_data("user"))
+    # print(db.show_data("user", "id", 1))
 
     # res = db.limit_data("attractions",400,12)
     # print(res)

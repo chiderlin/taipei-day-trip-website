@@ -3,6 +3,7 @@
 * {
     box-sizing: border-box;
     font-family: 'Noto Sans TC', sans-serif;
+    color: #666666;
 }
 body {
     margin: 0px;
@@ -13,7 +14,7 @@ header {
     align-items: center;
     position:fixed;top:0px;width:100%; /*固定選單*/
     background-color: white;
-    z-index:101;
+    z-index:99; /*要在最上面 置頂*/
 }
 .title a {
     text-decoration: none;
@@ -45,7 +46,155 @@ header {
 }
 .item {
     margin:0 10px 0; /* top | right,left | bottom   */
+    cursor: pointer;
 }
+.hide {
+    display: none;
+}
+
+.overlay-login {
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0; bottom:0;
+    left:0; right:0;
+    z-index:100;
+    display:none;
+    background-color: rgba(0,0,0,0.5);
+}
+.login-page-block1 {
+    display:flex;
+    width:100%;height:290px;
+    justify-content:center;
+    position:absolute;top:80px;
+    
+}
+.login-page-block {
+    display:block;
+    width:340px;height:100%;
+    background: -webkit-linear-gradient(left,#66AABB,#337788 ); /* Google Chrome 與 Apple Safari 使用 -webkit-*/
+    background: -moz-linear-gradient( right, #66AABB,#337788 ); /* Mozilla FireFox 使用 -moz- */
+    background: -o-linear-gradient(right, #66AABB,#337788 ); /* Opera 使用 -o- */
+    background: linear-gradient(to right, #66AABB,#337788 );
+    border-radius:5px;
+}
+
+.login-page {
+    position:absolute;
+    margin-top:10px;
+    width:340px;height:280px;
+    background-color: #fff;
+    border-radius:0 0 5px 5px;
+}
+
+.login-title {
+    font-size:24px;
+    font-weight: bold;
+    width:310px;height:27px;
+    margin: 15px 15px 10px;
+    text-align: center;
+}
+
+.input-format {
+    width:310px;
+    height:47px;
+    padding:0px;
+    margin: 4px 15px 4px;
+    border:1px solid #CCCCCC;
+    border-radius:5px;
+    outline:medium;
+}
+
+#login-close-btn {display:none;}
+#close-btn-for-img-login {
+    position:absolute;
+    top:17px;
+    right:17px;
+    cursor: pointer;
+}
+
+
+::placeholder {
+    padding:15px;
+    font-size: 16px;
+}
+
+
+.login-btn {
+    width:310px;
+    height:47px;
+    background-color: #448899;
+    color: #fff;
+    margin:4px 15px 10px;
+    border:none;
+    border-radius: 5px;
+    cursor: pointer;
+    position:absolute;left:0;
+    font-size:19px;
+}
+.login-msg {
+    width:310px;
+    margin: 5px 15px 10px;
+    position:absolute;bottom:30px;
+    text-align: center;
+    color: red;
+}
+.login-state {
+    width:310px;
+    margin: 5px 15px 0;
+    position:absolute;bottom:15px;
+    text-align: center;
+}
+
+.overlay-register {
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0; bottom:0;
+    left:0; right:0;
+    z-index:100;
+    display:none;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.register-page-block1 {
+    display:flex;
+    width:100%;height:337px;
+    justify-content:center;
+    position:absolute;top:80px;
+    
+}
+.register-page-block {
+    width:340px;height:100%;
+    background: -webkit-linear-gradient(left,#66AABB,#337788 ); /* Google Chrome 與 Apple Safari 使用 -webkit-*/
+    background: -moz-linear-gradient( right, #66AABB,#337788 ); /* Mozilla FireFox 使用 -moz- */
+    background: -o-linear-gradient(right, #66AABB,#337788 ); /* Opera 使用 -o- */
+    background: linear-gradient(to right, #66AABB,#337788 );
+    border-radius:5px;
+}
+
+.register-page {
+    position:absolute;
+    margin-top:10px;
+    width:340px;height:100%;
+    background-color: #fff;
+    border-radius:0 0 5px 5px;
+}
+
+#register-close-btn {display:none;}
+#close-btn-for-img-register {
+    position:absolute;
+    top:17px;
+    right:17px;
+    cursor: pointer;
+}
+
+
+main {
+    margin-top: 54px;
+
+}
+
 
 footer {
     display:flex;
