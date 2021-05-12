@@ -97,11 +97,11 @@ def user_login():
             db.close()
             if data:
                 if data[2] == email: # 帳號大小寫比對
-                    session["email"] = email # 有找到資料才把它存到session
                     hash_ = conf["HASH"]
                     hash_pwd = pwd + hash_
                     hash_pwd = hashlib.sha256(hash_pwd.encode("utf-8")).hexdigest()
                     if hash_pwd == data[3]:
+                        session["email"] = email # 確認email&密碼輸入正確才會存session
                         res = make_response(jsonify({"ok": True}))
                         # res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
                         # res.headers['Access-Control-Allow-Methods'] = 'PATCH'
