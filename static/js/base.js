@@ -1,7 +1,7 @@
 let url = `http://35.73.36.129:3000/api/user`;
 //let url = `http://127.0.0.1:3000/api/user`;
 let item = document.querySelectorAll(".item");
-
+let logout_check = false;
 init()
 
 // controller
@@ -19,7 +19,9 @@ item[2].addEventListener("click", (event)=> {
     loginOut();
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
-    location.reload();
+    if(logout_check === false) { // 開關判斷是否處理完delete
+        location.reload();
+    }
 });
 
 // 登入關閉
@@ -139,6 +141,7 @@ function logIn(email, pwd) {
 };
 
 function loginOut() {
+    logout_check = true;
     fetch(url, {
         method: "DELETE",
         credentials: 'include'
@@ -146,6 +149,7 @@ function loginOut() {
     .then(function(res) {
         return res.json();
     })
+    logout_check = false;
 };
 
 
