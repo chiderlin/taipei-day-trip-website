@@ -6,7 +6,7 @@ function getBookingApi() {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
-        console.log(api_data);
+        
         const data = api_data.data;
         const attraction = data.attraction;
         const name = attraction.name;
@@ -16,7 +16,6 @@ function getBookingApi() {
         const price = data.price;
         const time = data.time;
         renderUpperBlock(name, image, address, date, price, time);
-
     })
 }
 

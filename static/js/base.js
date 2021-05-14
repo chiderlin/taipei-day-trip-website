@@ -1,3 +1,5 @@
+//TODO: 預定行程要檔未登入的使用者
+
 let url = `/api/user`;
 let item = document.querySelectorAll(".item");
 
@@ -6,10 +8,12 @@ init()
 // controller
 function init() {
     getUserStatus();
+    getBookingStatus();
 };
 
-let checkbox = document.querySelector("input[name=booking]");
+
 // 預定行程
+let checkbox = document.querySelector("input[name=booking]");
 checkbox.addEventListener("change",()=> {
     let shopping_cart = document.querySelector(".shopping-cart");
 
@@ -20,6 +24,7 @@ checkbox.addEventListener("change",()=> {
     }
 
 });
+
 
 //使用者登入
 item[1].addEventListener("click", ()=> {
@@ -105,13 +110,35 @@ function loginProcess(api_data) {
 
 //model
 function getUserStatus() {
-    // 一開始進入這個網頁時，呼叫此函式判斷是否已登入，已登入的顯示畫面跟未登入顯示畫面不同
+    // 一開始進入這個網頁時，呼叫此函式判斷是否已登入
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
         initRenderItem(api_data);
     })
 };
+
+function getBookingStatus() {
+    const url = `/api/booking`;
+    fetch(url).then(function(res) {
+        return res.json();
+    }).then(function(api_data) {
+        console.log(api_data);
+        console.log(api_data.data[1]);
+        if(api_data.data === null) {
+            renderNodata();
+        } else {
+            for(let i=0; i<api_data.data.length; i++) {
+                let attraction_name = api_data.data[i].attraction.name;
+                renderBookingList(attraction_name);
+            }
+        }
+    }).catch(function(err) {
+        console.log(err);
+    });
+};
+
+
 
 function userRegister(name, email, pwd) {
     let register_info = {"name":name, "email":email, "password":pwd};
@@ -233,4 +260,23 @@ function loginErrorRender(api_data) {
     login_msg.appendChild(document.createTextNode(api_data.message));
     login_page.appendChild(login_msg);
     login_page.insertBefore(login_msg, login_state)
+};
+
+function renderNodata() {
+    let shopping_cart = document.querySelector(".shopping-cart");
+    let none_booking = document.createElement("div");
+    none_booking.className = "null-block";
+    none_booking.appendChild(document.createTextNode("尚無預定"));
+    shopping_cart.appendChild(none_booking);
+};
+
+function renderBookingList(attraction_name) {
+    let shopping_cart = document.querySelector(".shopping-cart");
+    let booking = document.createElement("li");
+    let booking_link = document.createElement("a");
+    booking_link.setAttribute("href", "/booking");
+    booking.appendChild(document.createTextNode(attraction_name));
+    booking_link.appendChild(booking);
+    shopping_cart.appendChild(booking_link);
+
 };
