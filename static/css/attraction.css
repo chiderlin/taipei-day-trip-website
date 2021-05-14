@@ -277,10 +277,10 @@ input[type="radio"] {
     margin: 15px 5px 15px 20px;
     font-weight:bold;
 }
-.btn { /*btn block */
+/* .btn { btn block
     margin-top:10px;
     width:154px;height:36px;
-}
+} */
 
 #booking-trip-btn {
     margin:0;padding:0;
@@ -291,6 +291,12 @@ input[type="radio"] {
     border-radius: 5px;
     position:absolute;left:20px;bottom: 15px;
     cursor:pointer;
+}
+
+.booking-message {
+    position:absolute;left:200px;bottom: 25px;
+    color: red;
+
 }
 
 .downer-block {

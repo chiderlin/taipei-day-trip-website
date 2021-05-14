@@ -69,25 +69,28 @@ booking_trip_btn.addEventListener("click", ()=>{
     for(let i=3; i<price_tag.innerText.length-1; i++) {
         price = price + price_tag.innerText[i];
     }
- 
-    if(price === "") {
+    if(date.value === "") {
+        renderMessage("日期");
         return;
     }
+
+    if(price === "") {
+        renderMessage("時間");
+        return;
+    }
+
     price = parseInt(price);
     if(price === 2000) {
         time = "morning";
     }else if(price === 2500){
         time = "afternoon";
     }
-    if(date.value === "") {
-        return;
-    }
+
     startBooking(date.value, price, time);
 });
 
 function startBooking(date, price, time) {
-    //let url = `http://35.73.36.129:3000/api/booking`;
-    let url = `http://127.0.0.1:3000/api/booking`;
+    let url = `/api/booking`;
     let new_booking = {"attractionId": attraction_id, "date": date, "time": time, "price": price}
     console.log(new_booking);
     fetch(url, {
@@ -200,4 +203,16 @@ function imageSlider() {
             image_block.appendChild(img);
         }
     }
+};
+
+function renderMessage(msg) {
+    let booking_area = document.querySelector(".booking-area");
+    let booking_message = document.querySelector(".booking-message");
+    if(booking_message !== null) {
+        booking_message.remove();
+    }
+    let message = document.createElement("div");
+    message.className = "booking-message";
+    message.appendChild(document.createTextNode(`請選擇${msg}`))
+    booking_area.appendChild(message);
 };

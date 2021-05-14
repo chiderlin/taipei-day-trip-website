@@ -8,6 +8,12 @@ function init() {
     getUserStatus();
 };
 
+// 預定行程
+item[0].addEventListener("click",()=> {
+    
+
+});
+
 //使用者登入
 item[1].addEventListener("click", ()=> {
     overlay_login.style.display = "block";

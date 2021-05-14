@@ -96,7 +96,9 @@ main {
 }
 #inside-trash-img {
     display:none;
+    cursor:pointer;
 }
+
 @media(max-width:850px) {
     #trash-img {display:none;}
     #inside-trash-img {display:block;}
