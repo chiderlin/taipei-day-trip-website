@@ -18,6 +18,7 @@ main {
 
 .upper-block {
     width:100%;
+    /* width:980px; */
     height:auto; /*設auto才不會遮到下面的字*/
     margin:30px 15px 40px;
     display:flex;flex-wrap: wrap;
@@ -43,19 +44,20 @@ main {
     /* background-color: #000000; */
 }
 
-#booking-img {
+.booking-img {
     display:block;
     width:100%;height:100%;
     object-fit:cover; /*圖片rwd 重要*/
 }
 .right-status {
     margin-left:22px;
-    width:auto;
+    width:60%;
 }
 
-@media(max-width:544px) {
+@media(max-width:737px) {
     .right-status {
         margin-top: 7px;
+        margin-left:10px;
     }
     .img-block {
         width:100%;
@@ -66,44 +68,50 @@ main {
         margin:0;
     }
     
-    #booking-img {
+    .booking-img {
         display:block;
         width:100%;height:100%;
         object-fit:cover; /*圖片rwd 重要*/
         padding: 20px 10px;
     }
+    .right-status {
+        width:95%;
+    }
 }
 .blank {
     flex:auto;
 }
-.trash {
-    display:flex;
-    justify-content:flex-start;
-    width:5%;
-    margin:0 10px 0;
-}
+
 #trash-btn {display:none;}
 #trash-img {cursor:pointer;}
-@media(max-width:600px) {
-    .trash {
-        width:100%;
-        margin: 0 20px 0;
-        display:flex;
-        justify-content:flex-end;
-    }
-}
 
 .block {
     display:flex;
     margin: 0 0 10px 0;
 }
+.block-trash {
+    margin: 0 0 10px 0;
+    display:flex;
+    justify-content:flex-end;
+}
+#inside-trash-img {
+    display:none;
+}
+@media(max-width:850px) {
+    #trash-img {display:none;}
+    #inside-trash-img {display:block;}
+}
+
 .booking-format {
+    flex:none;
     font-size:16px;
     font-weight: bold;
 }
 
 .booking-detail {
-    margin: 0 5px 0;
+    
+    margin: 0 0 0 5px;
+    letter-spacing:1.2px;
 }
 
 .middle-block {

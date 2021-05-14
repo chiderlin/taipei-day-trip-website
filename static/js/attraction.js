@@ -1,17 +1,17 @@
 
 let get_route = location.pathname
 getData(get_route);
-
-let images; //click也抓images
-
+let images;  //click也抓images
+let attraction_id;
 // model
-function getData(path) {
+function getData(path) { // path => /attraction/num
     let url = `http://35.73.36.129:3000/api${path}`
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
         // getData
         let data = api_data.data;
+        attraction_id = data.id;
         images = data.images;
         const name = data.name;
         const category = data.category;
@@ -48,6 +48,7 @@ morning_block.addEventListener("click", ()=> {
     show_price.appendChild(document.createTextNode("新台幣2000元"));
     fee_block.appendChild(show_price);
 });
+
 afternoon_block.addEventListener("click", ()=> {
     afternoon_btn.style.background = "#448899";
     afternoon_btn.style.border = "2px solid #fff";
@@ -55,8 +56,57 @@ afternoon_block.addEventListener("click", ()=> {
     show_price.innerHTML = "";
     show_price.appendChild(document.createTextNode("新台幣2500元"));
     fee_block.appendChild(show_price);
-
 });
+
+// 提交預定行程
+let date = document.getElementById("date");
+// let time = document.getElementById("")
+let price_tag = document.getElementById("price");
+let booking_trip_btn = document.getElementById("booking-trip-btn");
+booking_trip_btn.addEventListener("click", ()=>{
+    let price = "";
+    let time = "";
+    for(let i=3; i<price_tag.innerText.length-1; i++) {
+        price = price + price_tag.innerText[i];
+    }
+ 
+    if(price === "") {
+        return;
+    }
+    price = parseInt(price);
+    if(price === 2000) {
+        time = "morning";
+    }else if(price === 2500){
+        time = "afternoon";
+    }
+    if(date.value === "") {
+        return;
+    }
+    startBooking(date.value, price, time);
+});
+
+function startBooking(date, price, time) {
+    //let url = `http://35.73.36.129:3000/api/booking`;
+    let url = `http://127.0.0.1:3000/api/booking`;
+    let new_booking = {"attractionId": attraction_id, "date": date, "time": time, "price": price}
+    console.log(new_booking);
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(new_booking),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function(res) {
+        return res.json();
+    }).then(function(api_data) {
+        console.log(api_data);
+        if(api_data.ok === true) {
+            window.location.href = `/booking`
+        }
+    })
+    
+
+};
 
 // 輪播效果切換
 let left_arrow = document.getElementById("left-arrow");

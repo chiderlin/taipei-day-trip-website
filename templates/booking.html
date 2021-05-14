@@ -12,34 +12,42 @@
                 <div class="booking-status">您好，Yakko，待預訂的行程如下:</div>
                 <div class="upper-block">
                     <div class="img-block">
-                        <img src="/png/test.png" id="booking-img">
+                        <!-- <img src="/png/test.png" class="booking-img"> -->
+
                     </div>
                     <div class="right-status">
-                        <div class="booking-title">台北一日遊 : 平安鐘</div>
-                        <div class="block">
+                        <div class="booking-title"></div>
+                        <!-- 台北一日遊 : 平安鐘 -->
+                        <div class="block" id="date-block">
                             <div class="booking-format">日期 : </div>
-                            <div class="booking-detail">2021-04-23</div>
+                            <div class="booking-detail" id="booking-date"></div> 
+                            <!-- 2021-04-23 -->
                         </div>
-                        <div class="block">
+                        <div class="block" id="time-block">
                             <div class="booking-format">時間 : </div>
-                            <div class="booking-detail">早上9點到下午4點</div>
+                            <div class="booking-detail" id="booking-time"></div>
+                            <!-- 早上9點到下午4點 -->
                         </div>
-                        <div class="block">
+                        <div class="block" id="price-block">
                             <div class="booking-format">費用 : </div>
-                            <div class="booking-detail">新台幣2000元</div>
+                            <div class="booking-detail" id="booking-price"></div>
+                            <!-- 新台幣2000元 -->
                         </div>
                         <div class="block">
                             <div class="booking-format">地點 : </div>
-                            <div class="booking-detail">臺北市 大安區忠孝東路4段</div>
+                            <div class="booking-detail" id="booking-address">臺北市 大安區忠孝東路4段</div>
+                        </div>
+                        <div class="block-trash">
+                            <input type="button" name="trash-btn" id="trash-btn">
+                            <label for="trash-btn">
+                                <img src="/png/icon/icon_delete.png" id="inside-trash-img">
+                            </label>
                         </div>
                     </div>
-                    <div class="blank"></div>
-                    <div class="trash">
-                        <input type="button" name="trash-btn" id="trash-btn">
-                        <label for="trash-btn">
-                            <img src="/png/icon/icon_delete.png" id="trash-img">
-                        </label>
-                    </div>
+                    <input type="button" name="trash-btn" id="trash-btn">
+                    <label for="trash-btn">
+                        <img src="/png/icon/icon_delete.png" id="trash-img">
+                    </label>
                 </div>
                 <hr />
                 <div class="middle-block">
@@ -85,13 +93,6 @@
             </div>
         </div>
     </div>
-    
-        
-    </div>
-    
-    
-
-
 </main>
-
+<script src="/js/booking.js"></script>    
 {% endblock %}
