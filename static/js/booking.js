@@ -1,4 +1,4 @@
-const url = `http://127.0.0.1:3000/api/booking`;
+const url = `/api/booking`;
 init();
 function init() {
     fetch(url).then(function(res) {
