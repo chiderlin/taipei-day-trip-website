@@ -39,7 +39,7 @@ header {
     height: 34px;
 }
 .items {
-    flex: none;
+    flex: none; display:flex;
     /*margin: 20px 370px 20px 0;*/ /* top | right | bottom | left */
     color: #666666;
     font-size: 16px;
@@ -48,8 +48,30 @@ header {
     margin:0 10px 0; /* top | right,left | bottom   */
     cursor: pointer;
 }
+
 .hide {
     display: none;
+}
+
+.shopping-cart {
+    display:none;
+    width:165px;height:auto;
+    background-color: #ffffff;
+    opacity: 0.8;
+    margin:0; padding:0;
+    position: absolute;
+    top:54px;right:0px;
+    list-style-type:none;
+}
+
+#booking {display:none;}
+
+
+.shopping-cart li {
+    padding:10px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .overlay-login {

@@ -8,9 +8,16 @@ function init() {
     getUserStatus();
 };
 
+let checkbox = document.querySelector("input[name=booking]");
 // 預定行程
-item[0].addEventListener("click",()=> {
-    
+checkbox.addEventListener("change",()=> {
+    let shopping_cart = document.querySelector(".shopping-cart");
+
+    if(checkbox.checked === true) {
+        shopping_cart.style.display = "block";
+    }else {
+        shopping_cart.style.display = "none";
+    }
 
 });
 
