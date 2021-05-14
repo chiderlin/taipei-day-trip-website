@@ -89,7 +89,7 @@ class DB_controller:
             return e
 
     def show_data(self, table_name, column_name, value):
-        '''show all data base on specific db&table'''
+        '''show one data on specific db&table'''
         try:
             self.mycursor.execute(f"use {self.db}")
             self.mycursor.execute(
@@ -98,6 +98,16 @@ class DB_controller:
             return result
         except Exception as e:
             return e
+
+    def fetch_all_data(self, table_name, column_name, value):
+        '''show all relative data on specific db&table'''
+        try:
+            self.mycursor.execute(f"use {self.db}")
+            self.mycursor.execute(f"select * from {table_name} where {column_name}='{value}'")
+            result = self.mycursor.fetchall()
+            return result
+        except Exception as e:
+            return e        
 
     def update_name(self, origin_name, new_name):
         '''update name to db'''
@@ -193,10 +203,12 @@ if __name__ == '__main__':
     #     )
     #     CHARSET=utf8mb4'''))
     
-    # print(db.insert_data(table_name='booking', settingrow='attractionId, userId, date, time, price', settingvalue='"1", "2", "2021-05-13", "afternoon", "2500"'))
+    # print(db.insert_data(table_name='booking', settingrow='attractionId, userId, date, time, price', settingvalue='"3", "2", "2021-05-13", "afternoon", "2500"'))
+    res = db.fetch_all_data("booking", "userId", "2")
+    print(res[0][2])
     # print(db.read_table())
     # print(db.count_data("user"))
     # print(db.show_data("booking", "bookingId", 2))
-    print(db.delete("booking", "bookingId", 2))
+    # print(db.delete("booking", "bookingId", 2))
     # res = db.limit_data("attractions",400,12)
     # print(res)
