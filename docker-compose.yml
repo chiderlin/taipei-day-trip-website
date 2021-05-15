@@ -12,8 +12,6 @@ services:
     mysql:
         image: mysql
         ports: ["3306"]
-        volumes:
-            - "db-data:/home/ubuntu/root/data"
         networks:
             - second-stage-project
 
