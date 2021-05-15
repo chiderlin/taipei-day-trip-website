@@ -4,7 +4,18 @@ services:
         build: .
         ports:
             - "3000:3000"
+        links:
+            - mysql
         networks:
             - second-stage-project
+
+    mysql:
+        images: mysql
+        ports: ["3306"]
+        volumes:
+            - "db-data:/home/ubuntu/root/data"
+        networks:
+            - second-stage-project
+
 networks:
     second-stage-project:
