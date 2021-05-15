@@ -123,8 +123,6 @@ function getBookingStatus() {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
-        console.log(api_data);
-        console.log(api_data.data[1]);
         if(api_data.data === null) {
             renderNodata();
         } else {

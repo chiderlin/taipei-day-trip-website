@@ -6,17 +6,19 @@ function getBookingApi() {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
-        
-        const data = api_data.data;
-        const attraction = data.attraction;
-        const name = attraction.name;
-        const image = attraction.image;
-        const address = attraction.address;
-        const date = data.date;
-        const price = data.price;
-        const time = data.time;
-        renderUpperBlock(name, image, address, date, price, time);
-    })
+        console.log(api_data);
+        for(let i=0; i<api_data.data.length; i++) {
+            const data = api_data.data[i];
+            const attraction = data.attraction;
+            const name = attraction.name;
+            const image = attraction.image;
+            const address = attraction.address;
+            const date = data.date;
+            const price = data.price;
+            const time = data.time;
+            renderUpperBlock(name, image, address, date, price, time);
+        }
+    });
 }
 
 function dropBooking() {
