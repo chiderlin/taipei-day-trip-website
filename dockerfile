@@ -1,5 +1,5 @@
 # FROM python:3.8.1
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER Chi Lin "chiderlin36@gmail.com"
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
