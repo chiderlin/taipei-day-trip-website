@@ -7,7 +7,7 @@ import datetime
 sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 from model.db import DB_controller
 
-with open("config.json", mode="r", encoding="utf-8") as f:
+with open("./data/config.json", mode="r", encoding="utf-8") as f:
     conf = json.load(f)
 
 
