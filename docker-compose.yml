@@ -5,7 +5,7 @@ services:
         ports:
             - "3000:3000"
         links:
-            - mysql
+            - taipei-day-trip-website_mysql_1
         networks:
             - second-stage-project
 

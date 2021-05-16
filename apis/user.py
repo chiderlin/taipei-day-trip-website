@@ -3,8 +3,8 @@ from flask import request, jsonify, make_response, session
 import json
 import hashlib
 import sys
-# sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
-sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
+sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
+# sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 from model.db import DB_controller
 
 
