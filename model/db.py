@@ -203,7 +203,7 @@ if __name__ == '__main__':
     #     )
     #     CHARSET=utf8mb4'''))
     
-    # print(db.insert_data(table_name='booking', settingrow='attractionId, userId, date, time, price', settingvalue='"5", "2", "2021-05-13", "afternoon", "2500"'))
+    print(db.insert_data(table_name='booking', settingrow='attractionId, userId, date, time, price', settingvalue='"5", "2", "2021-05-13", "afternoon", "2500"'))
     # res = db.fetch_all_data("booking", "userId", "2")
     # print(res[0][2])
     # print(db.read_table())

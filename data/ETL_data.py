@@ -1,9 +1,9 @@
+from model.db import DB_controller  # 原本會有紅紅的底線，但在該檔案中加上__init__.py 錯誤就消失了
 import json
 import sys
-sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
-from model.db import DB_controller # 原本會有紅紅的底線，但在該檔案中加上__init__.py 錯誤就消失了
-
-
+# sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
+# sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
+sys.path.append("/app") # 容器裡面
 
 with open("config.json", mode="r", encoding="utf-8") as config:
     conf = json.load(config)
@@ -26,11 +26,11 @@ for j in range(len(data)):
     data[j]["file"].pop(0)
     clean_img = []
     for i in range(len(data[j]["file"])):
-        image_web = data[j]["file"][i] # 在每個網址
+        image_web = data[j]["file"][i]  # 在每個網址
         image_web = image_web.lower()
         if ".jpg" in image_web or ".png" in image_web:
             clean_img.append(image_web)
-        
+
     name = data[j]["stitle"]
     category = data[j]["CAT2"]
     description = data[j]["xbody"]
@@ -38,11 +38,10 @@ for j in range(len(data)):
     transport = data[j]["info"]
     mrt = data[j]["MRT"]
     latitude = data[j]["latitude"]
-    longitude = data[j]["longitude"]    
-    test = db.insert_data(name, category, description, address, transport, mrt, latitude, longitude, clean_img)
+    longitude = data[j]["longitude"]
+    test = db.insert_data(table_name="attractions", settingrow='name, category, description, address, transport, mrt, latitude, longitude, images', settingvalue=f'"{name}","{category}","{description}","{address}","{transport}","{mrt}","{latitude}","{longitude},"{clean_img}"')
+    # name, category, description, address, transport, mrt, latitude, longitude, clean_img
     print(test)
-
-
 
 
 # API => JSON
@@ -54,4 +53,4 @@ for j in range(len(data)):
 # mrt => MRT
 # latitude => latitude
 # longitude => longitude
-# image => file  
+# image => file
