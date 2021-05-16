@@ -44,7 +44,7 @@ for j in range(len(data)):
 
 
 
-# TODO:
+
 # API => JSON
 # name=> stitle
 # category => CAT2
