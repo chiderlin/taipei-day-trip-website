@@ -8,6 +8,6 @@ RUN apt-get update \
   && pip3 install --upgrade pip
 COPY . /app
 WORKDIR /app
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 EXPOSE 3000
-CMD ["python", "app.py"]
+CMD ["python3", "app.py"]
