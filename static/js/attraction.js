@@ -5,7 +5,7 @@ let images;  //click也抓images
 let attraction_id;
 // model
 function getData(path) { // path => /attraction/num
-    let url = `http://35.73.36.129:3000/api${path}`
+    let url = `/api${path}`
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
