@@ -37,8 +37,6 @@ def uncheck_booking_list():
                 )
                 user_data = db.show_data("user", "email", user_email)
                 booking_data = db.show_data("booking", "userId", user_data[0]) #此使用人的booking資料
-                # booking_data = db.fetch_all_data("booking", "userId", user_data[0])
-
                 if booking_data is None:
                     return jsonify({"data": None})
                 else:
@@ -63,7 +61,6 @@ def uncheck_booking_list():
                     }
 
                     res = make_response(jsonify(data))
-                    print(data)
                     db.close()
                     return res
             except Exception as e:
@@ -74,7 +71,6 @@ def uncheck_booking_list():
 def build_booking():
     if request.method == "POST":
         post_data = request.get_json()
-        print(post_data)
         attractionId = post_data["attractionId"]
         date = post_data["date"]
         time = post_data["time"]
@@ -99,9 +95,14 @@ def build_booking():
                 )
                 user_data = db.show_data("user", "email", user_email)
                 userId = user_data[0]
-                db.insert_data(table_name="booking", settingrow='attractionId, userId, date, time, price', settingvalue=f'"{attractionId}","{userId}","{date}", "{time}", "{price}"')
-                db.close()
-                res = make_response(jsonify({"ok":True}))
+                # 先判斷booking table裡面是否已經有資料了，
+                # 如果有 => 刪除原本的 insert此筆
+                booking_data = db.show_data("booking", "userId", userId)
+                if booking_data:
+                    delete = db.delete("booking", "userId", userId)
+                    insert = db.insert_data(table_name="booking", settingrow='attractionId, userId, date, time, price', settingvalue=f'"{attractionId}","{userId}","{date}", "{time}", "{price}"')
+                    db.close()
+                    res = make_response(jsonify({"ok":True}))
                 return res
             except Exception as e:
                 return jsonify({"error":True, "message": str(e)}), 500
