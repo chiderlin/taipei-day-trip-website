@@ -2,8 +2,8 @@ from model.db import DB_controller  # 原本會有紅紅的底線，但在該檔
 import json
 import sys
 # sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
-# sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
-sys.path.append("/app") # 容器裡面
+sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
+# sys.path.append("/app") # 容器裡面
 
 with open("config.json", mode="r", encoding="utf-8") as config:
     conf = json.load(config)
