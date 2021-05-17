@@ -71,6 +71,7 @@ def uncheck_booking_list():
 def build_booking():
     if request.method == "POST":
         post_data = request.get_json()
+        print("post_data",post_data)
         attractionId = post_data["attractionId"]
         date = post_data["date"]
         time = post_data["time"]
@@ -94,16 +95,23 @@ def build_booking():
                     db=conf["DB"]
                 )
                 user_data = db.show_data("user", "email", user_email)
+                print("user_data", user_data)
                 userId = user_data[0]
                 # 先判斷booking table裡面是否已經有資料了，
-                # 如果有 => 刪除原本的 insert此筆
+                
                 booking_data = db.show_data("booking", "userId", userId)
-                if booking_data:
+                print("check booking db", booking_data)
+                if booking_data: # 如果有 => 刪除原本的 insert此筆
                     delete = db.delete("booking", "userId", userId)
                     insert = db.insert_data(table_name="booking", settingrow='attractionId, userId, date, time, price', settingvalue=f'"{attractionId}","{userId}","{date}", "{time}", "{price}"')
                     db.close()
                     res = make_response(jsonify({"ok":True}))
-                return res
+                    return res
+                else: 
+                    # 沒找到的話直接insert
+                    insert = db.insert_data(table_name="booking", settingrow='attractionId, userId, date, time, price', settingvalue=f'"{attractionId}","{userId}","{date}", "{time}", "{price}"')
+                    db.close()
+                    res = make_response(jsonify({"ok":True}))
             except Exception as e:
                 return jsonify({"error":True, "message": str(e)}), 500
 
