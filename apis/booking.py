@@ -112,6 +112,7 @@ def build_booking():
                     insert = db.insert_data(table_name="booking", settingrow='attractionId, userId, date, time, price', settingvalue=f'"{attractionId}","{userId}","{date}", "{time}", "{price}"')
                     db.close()
                     res = make_response(jsonify({"ok":True}))
+                    return res
             except Exception as e:
                 return jsonify({"error":True, "message": str(e)}), 500
 
