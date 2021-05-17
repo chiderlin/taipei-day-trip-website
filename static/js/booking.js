@@ -43,15 +43,17 @@ function getUserInfo() {
     })
 };
 function dropBooking() {
-        const url = `/api/booking`;
-        fetch(url, {
-            method: "DELETE",
-        }).then(function(res) {
-            return res.json()
-        }).then(function(api_data) {
-            console.log(api_data);
-        })
-    };
+    const url = `/api/booking`;
+    fetch(url, {
+        method: "DELETE",
+    }).then(function(res) {
+        return res.json()
+    }).then(function(api_data) {
+        if(api_data.ok === true) {
+            window.location.reload();
+        }
+    })
+};
 
 
 
@@ -124,7 +126,6 @@ let inside_trash_img = document.getElementById("inside-trash-img");
 trash_img.addEventListener("click", ()=> {
     if(window.confirm("確定要刪除此預定行程嗎?") == true) {
         dropBooking();
-        window.location.reload();
     }
 
 });
@@ -132,7 +133,6 @@ trash_img.addEventListener("click", ()=> {
 inside_trash_img.addEventListener("click", ()=> {
     if(window.confirm("確定要刪除此預定行程嗎?") == true) {
         dropBooking();
-        window.location.reload();
     }
 
 });
