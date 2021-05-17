@@ -36,10 +36,15 @@ function getUserInfo() {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(user_info) {
-        let username = user_info.data.name;
-        let email = user_info.data.email;
-        renderTitle(username);
-        renderclientInfo(username, email);
+        if(user_info.data !== null) {
+            let username = user_info.data.name;
+            let email = user_info.data.email;
+            renderTitle(username);
+            renderclientInfo(username, email);
+        } else { // 直接進入/booking網址 沒登入直接導回首頁
+            window.location.href = "/";
+        }
+
     })
 };
 function dropBooking() {
