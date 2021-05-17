@@ -9,85 +9,125 @@
     <div class="head">
         <div class="fix2">
             <div class="fixed">
-                <div class="booking-status"></div>
-                <!-- 您好，Yakko，待預訂的行程如下: -->
-                <div class="upper-block">
-                    <div class="img-block">
-                        <!-- <img src="/png/test.png" class="booking-img"> -->
+                <div class="booking-status">
+                    <!-- 您好，Yakko，待預訂的行程如下 -->
+                </div>
+                <div class="layout">
+                <!-- 把所有東西都包進去，如果是nobooking就把下面都block-->
+                    <div class="upper-block">
+                        <div class="img-block">
+                            <!-- <img src="/png/test.png" class="booking-img"> -->
+                        </div>
+                        <div class="right-status">
+                            <div class="booking-title">
+                                <!-- 台北一日遊 : 平安鐘 -->
+                            </div>
+                            <div class="block" id="date-block">
+                                <div class="booking-format">
+                                    日期 : 
+                                </div>
+                                <div class="booking-detail" id="booking-date">
+                                    <!-- 2021-04-23 -->
+                                </div> 
+                                
+                            </div>
+                            <div class="block" id="time-block">
+                                <div class="booking-format">
+                                    時間 : 
+                                </div>
+                                <div class="booking-detail" id="booking-time">
+                                    <!-- 早上9點到下午4點 -->
+                                </div>
+                                
+                            </div>
+                            <div class="block" id="price-block">
+                                <div class="booking-format">
+                                    費用 : 
+                                </div>
+                                <div class="booking-detail" id="booking-price">
+                                    <!-- 新台幣2000元 -->
+                                </div>
+                                
+                            </div>
+                            <div class="block">
+                                <div class="booking-format">
+                                    地點 : 
+                                </div>
+                                <div class="booking-detail" id="booking-address">
+                                    <!-- 臺北市 大安區忠孝東路4段 -->
+                                </div>
+                            </div>
+                            <div class="block-trash">
+                                <input type="button" name="trash-btn" id="trash-btn">
+                                <label for="trash-btn">
+                                    <img src="/png/icon/icon_delete.png" id="inside-trash-img">
+                                </label>
+                            </div>
+                        </div>
+                        <input type="button" name="trash-btn" id="trash-btn">
+                        <label for="trash-btn">
+                            <img src="/png/icon/icon_delete.png" id="trash-img">
+                        </label>
                     </div>
-                    <div class="right-status">
-                        <div class="booking-title"></div>
-                        <!-- 台北一日遊 : 平安鐘 -->
-                        <div class="block" id="date-block">
-                            <div class="booking-format">日期 : </div>
-                            <div class="booking-detail" id="booking-date"></div> 
-                            <!-- 2021-04-23 -->
+                    <hr />
+                    <div class="middle-block">
+                        <div class="client-info">
+                            您的聯絡資訊
                         </div>
-                        <div class="block" id="time-block">
-                            <div class="booking-format">時間 : </div>
-                            <div class="booking-detail" id="booking-time"></div>
-                            <!-- 早上9點到下午4點 -->
+                        <div class="block" id="name-block">
+                            <div class="client-format">
+                                聯絡姓名 :
+                            </div>
+                            <input id="client-name" class="input" type="text" name="client-name">
                         </div>
-                        <div class="block" id="price-block">
-                            <div class="booking-format">費用 : </div>
-                            <div class="booking-detail" id="booking-price"></div>
-                            <!-- 新台幣2000元 -->
+                        <div class="block" id="email-block">
+                            <div class="client-format">
+                                連絡信箱 :
+                            </div>
+                            <input id="client-email" class="input" type="text" name="client-email">
                         </div>
                         <div class="block">
-                            <div class="booking-format">地點 : </div>
-                            <div class="booking-detail" id="booking-address">臺北市 大安區忠孝東路4段</div>
+                            <div class="client-format">
+                                手機號碼 :
+                            </div>
+                            <input class="input" type="text" name="client-phonenum">
                         </div>
-                        <div class="block-trash">
-                            <input type="button" name="trash-btn" id="trash-btn">
-                            <label for="trash-btn">
-                                <img src="/png/icon/icon_delete.png" id="inside-trash-img">
-                            </label>
+                        <div class="state">
+                            請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
                         </div>
                     </div>
-                    <input type="button" name="trash-btn" id="trash-btn">
-                    <label for="trash-btn">
-                        <img src="/png/icon/icon_delete.png" id="trash-img">
-                    </label>
-                </div>
-                <hr />
-                <div class="middle-block">
-                    <div class="client-info">您的聯絡資訊</div>
-                    <div class="block" id="name-block">
-                        <div class="client-format">聯絡姓名 :</div>
-                        <input id="client-name" class="input" type="text" name="client-name">
+                    <hr />
+                    <div class="downer-block">
+                        <div class="client-info">
+                            信用卡付款資訊
+                        </div>
+                        <div class="block">
+                            <div class="client-format">
+                                卡片號碼 :
+                            </div>
+                            <input class="input" type="password" placeholder="**** **** ****">
+                        </div>
+                        <div class="block">
+                            <div class="client-format">
+                                過期時間 :
+                            </div>
+                            <input class="input" type="text" placeholder="MM/YY">
+                        </div>
+                        <div class="block">
+                            <div class="client-format">
+                                驗證密碼 :
+                            </div>
+                            <input class="input" type="password" placeholder="CVV">
+                        </div>
                     </div>
-                    <div class="block" id="email-block">
-                        <div class="client-format">連絡信箱 :</div>
-                        <input id="client-email" class="input" type="text" name="client-email">
-                    </div>
-                    <div class="block">
-                        <div class="client-format">手機號碼 :</div>
-                        <input class="input" type="text" name="client-phonenum">
-                    </div>
-                    <div class="state">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
-                </div>
-                <hr />
-                <div class="downer-block">
-                    <div class="client-info">信用卡付款資訊</div>
-                    <div class="block">
-                        <div class="client-format">卡片號碼 :</div>
-                        <input class="input" type="password" placeholder="**** **** ****">
-                    </div>
-                    <div class="block">
-                        <div class="client-format">過期時間 :</div>
-                        <input class="input" type="text" placeholder="MM/YY">
-                    </div>
-                    <div class="block">
-                        <div class="client-format">驗證密碼 :</div>
-                        <input class="input" type="password" placeholder="CVV">
-                    </div>
-
-                </div>
-                <hr />
-                <div class="last-block">
-                    <div class="price-check">總價 : 新台幣2000元</div>
-                    <div class="btn-format">
-                        <input type="submit" value="確認訂購並付款" id="booking-btn">
+                    <hr />
+                    <div class="last-block">
+                        <div class="price-check">
+                            <!-- 總價 : 新台幣2000元 -->
+                        </div>
+                        <div class="btn-format">
+                            <input type="submit" value="確認訂購並付款" id="booking-btn">
+                        </div>
                     </div>
                 </div>
             </div>

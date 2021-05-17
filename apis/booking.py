@@ -22,7 +22,6 @@ def selectOneImage(images):
 
 @booking.route("/booking", methods=["GET"])
 def uncheck_booking_list():
-    pass
     # 搜尋attractionId，如果該id存在，表示按過開始預定行程
     if request.method == "GET":
         user_email = session.get("email")
@@ -37,32 +36,31 @@ def uncheck_booking_list():
                     db=conf["DB"]
                 )
                 user_data = db.show_data("user", "email", user_email)
-                # booking_data = db.show_data("booking", "userId", user_data[0]) #此使用人的booking資料
-                booking_data = db.fetch_all_data("booking", "userId", user_data[0])
-                
+                booking_data = db.show_data("booking", "userId", user_data[0]) #此使用人的booking資料
+                # booking_data = db.fetch_all_data("booking", "userId", user_data[0])
+
                 if booking_data is None:
                     return jsonify({"data": None})
                 else:
-                    data = {"data":[]}
-                    for one_data in booking_data:
-                        attraction_data = db.show_data("attractions", "id", one_data[1])
-                        images = attraction_data[9]
-                        image = selectOneImage(images)
-                        date = one_data[3]
+                    attraction_data = db.show_data("attractions", "id", booking_data[1])
+                    images = attraction_data[9]
+                    image = selectOneImage(images)
+                    date = booking_data[3]
 
-                        date_format = date.strftime("%Y-%m-%d")
-                        one = {
-                                "attraction": {
-                                    "id": attraction_data[0],
-                                    "name":attraction_data[1],
-                                    "address": attraction_data[4],
-                                    "image": image
-                                },
-                                "date": date_format,
-                                "time": one_data[4],
-                                "price": one_data[5]
-                            }
-                        data["data"].append(one)
+                    date_format = date.strftime("%Y-%m-%d")
+                    data = {
+                        "data": {
+                            "attraction": {
+                                "id": attraction_data[0],
+                                "name":attraction_data[1],
+                                "address": attraction_data[4],
+                                "image": image
+                            },
+                            "date": date_format,
+                            "time": booking_data[4],
+                            "price": booking_data[5]
+                        }
+                    }
 
                     res = make_response(jsonify(data))
                     print(data)

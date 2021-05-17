@@ -60,7 +60,6 @@ afternoon_block.addEventListener("click", ()=> {
 
 // 提交預定行程
 let date = document.getElementById("date");
-// let time = document.getElementById("")
 let price_tag = document.getElementById("price");
 let booking_trip_btn = document.getElementById("booking-trip-btn");
 booking_trip_btn.addEventListener("click", ()=>{
@@ -92,7 +91,6 @@ booking_trip_btn.addEventListener("click", ()=>{
 function startBooking(date, price, time) {
     let url = `/api/booking`;
     let new_booking = {"attractionId": attraction_id, "date": date, "time": time, "price": price}
-    console.log(new_booking);
     fetch(url, {
         method: "POST",
         body: JSON.stringify(new_booking),
@@ -102,7 +100,6 @@ function startBooking(date, price, time) {
     }).then(function(res) {
         return res.json();
     }).then(function(api_data) {
-        console.log(api_data);
         if(api_data.ok === true) {
             window.location.href = `/booking`
         }

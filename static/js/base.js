@@ -2,27 +2,27 @@
 
 let url = `/api/user`;
 let item = document.querySelectorAll(".item");
-
+let overlay_login = document.querySelector(".overlay-login");
+let login_status = false;
 init()
 
 // controller
 function init() {
     getUserStatus();
-    getBookingStatus();
+    
 };
 
-
-// 預定行程
-let checkbox = document.querySelector("input[name=booking]");
-checkbox.addEventListener("change",()=> {
-    let shopping_cart = document.querySelector(".shopping-cart");
-
-    if(checkbox.checked === true) {
-        shopping_cart.style.display = "block";
+//預定行程
+item[0].addEventListener("click", ()=> {
+    if(login_status === false) {
+        //沒登入 => 跳到登入畫面
+        overlay_login.style.display = "block";
     }else {
-        shopping_cart.style.display = "none";
+        // 有登入 => 先判斷 有無uncheck的booking資料 =>有才跳轉
+        // 無 => 跳通知 預定流程
+        // getBookingStatus();
+        window.location.href = `/booking`
     }
-
 });
 
 
@@ -32,7 +32,7 @@ item[1].addEventListener("click", ()=> {
 });
 
 //使用者登出
-item[2].addEventListener("click", (event)=> {
+item[2].addEventListener("click", ()=> {
     loginOut();
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
@@ -41,7 +41,6 @@ item[2].addEventListener("click", (event)=> {
 
 // 登入關閉
 let login_close_btn = document.getElementById("close-btn-for-img-login");
-let overlay_login = document.querySelector(".overlay-login");
 login_close_btn.addEventListener("click", ()=> {
     overlay_login.style.display = "none";
 });
@@ -107,6 +106,16 @@ function loginProcess(api_data) {
     }
 };
 
+function bookingProcess(api_data) { 
+    // 為了預定行程
+    // 判斷有無登入
+    if(api_data.data === null) {
+        login_status = false;
+    } else {
+        login_status = true;
+    }
+}
+
 
 //model
 function getUserStatus() {
@@ -115,26 +124,25 @@ function getUserStatus() {
         return res.json();
     }).then(function(api_data) {
         initRenderItem(api_data);
+        bookingProcess(api_data);
     })
 };
 
-function getBookingStatus() {
-    const url = `/api/booking`;
-    fetch(url).then(function(res) {
-        return res.json();
-    }).then(function(api_data) {
-        if(api_data.data === null) {
-            renderNodata();
-        } else {
-            for(let i=0; i<api_data.data.length; i++) {
-                let attraction_name = api_data.data[i].attraction.name;
-                renderBookingList(attraction_name);
-            }
-        }
-    }).catch(function(err) {
-        console.log(err);
-    });
-};
+// function getBookingStatus() { 
+//     處理 有無booking資料
+//     const url = `/api/booking`;
+//     fetch(url).then(function(res) {
+//         return res.json();
+//     }).then(function(api_data) {
+//         跳轉booking頁面
+//         if(api_data.data !== null) {
+//             window.location.href = `/booking`
+//         }
+
+//     }).catch(function(err) {
+//         console.log(err);
+//     });
+// };
 
 
 
@@ -184,7 +192,8 @@ function loginOut() {
         return res.json();
     }).then(function(api_data) {
         if(api_data.ok === true) {
-            window.location.reload();
+            // window.location.reload();
+            window.location.href = "/";
         } 
     })
 };
@@ -204,6 +213,10 @@ function initRenderItem(api_data) {
         item[2].classList.add("hide");
 
     }
+};
+
+function openLoginPage() {
+    overlay_login.style.display = "block";
 };
 
 function renderRegister(api_data) {
@@ -278,3 +291,41 @@ function renderBookingList(attraction_name) {
     shopping_cart.appendChild(booking_link);
 
 };
+
+
+// ==================================================
+
+
+// 預定行程
+// let checkbox = document.querySelector("input[name=booking]");
+// checkbox.addEventListener("change",()=> {
+//     let shopping_cart = document.querySelector(".shopping-cart");
+
+//     if(checkbox.checked === true) {
+//         shopping_cart.style.display = "block";
+//     }else {
+//         shopping_cart.style.display = "none";
+//     }
+
+// });
+
+
+
+// function getBookingStatus() {
+//     const url = `/api/booking`;
+//     fetch(url).then(function(res) {
+//         return res.json();
+//     }).then(function(api_data) {
+//         console.log(api_data.data);
+//         if(api_data.data === null) {
+//             renderNodata();
+//         } else {
+//             for(let i=0; i<api_data.data.length; i++) {
+//                 let attraction_name = api_data.data[i].attraction.name;
+//                 renderBookingList(attraction_name);
+//             }
+//         }
+//     }).catch(function(err) {
+//         console.log(err);
+//     });
+// };

@@ -53,11 +53,13 @@ header {
     display: none;
 }
 
-.shopping-cart {
+/*購物車*/
+/* .shopping-cart {
     display:none;
     justify-content: center;
     align-items: center;
-    width:165px;height:auto;
+    width:165px;
+    height:200px;
     background-color: #ffffff;
     opacity: 0.8;
     margin:0; padding:0;
@@ -84,7 +86,6 @@ header {
     justify-content: center;
     align-items: center;
     cursor:pointer;
-    /* border-bottom: 1px solid #777; */
 }
 
 li:hover {
@@ -96,7 +97,7 @@ li:hover {
     .shopping-cart {
         top:54px;right:0px;
     }
-}
+} */
 
 
 
@@ -250,7 +251,9 @@ footer {
     align-items:center;
     background-color: #757575;
     height:104px;
-    color:white;
     font-weight:bold;font-size:16px;
     margin-top:25px;
+}
+footer div {
+    color: #fff;
 }
