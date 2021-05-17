@@ -1,8 +1,111 @@
-
+let login_status = false;
 let get_route = location.pathname
-getData(get_route);
 let images;  //click也抓images
 let attraction_id;
+
+init();
+//controller
+function init() {
+    getData(get_route); // 取得網頁編號 => 進行attraction的render page
+    getUserStatus(); // 看有無登入
+};
+
+function bookingProcess(user_info) { //true false切換登入狀態
+    if(user_info.data !== null) {
+        login_status = true;
+    } else {
+        login_status = false;
+    }
+
+};
+
+
+// 輪播效果切換
+let left_arrow = document.getElementById("left-arrow");
+let right_arrow = document.getElementById("right-arrow");
+let count = 1;
+left_arrow.addEventListener("click",()=> {
+    count--;
+    if(count === 0) {
+        count = images.length;
+    }
+    document.querySelector(`#control-${count}`).checked = true;
+});
+
+right_arrow.addEventListener("click",()=> {
+    count++;
+    if(count === images.length+1) {
+        count = 1;
+    }
+    document.querySelector(`#control-${count}`).checked = true;
+});
+
+
+// 按上半天 下半天 => 按字就可以觸發效果
+let morning_block = document.getElementById("morning");
+let afternoon_block = document.getElementById("afternoon");
+let morning_btn = document.getElementById("morning-btn");
+let afternoon_btn = document.getElementById("afternoon-btn");
+let fee_block = document.getElementById("fee-block");
+let show_price = document.getElementById("price");
+
+morning_block.addEventListener("click", ()=> {
+    morning_btn.style.background = "#448899";
+    morning_btn.style.border = "2px solid #fff";
+    afternoon_btn.style = "none";
+    show_price.innerHTML = "";
+    show_price.appendChild(document.createTextNode("新台幣2000元"));
+    fee_block.appendChild(show_price);
+});
+
+afternoon_block.addEventListener("click", ()=> {
+    afternoon_btn.style.background = "#448899";
+    afternoon_btn.style.border = "2px solid #fff";
+    morning_btn.style = "none";
+    show_price.innerHTML = "";
+    show_price.appendChild(document.createTextNode("新台幣2500元"));
+    fee_block.appendChild(show_price);
+});
+
+
+// 提交預定行程
+let date = document.getElementById("date");
+let price_tag = document.getElementById("price");
+let booking_trip_btn = document.getElementById("booking-trip-btn");
+booking_trip_btn.addEventListener("click", ()=>{
+    if(login_status === false) {
+        let overlay_login = document.querySelector(".overlay-login");
+        overlay_login.style.display = "block";
+
+    } else if(login_status === true) {
+        let price = "";
+        let time = "";
+        for(let i=3; i<price_tag.innerText.length-1; i++) {
+            price = price + price_tag.innerText[i];
+        }
+        if(date.value === "") {
+            renderMessage("日期");
+            return;
+        }
+    
+        if(price === "") {
+            renderMessage("時間");
+            return;
+        }
+    
+        price = parseInt(price);
+        if(price === 2000) {
+            time = "morning";
+        }else if(price === 2500){
+            time = "afternoon";
+        }
+    
+        startBooking(date.value, price, time);
+    }
+    
+});
+
+
 // model
 function getData(path) { // path => /attraction/num
     let url = `/api${path}`
@@ -30,63 +133,14 @@ function getData(path) { // path => /attraction/num
     })
 };
 
-
-//controller
-// 按上半天 下半天 => 按字就可以觸發效果
-let morning_block = document.getElementById("morning");
-let afternoon_block = document.getElementById("afternoon");
-let morning_btn = document.getElementById("morning-btn");
-let afternoon_btn = document.getElementById("afternoon-btn");
-let fee_block = document.getElementById("fee-block");
-let show_price = document.getElementById("price");
-
-morning_block.addEventListener("click", ()=> {
-    morning_btn.style.background = "#448899";
-    morning_btn.style.border = "2px solid #fff";
-    afternoon_btn.style = "none";
-    show_price.innerHTML = "";
-    show_price.appendChild(document.createTextNode("新台幣2000元"));
-    fee_block.appendChild(show_price);
-});
-
-afternoon_block.addEventListener("click", ()=> {
-    afternoon_btn.style.background = "#448899";
-    afternoon_btn.style.border = "2px solid #fff";
-    morning_btn.style = "none";
-    show_price.innerHTML = "";
-    show_price.appendChild(document.createTextNode("新台幣2500元"));
-    fee_block.appendChild(show_price);
-});
-
-// 提交預定行程
-let date = document.getElementById("date");
-let price_tag = document.getElementById("price");
-let booking_trip_btn = document.getElementById("booking-trip-btn");
-booking_trip_btn.addEventListener("click", ()=>{
-    let price = "";
-    let time = "";
-    for(let i=3; i<price_tag.innerText.length-1; i++) {
-        price = price + price_tag.innerText[i];
-    }
-    if(date.value === "") {
-        renderMessage("日期");
-        return;
-    }
-
-    if(price === "") {
-        renderMessage("時間");
-        return;
-    }
-
-    price = parseInt(price);
-    if(price === 2000) {
-        time = "morning";
-    }else if(price === 2500){
-        time = "afternoon";
-    }
-
-    startBooking(date.value, price, time);
-});
+function getUserStatus() {
+    let url = "/api/user"
+    fetch(url).then(function(res) {
+        return res.json();
+    }).then(function(user_info) {
+        bookingProcess(user_info);
+    })
+};
 
 function startBooking(date, price, time) {
     let url = `/api/booking`;
@@ -104,29 +158,7 @@ function startBooking(date, price, time) {
             window.location.href = `/booking`
         }
     })
-    
-
 };
-
-// 輪播效果切換
-let left_arrow = document.getElementById("left-arrow");
-let right_arrow = document.getElementById("right-arrow");
-let count = 1;
-left_arrow.addEventListener("click",()=> {
-    count--;
-    if(count === 0) {
-        count = images.length;
-    }
-    document.querySelector(`#control-${count}`).checked = true;
-});
-
-right_arrow.addEventListener("click",()=> {
-    count++;
-    if(count === images.length+1) {
-        count = 1;
-    }
-    document.querySelector(`#control-${count}`).checked = true;
-});
 
 
 //view

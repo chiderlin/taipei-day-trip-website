@@ -1,5 +1,3 @@
-//TODO: 預定行程要檔未登入的使用者
-
 let url = `/api/user`;
 let item = document.querySelectorAll(".item");
 let overlay_login = document.querySelector(".overlay-login");
@@ -9,7 +7,6 @@ init()
 // controller
 function init() {
     getUserStatus();
-    
 };
 
 //預定行程
@@ -60,6 +57,7 @@ register.addEventListener("click", ()=>{
     overlay_login.style.display = "none";
     overlay_register.style.display = "block";
 });
+
 
 // 切換登入畫面
 let login_link = document.getElementById("login");
@@ -128,24 +126,6 @@ function getUserStatus() {
     })
 };
 
-// function getBookingStatus() { 
-//     處理 有無booking資料
-//     const url = `/api/booking`;
-//     fetch(url).then(function(res) {
-//         return res.json();
-//     }).then(function(api_data) {
-//         跳轉booking頁面
-//         if(api_data.data !== null) {
-//             window.location.href = `/booking`
-//         }
-
-//     }).catch(function(err) {
-//         console.log(err);
-//     });
-// };
-
-
-
 function userRegister(name, email, pwd) {
     let register_info = {"name":name, "email":email, "password":pwd};
     fetch(url, {
@@ -192,7 +172,7 @@ function loginOut() {
         return res.json();
     }).then(function(api_data) {
         if(api_data.ok === true) {
-            // window.location.reload();
+            // window.location.reload(); //重load改成導回首頁
             window.location.href = "/";
         } 
     })

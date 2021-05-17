@@ -14,7 +14,6 @@ function getBookingApi() {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
-        console.log(api_data);
         if(api_data.data === null) {
             renderNoBooking();
         } else {
