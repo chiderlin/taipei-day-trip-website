@@ -1,13 +1,14 @@
 from flask import Blueprint
-from flask import Flask, request, jsonify, make_response, session
+from flask import request, jsonify, make_response, session
 import json
 import hashlib
 import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
+# sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 from model.db import DB_controller
 
 
-with open("./data/config.json", mode="r", encoding="utf-8") as f:
+with open("./data/config.json", mode="r", encoding="utf-8") as f: # 依照app.py的位置來寫路徑
     conf = json.load(f)
 
 user = Blueprint("user", __name__)

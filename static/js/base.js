@@ -1,7 +1,7 @@
-let url = `http://35.73.36.129:3000/api/user`;
-//let url = `http://127.0.0.1:3000/api/user`;
+let url = `/api/user`;
 let item = document.querySelectorAll(".item");
-
+let overlay_login = document.querySelector(".overlay-login");
+let login_status = false;
 init()
 
 // controller
@@ -9,13 +9,27 @@ function init() {
     getUserStatus();
 };
 
+//預定行程
+item[0].addEventListener("click", ()=> {
+    if(login_status === false) {
+        //沒登入 => 跳到登入畫面
+        overlay_login.style.display = "block";
+    }else {
+        // 有登入 => 先判斷 有無uncheck的booking資料 =>有才跳轉
+        // 無 => 跳通知 預定流程
+        // getBookingStatus();
+        window.location.href = `/booking`
+    }
+});
+
+
 //使用者登入
 item[1].addEventListener("click", ()=> {
     overlay_login.style.display = "block";
 });
 
 //使用者登出
-item[2].addEventListener("click", (event)=> {
+item[2].addEventListener("click", ()=> {
     loginOut();
     item[1].classList.remove("hide");
     item[2].classList.add("hide");
@@ -24,7 +38,6 @@ item[2].addEventListener("click", (event)=> {
 
 // 登入關閉
 let login_close_btn = document.getElementById("close-btn-for-img-login");
-let overlay_login = document.querySelector(".overlay-login");
 login_close_btn.addEventListener("click", ()=> {
     overlay_login.style.display = "none";
 });
@@ -44,6 +57,7 @@ register.addEventListener("click", ()=>{
     overlay_login.style.display = "none";
     overlay_register.style.display = "block";
 });
+
 
 // 切換登入畫面
 let login_link = document.getElementById("login");
@@ -90,14 +104,25 @@ function loginProcess(api_data) {
     }
 };
 
+function bookingProcess(api_data) { 
+    // 為了預定行程
+    // 判斷有無登入
+    if(api_data.data === null) {
+        login_status = false;
+    } else {
+        login_status = true;
+    }
+}
+
 
 //model
 function getUserStatus() {
-    // 一開始進入這個網頁時，呼叫此函式判斷是否已登入，已登入的顯示畫面跟未登入顯示畫面不同
+    // 一開始進入這個網頁時，呼叫此函式判斷是否已登入
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
         initRenderItem(api_data);
+        bookingProcess(api_data);
     })
 };
 
@@ -147,7 +172,8 @@ function loginOut() {
         return res.json();
     }).then(function(api_data) {
         if(api_data.ok === true) {
-            window.location.reload();
+            // window.location.reload(); //重load改成導回首頁
+            window.location.href = "/";
         } 
     })
 };
@@ -167,6 +193,10 @@ function initRenderItem(api_data) {
         item[2].classList.add("hide");
 
     }
+};
+
+function openLoginPage() {
+    overlay_login.style.display = "block";
 };
 
 function renderRegister(api_data) {
@@ -221,4 +251,23 @@ function loginErrorRender(api_data) {
     login_msg.appendChild(document.createTextNode(api_data.message));
     login_page.appendChild(login_msg);
     login_page.insertBefore(login_msg, login_state)
+};
+
+function renderNodata() {
+    let shopping_cart = document.querySelector(".shopping-cart");
+    let none_booking = document.createElement("div");
+    none_booking.className = "null-block";
+    none_booking.appendChild(document.createTextNode("尚無預定"));
+    shopping_cart.appendChild(none_booking);
+};
+
+function renderBookingList(attraction_name) {
+    let shopping_cart = document.querySelector(".shopping-cart");
+    let booking = document.createElement("li");
+    let booking_link = document.createElement("a");
+    booking_link.setAttribute("href", "/booking");
+    booking.appendChild(document.createTextNode(attraction_name));
+    booking_link.appendChild(booking);
+    shopping_cart.appendChild(booking_link);
+
 };

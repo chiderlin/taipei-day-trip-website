@@ -58,9 +58,9 @@ function getData(page, keyword) {
     let url;
     checkProcess = true;
     if(keyword_tag.value === "") {
-        url = `http://35.73.36.129:3000/api/attractions?page=${page}`
+        url = `/api/attractions?page=${page}`
     } else {
-        url = `http://35.73.36.129:3000/api/attractions?page=${page}&keyword=${keyword}`
+        url = `/api/attractions?page=${page}&keyword=${keyword}`
     }
     fetch(url).then(function(res) {
         return res.json();
