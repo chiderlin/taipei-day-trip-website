@@ -8,7 +8,7 @@ sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 from model.db import DB_controller
 
 
-with open("./data/config.json", mode="r", encoding="utf-8") as f: # 依照app.py的位置來寫路徑
+with open("./data/config.json", mode="r", encoding="utf-8") as f: # 在app執行程式，所以依照app.py的位置來寫路徑
     conf = json.load(f)
 
 user = Blueprint("user", __name__)

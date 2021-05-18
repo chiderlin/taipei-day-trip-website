@@ -87,8 +87,8 @@ def attractions():
                         "address": ans[4],
                         "transport": ans[5],
                         "mrt": ans[6],
-                        "latitude": ans[7],
-                        "longitude": ans[8],
+                        "latitude": str(ans[7]), #小數點 jsonify會有問題(Decimal error)，所以轉成str
+                        "longitude": str(ans[8]),
                         "images": ans[9],
                     }
                     tmp_db.append(data_dict)
@@ -173,8 +173,8 @@ def attractions():
                     "address": res[4],
                     "transport": res[5],
                     "mrt": res[6],
-                    "latitude": res[7],
-                    "longitude": res[8],
+                    "latitude": str(res[7]),
+                    "longitude": str(res[8]),
                     "images": res[9],
                 }
                 data.append(data_dict)
@@ -235,8 +235,8 @@ def view(attractionId):
                     "address": result[4],
                     "transport": result[5],
                     "mrt": result[6],
-                    "latitude": result[7],
-                    "longitude": result[8],
+                    "latitude": str(result[7]),
+                    "longitude": str(result[8]),
                     "images": result[9],
                 }
             }

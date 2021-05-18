@@ -15,9 +15,7 @@ item[0].addEventListener("click", ()=> {
         //沒登入 => 跳到登入畫面
         overlay_login.style.display = "block";
     }else {
-        // 有登入 => 先判斷 有無uncheck的booking資料 =>有才跳轉
-        // 無 => 跳通知 預定流程
-        // getBookingStatus();
+        // 有登入 => 跳轉 (讓booking頁面去判斷有無unbook資料存在)
         window.location.href = `/booking`
     }
 });
@@ -70,7 +68,7 @@ login_link.addEventListener("click", ()=> {
 // 提交登入表單
 let login_form = document.getElementById("login-form");
 login_form.addEventListener("submit", (event)=> {
-    event.preventDefault(); // 要重新載入所以不用防
+    event.preventDefault();
     let login_email = document.getElementById("email-login");
     let login_pwd = document.getElementById("pwd-login");
     let email = login_email.value;
@@ -179,9 +177,6 @@ function loginOut() {
 };
 
 
-
-
-
 //view
 function initRenderItem(api_data) {
     //[0]預定行程 [1]登入/註冊 [2]登出系統
@@ -193,10 +188,6 @@ function initRenderItem(api_data) {
         item[2].classList.add("hide");
 
     }
-};
-
-function openLoginPage() {
-    overlay_login.style.display = "block";
 };
 
 function renderRegister(api_data) {
@@ -251,23 +242,4 @@ function loginErrorRender(api_data) {
     login_msg.appendChild(document.createTextNode(api_data.message));
     login_page.appendChild(login_msg);
     login_page.insertBefore(login_msg, login_state)
-};
-
-function renderNodata() {
-    let shopping_cart = document.querySelector(".shopping-cart");
-    let none_booking = document.createElement("div");
-    none_booking.className = "null-block";
-    none_booking.appendChild(document.createTextNode("尚無預定"));
-    shopping_cart.appendChild(none_booking);
-};
-
-function renderBookingList(attraction_name) {
-    let shopping_cart = document.querySelector(".shopping-cart");
-    let booking = document.createElement("li");
-    let booking_link = document.createElement("a");
-    booking_link.setAttribute("href", "/booking");
-    booking.appendChild(document.createTextNode(attraction_name));
-    booking_link.appendChild(booking);
-    shopping_cart.appendChild(booking_link);
-
 };

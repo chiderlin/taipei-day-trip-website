@@ -81,7 +81,7 @@ booking_trip_btn.addEventListener("click", ()=>{
         let price = "";
         let time = "";
         for(let i=3; i<price_tag.innerText.length-1; i++) {
-            price = price + price_tag.innerText[i];
+            price = price + price_tag.innerText[i]; //擷取數字部分
         }
         if(date.value === "") {
             renderMessage("日期");
@@ -234,7 +234,7 @@ function imageSlider() {
     }
 };
 
-function renderMessage(msg) {
+function renderMessage(msg) { //提示訊息
     let booking_area = document.querySelector(".booking-area");
     let booking_message = document.querySelector(".booking-message");
     if(booking_message !== null) {

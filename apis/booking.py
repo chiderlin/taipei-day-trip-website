@@ -22,7 +22,7 @@ def selectOneImage(images):
 
 @booking.route("/booking", methods=["GET"])
 def uncheck_booking_list():
-    # 搜尋attractionId，如果該id存在，表示按過開始預定行程
+    # 搜尋userId，如果該id存在，表示按過開始預定行程
     if request.method == "GET":
         user_email = session.get("email")
         if not user_email:
@@ -97,10 +97,10 @@ def build_booking():
                 user_data = db.show_data("user", "email", user_email)
                 print("user_data", user_data)
                 userId = user_data[0]
-                # 先判斷booking table裡面是否已經有資料了，
                 
                 booking_data = db.show_data("booking", "userId", userId)
                 print("check booking db", booking_data)
+                # 先判斷booking table裡面是否已經有資料了，
                 if booking_data: # 如果有 => 刪除原本的 insert此筆
                     delete = db.delete("booking", "userId", userId)
                     insert = db.insert_data(table_name="booking", settingrow='attractionId, userId, date, time, price', settingvalue=f'"{attractionId}","{userId}","{date}", "{time}", "{price}"')
@@ -138,5 +138,5 @@ def delete_booking():
             res = make_response(jsonify({"ok":True}))
             return res
         except Exception as e:
-            return jsonify({"error":True, "message":str(e)})
+            return jsonify({"error":True, "message":str(e)}), 500
         
