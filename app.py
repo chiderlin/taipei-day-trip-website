@@ -2,11 +2,13 @@ from flask import Flask, render_template, session
 from apis.attractions import attr
 from apis.user import user
 from apis.booking import booking
+from apis.orders import order
 
 app = Flask(__name__, static_url_path="/", static_folder="static")
 app.register_blueprint(attr, url_prefix="/api")
 app.register_blueprint(user, url_prefix="/api")
 app.register_blueprint(booking, url_prefix="/api")
+app.register_blueprint(order, url_prefix="/api")
 
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True

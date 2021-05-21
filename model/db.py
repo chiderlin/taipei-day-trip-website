@@ -187,23 +187,26 @@ if __name__ == '__main__':
     # print(db.read_db())
     # print(db.create_db("taipeitravel"))
 
-    # print(db.create_table(
-    #     '''
-    #     create table booking (
-    #     bookingId int auto_increment,
-    #     attractionId int not null,
-    #     userId int not null,
-    #     date date not null,
-    #     time varchar(255) not null,
-    #     price int not null,
-    #     create_time datetime not null default now(),
-    #     PRIMARY KEY (bookingId),
-    #     FOREIGN KEY (attractionId) REFERENCES attractions(id) ON DELETE CASCADE,
-    #     FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
-    #     )
-    #     CHARSET=utf8mb4'''))
+    print(db.create_table(
+        '''
+        create table orders (
+        id int auto_increment,
+        order_number varchar(255) not null unique,
+        attractionId int not null,
+        userId int not null,
+        phone varchar(255) not null,
+        date date not null,
+        time varchar(255) not null,
+        price int not null,
+        status int not null,
+        create_time datetime not null default now(),
+        PRIMARY KEY (id),
+        FOREIGN KEY (attractionId) REFERENCES attractions(id) ON DELETE CASCADE,
+        FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+        )
+        CHARSET=utf8mb4'''))
     
-    print(db.insert_data(table_name='booking', settingrow='attractionId, userId, date, time, price', settingvalue='"5", "2", "2021-05-13", "afternoon", "2500"'))
+    # print(db.insert_data(table_name='orders', settingrow='order_number, attractionId, userId, phone, date, time, price, status', settingvalue='"202105211813", "2", "2", "0911111111", "2021-05-13", "afternoon", "2500", "0"'))
     # res = db.fetch_all_data("booking", "userId", "2")
     # print(res[0][2])
     # print(db.read_table())

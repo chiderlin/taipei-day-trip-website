@@ -17,6 +17,8 @@ user = Blueprint("user", __name__)
 
 @user.route("/user", methods=["GET"])
 def get_logined_user():
+    '''logined user infomation'''
+
     if request.method == "GET":
         # 判斷有sessionId  => 取得db裡的資料 => 回傳使用者資料
         if session.get("email") is None:
@@ -45,6 +47,8 @@ def get_logined_user():
 
 @user.route("/user", methods=["POST"])
 def user_register():
+    '''new user register process'''
+
     if request.method == "POST":
         post_data = request.get_json()
         # 登入才要給一個sessionId
@@ -82,6 +86,8 @@ def user_register():
 
 @user.route("/user", methods=["PATCH"])
 def user_login():
+    '''user login process'''
+
     if request.method == "PATCH":
         login_data = request.get_json()
         # 這樣應該就會回傳sessionId到使用者Response Headers
@@ -120,6 +126,8 @@ def user_login():
 
 @user.route("/user", methods=["DELETE"])
 def user_logout():
+    '''user logout process'''
+
     if request.method == "DELETE":
         res = make_response(jsonify({"ok": True}))
         # res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'

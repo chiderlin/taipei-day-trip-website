@@ -2,7 +2,6 @@ from flask import Blueprint
 from flask import request, jsonify, make_response, session
 import json
 import sys
-import datetime
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 # sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 from model.db import DB_controller
@@ -15,13 +14,17 @@ booking = Blueprint("booking", __name__)
 
 
 def selectOneImage(images):
+    '''etl images data, pick first picture'''
     images = images.replace("[","").replace("]","").replace("\'","")
     images = images.split(", ")
     return images[0]
 
 
+
 @booking.route("/booking", methods=["GET"])
-def uncheck_booking_list():
+def uncheck_booking():
+    '''user scheduled trip record'''
+
     # 搜尋userId，如果該id存在，表示按過開始預定行程
     if request.method == "GET":
         user_email = session.get("email")
@@ -69,6 +72,8 @@ def uncheck_booking_list():
 
 @booking.route("/booking", methods=["POST"])
 def build_booking():
+    '''build a trip if interested'''
+
     if request.method == "POST":
         post_data = request.get_json()
         print("post_data",post_data)
@@ -120,6 +125,8 @@ def build_booking():
 
 @booking.route("/booking", methods=["DELETE"])
 def delete_booking():
+    '''want to delete a scheduled'''
+
     if request.method == "DELETE":
         user_email = session.get("email")
         if not user_email:

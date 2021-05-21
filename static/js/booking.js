@@ -1,5 +1,6 @@
 let fixed = document.querySelector(".fixed");
 let layout = document.querySelector(".layout");
+let order = {};
 
 init();
 
@@ -31,6 +32,8 @@ function getBookingApi() {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
+        cleanup_order_json(api_data); // 產生order物件
+
         if(api_data.data === null) {
             renderNoBooking();
         } else {
@@ -135,6 +138,104 @@ function renderNoBooking() {
     fixed.appendChild(nobooking);
 };
 
+// 串接金流取prime
 
+TPDirect.setupSDK(20343, "app_PxPSoHZCppMvxjkyNzFnuRmqtgvENcu1rDkYKxl8ZOZHjJfKOkCtAxpmKKbW", "sandbox");
+let fields = {
+    number: {
+        element: "#card-number",
+        placeholder: " **** **** **** ****"
+    },
+    expirationDate: {
+        element: "#card-expiration-date",
+        placeholder: " MM / YY"
+    },
+    ccv: {
+        element: "#card-ccv",
+        placeholder: " CCV"
+    }
+};
 
+TPDirect.card.setup({
+    fields: fields,
+    style: {
+        'input': {
+            'color': 'gray'
+        },
+        'input.ccv': {
+            'font-size': '16px'
+        },
+        'input.expiration-date': {
+            'font-size': '16px'
+        },
+        'input.card-number': {
+            'font-size': '16px'
+        },
+        ':focus': {
+            'color': 'black'
+        },
+        '.valid': {
+            'color': 'green'
+        },
+        '.invalid': {
+            'color': 'red'
+        },
+        '@media screen and (max-width: 400px)': {
+            'input': {
+                'color': 'orange'
+            }
+        }
+    }
+});
+
+function checkAndPay(event) {
+    event.preventDefault();
+    const tappaystatus = TPDirect.card.getTappayFieldsStatus();
+    // console.log(tappaystatus);
+    TPDirect.card.getPrime(function(result) {
+        if(result.status !== 0) {
+            console.log("getPrime錯誤"+result.status);
+            return;
+        }
+        let prime = result.card.prime;
+        // console.log(result);
+        let phone = document.getElementById("client-phonenum");
+        let email = document.getElementById("client-email");
+        let name = document.getElementById("client-name");
+        let url = "api/orders"
+        let build_order = {
+            "prime": prime,
+            "order": order,
+            "contact": {
+                "name":name.value,
+                "email":email.value,
+                "phone":phone.value
+            }
+        }
+        // console.log(build_order);
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(build_order),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function(res){
+            return res.json();
+        }).then(function(api_data){
+            console.log(api_data);
+        })
+    });
+};
+
+function cleanup_order_json(api_data) {
+    //儲存order 全域變數
+    order = {
+        "price": api_data.data.price,
+        "trip": {
+            "attraction": api_data.data.attraction
+        },
+        "date": api_data.data.date,
+        "time": api_data.data.time
+    };
+};
 

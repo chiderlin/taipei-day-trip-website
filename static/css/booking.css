@@ -144,6 +144,7 @@ main {
 }
 
 .input {
+    width: 200px; height:38px;
     border: 1px solid #E8E8E8;
     border-radius:5px;
     color:#000000;
