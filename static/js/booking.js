@@ -138,8 +138,8 @@ function renderNoBooking() {
     fixed.appendChild(nobooking);
 };
 
-// 串接金流取prime
 
+// 串接金流取prime
 TPDirect.setupSDK(20343, "app_PxPSoHZCppMvxjkyNzFnuRmqtgvENcu1rDkYKxl8ZOZHjJfKOkCtAxpmKKbW", "sandbox");
 let fields = {
     number: {

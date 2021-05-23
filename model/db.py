@@ -164,7 +164,6 @@ class DB_controller:
         except Exception as e:
             return eval
 
-
     def close(self):
         ''' close database'''
         try:
