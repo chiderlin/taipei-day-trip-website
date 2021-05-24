@@ -1,7 +1,8 @@
 let fixed = document.querySelector(".fixed");
 let layout = document.querySelector(".layout");
 let order = {};
-
+let attrId;
+let userId;
 init();
 
 // controller
@@ -32,12 +33,13 @@ function getBookingApi() {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
-        cleanup_order_json(api_data); // 產生order物件
-
+        console.log(api_data);
         if(api_data.data === null) {
             renderNoBooking();
         } else {
+            cleanup_order_json(api_data); // 產生order物件
             const data = api_data.data;
+            attrId = data.attraction.id;
             const attraction = data.attraction;
             const name = attraction.name;
             const image = attraction.image;
@@ -56,7 +58,9 @@ function getUserInfo() {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(user_info) {
+        console.log(user_info);
         if(user_info.data !== null) {
+            userId = user_info.data.id;
             let username = user_info.data.name;
             let email = user_info.data.email;
             renderTitle(username);
@@ -78,6 +82,43 @@ function dropBooking() {
             window.location.reload();
         }
     })
+};
+
+function makeaPayment(prime, phone, email, name) {
+    let url = "api/orders"
+    let build_order = {
+        "prime": prime,
+        "order": order,
+        "contact": {
+            "name":name.value,
+            "email":email.value,
+            "phone":phone.value
+        }
+    }
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(build_order),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function(res){
+        return res.json();
+    }).then(function(api_data){
+        if(api_data.error === true) {
+            console.log(api_data);
+            return;
+        }
+        if(api_data.data.payment.status === 0) { //付款成功，轉到thankyou page 顯示訂單資料
+            let ordernum = api_data.data.number;
+            window.location.href = `/thankyou?number=${ordernum}`;
+        }
+    }).catch(function(err){
+        console.log(err);
+    });
+};
+
+function checkIfPay() {
+    // let url = `/api/order/${}`
 };
 
 
@@ -129,6 +170,12 @@ function renderPage(name, image, address, date, price, time) {
     img_block.appendChild(booking_img);
 };
 
+function renderCreditError() {
+    let error_msg = document.querySelector(".error-msg");
+    error_msg.style.display = "block";
+
+};
+
 function renderNoBooking() {
     let footer = document.querySelector("footer");
     footer.style.height = "100vh";
@@ -140,7 +187,9 @@ function renderNoBooking() {
 
 
 // 串接金流取prime
-TPDirect.setupSDK(20343, "app_PxPSoHZCppMvxjkyNzFnuRmqtgvENcu1rDkYKxl8ZOZHjJfKOkCtAxpmKKbW", "sandbox");
+//(appID, appKey, serverType)
+TPDirect.setupSDK(20343, "app_PxPSoHZCppMvxjkyNzFnuRmqtgvENcu1rDkYKxl8ZOZHjJfKOkCtAxpmKKbW", "Sandbox");
+//PDirect.setupSDK(11327, "app_whdEWBH8e8Lzy4N6BysVRRMILYORF6UxXbiOFsICkz0J9j1C0JUlCHv1tVJC", "Sandbox");
 let fields = {
     number: {
         element: "#card-number",
@@ -158,7 +207,7 @@ let fields = {
 
 TPDirect.card.setup({
     fields: fields,
-    style: {
+    styles: {
         'input': {
             'color': 'gray'
         },
@@ -190,40 +239,19 @@ TPDirect.card.setup({
 
 function checkAndPay(event) {
     event.preventDefault();
-    const tappaystatus = TPDirect.card.getTappayFieldsStatus();
-    // console.log(tappaystatus);
+    //const tappaystatus = TPDirect.card.getTappayFieldsStatus();
+    //console.log(tappaystatus);
     TPDirect.card.getPrime(function(result) {
+        console.log(result); //status:0, msg:succrss
         if(result.status !== 0) {
-            console.log("getPrime錯誤"+result.status);
+            renderCreditError();
             return;
         }
         let prime = result.card.prime;
-        // console.log(result);
         let phone = document.getElementById("client-phonenum");
         let email = document.getElementById("client-email");
         let name = document.getElementById("client-name");
-        let url = "api/orders"
-        let build_order = {
-            "prime": prime,
-            "order": order,
-            "contact": {
-                "name":name.value,
-                "email":email.value,
-                "phone":phone.value
-            }
-        }
-        // console.log(build_order);
-        fetch(url, {
-            method: "POST",
-            body: JSON.stringify(build_order),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(function(res){
-            return res.json();
-        }).then(function(api_data){
-            console.log(api_data);
-        })
+        makeaPayment(prime, phone, email, name);
     });
 };
 

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/css/thankyou.css">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="fixed">
+        <div class="container">
+            <div class="payment-state">
+                <!-- 付款成功 -->
+            </div>
+            <div class="payment-state">您的付款資訊如下:</div>
+            <div class="format">
+                <table>
+                    <tr>
+                        <td class="word-format">訂單編號</td>
+                        <td id="order_number">
+                            <!-- 202105231220 -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="word-format">銀行交易序號</td>
+                        <td id="bank_number">
+                            <!-- TP20210524O7qQOp -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="word-format">訂單金額</td>
+                        <td id="order_price">
+                            <!-- 新台幣 2000 元 -->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="/js/thankyou.js"></script>  
+{% endblock %}
