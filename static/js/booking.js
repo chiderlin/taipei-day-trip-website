@@ -33,7 +33,6 @@ function getBookingApi() {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
-        console.log(api_data);
         if(api_data.data === null) {
             renderNoBooking();
         } else {
@@ -58,7 +57,6 @@ function getUserInfo() {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(user_info) {
-        console.log(user_info);
         if(user_info.data !== null) {
             userId = user_info.data.id;
             let username = user_info.data.name;
@@ -242,7 +240,7 @@ function checkAndPay(event) {
     //const tappaystatus = TPDirect.card.getTappayFieldsStatus();
     //console.log(tappaystatus);
     TPDirect.card.getPrime(function(result) {
-        console.log(result); //status:0, msg:succrss
+        //console.log(result); //status:0, msg:succrss
         if(result.status !== 0) {
             renderCreditError();
             return;

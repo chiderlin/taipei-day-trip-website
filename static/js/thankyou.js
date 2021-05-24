@@ -18,8 +18,6 @@ function getOrderInfo(ordernum) {
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
-        console.log(api_data);
-        
         if(api_data.data === null){ // 直接進入thankyou頁面，但是order無資料
             // renderError(); 
 
