@@ -50,6 +50,7 @@ function renderPaymentDetail(number, bank_transaction, price, attraction, attrac
     let trip_time = document.getElementById("trip_time");
     let footer = document.querySelector("footer");
     container.style.display = "block";
+    link_attraction.style.color = "#66AABB";
     payment_state.appendChild(document.createTextNode("付款成功"));
     order_num.appendChild(document.createTextNode(number));
     bank_num.appendChild(document.createTextNode(bank_transaction));

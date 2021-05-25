@@ -185,3 +185,38 @@ def order_info(ordernumber):
         except Exception as e:
             return jsonify({"error":True, "message": str(e)}), 500
 
+
+@order.route("/orders/history", methods=["GET"])
+def order_list():
+    if request.method == "GET":
+        if not session.get("email"):
+            return jsonify({"error":True, "message":"尚未登入會員"}), 403
+        
+        clean_order_list = []
+        try:
+            db = DB_controller(
+                host=conf["HOST"],
+                user=conf["USER"],
+                password=conf["PWD"],
+                db=conf["DB"]
+            )
+            user_data = db.show_data("user", "email", session.get("email"))
+            order_list = db.fetch_all_data("orders", "userId", user_data[0])
+            if not order_list:
+                return jsonify({"data": None})
+            
+            
+            for one in order_list:
+                time_format = one[10]
+                time_format = time_format.strftime("%Y-%m-%d %H:%M:%S")
+                one_data = {
+                    "number": one[1],
+                    "create_time": time_format,
+                    "order_price": one[8],
+                    "status": one[9]
+                }
+                clean_order_list.append(one_data)
+            return jsonify({"data": clean_order_list})
+
+        except Exception as e:
+            return jsonify({"error":True, "message": str(e)}), 500

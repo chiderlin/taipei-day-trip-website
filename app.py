@@ -34,6 +34,9 @@ def booking():
 def thankyou():
     return render_template("thankyou.html")
 
+@app.route("/historyorder")
+def historyorder():
+    return render_template("historyorder.html")
 
 
 if __name__ == "__main__":

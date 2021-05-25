@@ -9,6 +9,19 @@ function init() {
     getUserStatus();
 };
 
+
+// 歷史訂單
+item[3].addEventListener("click", ()=> {
+    if(login_status === false) {
+        //沒登入 => 跳到登入畫面
+        overlay_login.style.display = "block";
+    }else {
+        // 有登入 => 跳轉
+        window.location.href = `/historyorder`
+    }
+});
+
+
 //預定行程
 item[0].addEventListener("click", ()=> {
     if(login_status === false) {
@@ -179,13 +192,15 @@ function loginOut() {
 
 //view
 function initRenderItem(api_data) {
-    //[0]預定行程 [1]登入/註冊 [2]登出系統
+    //[0]預定行程 [1]登入/註冊 [2]登出系統 [3]歷史訂單
     if(api_data.data !== null) { //登入狀態
         item[2].classList.remove("hide");
+        item[3].classList.remove("hide");
         item[1].classList.add("hide");
     } else { //未登入狀態
         item[1].classList.remove("hide");
         item[2].classList.add("hide");
+        item[3].classList.add("hide");
 
     }
 };

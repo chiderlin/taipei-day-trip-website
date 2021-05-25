@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/css/historyorder.css">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="fixed">
+        <div class="container">
+            <div class="payment-state">歷史付款紀錄如下:</div>
+            <div class="table-block">
+                <table id="big">
+                    <tr>
+                        <td>訂單編號</td>
+                        <td>訂單時間</td>
+                        <td>訂單金額</td>
+                        <td>訂單狀態</td>
+                    </tr>
+                    
+                </table>
+            </div>
+
+        </div>
+        <div class="small-container">
+            <div class="payment-state">歷史付款紀錄如下:</div>
+        </div>
+    </div>
+
+</main>
+<script src="/js/history.js"></script>
+{% endblock %}
