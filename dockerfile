@@ -1,9 +1,11 @@
 # FROM python:3.8.1
 FROM ubuntu:latest
 MAINTAINER Chi Lin "chiderlin36@gmail.com"
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && \
     apt-get install -y vim && \
-    apt-get install --no-install-recommends -y && \
+    apt-get install --no-install-recommends -y \
     python3.8 python3-pip python3.8-dev
 
 COPY . /app
