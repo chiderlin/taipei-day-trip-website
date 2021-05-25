@@ -4,9 +4,15 @@ MAINTAINER Chi Lin "chiderlin36@gmail.com"
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
+    DEBIAN_FRONTEND apt-get install -y --no-install-recommends tzdata && \
     apt-get install -y vim && \
     apt-get install --no-install-recommends -y \
     python3.8 python3-pip python3.8-dev
+
+RUN TZ=Asia/Taipei \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone \
+    && dpkg-reconfigure -f noninteractive tzdata 
 
 COPY . /app
 WORKDIR /app
