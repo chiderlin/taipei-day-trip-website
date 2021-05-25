@@ -70,7 +70,6 @@ function renderPaymentDetail(number, bank_transaction, price, attraction, attrac
 };
 
 function renderNoOrder() {
-
     let fixed = document.querySelector(".fixed");
     let payment_state = document.createElement("div");
     let footer = document.querySelector("footer");
