@@ -29,9 +29,9 @@
 }
 
 table {
-    width:400px;border:1px solid #888888;
+    width:70%;border:1px solid #888888;
     border-collapse:collapse; /*兩條邊線變一條*/
-    margin:20px;
+    margin:10px;
 }
 
 
@@ -39,15 +39,26 @@ td{
 	/* border-bottom:1px solid #888888; */
     border:1px solid #888888;
     padding:10px;
+    flex:none;
 }
 
 td:nth-child(1) {
     background-color: #66AABB;
 }
 
-.word-format {
+.left-word-format {
     color: #ffffff;
+    font-size:16px;
 }
+
+.right-word-format {
+    font-size:16px;
+}
+
+.note {
+    margin:20px;
+} 
+
 
 footer{
     align-items:start;
@@ -57,4 +68,15 @@ footer{
 footer div {
     color: #fff;
     margin-top:45px;
+}
+@media(max-width:600px) {
+    .left-word-format {
+        font-size:14px;
+    }
+    .left-word-format {
+        font-size:14px;
+    }
+    td {
+        padding:5px;
+    }
 }
