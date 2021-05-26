@@ -8,6 +8,7 @@ init();
 function init() {
     getData(get_route); // 取得網頁編號 => 進行attraction的render page
     getUserStatus(); // 看有無登入
+    disableDayBefore(); // 過去日期不要讓使用者做booking
 };
 
 function bookingProcess(user_info) { //true false切換登入狀態
@@ -17,6 +18,12 @@ function bookingProcess(user_info) { //true false切換登入狀態
         login_status = false;
     }
 
+};
+
+function disableDayBefore() {
+    let date_cal = document.getElementById("date");
+    let today = new Date().toISOString().split('T')[0]; // ["2021-05-18", "06:06:54.157Z"]
+    date_cal.setAttribute("min", today);
 };
 
 
@@ -81,7 +88,7 @@ booking_trip_btn.addEventListener("click", ()=>{
         let price = "";
         let time = "";
         for(let i=3; i<price_tag.innerText.length-1; i++) {
-            price = price + price_tag.innerText[i];
+            price = price + price_tag.innerText[i]; //擷取數字部分
         }
         if(date.value === "") {
             renderMessage("日期");
@@ -234,7 +241,7 @@ function imageSlider() {
     }
 };
 
-function renderMessage(msg) {
+function renderMessage(msg) { //提示訊息
     let booking_area = document.querySelector(".booking-area");
     let booking_message = document.querySelector(".booking-message");
     if(booking_message !== null) {

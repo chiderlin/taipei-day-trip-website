@@ -14,8 +14,6 @@ let checkProcess = false;
 
 init(); // => 接getNextPage
 
-
-
 // controller
 function init() {
     getData(0, "")
@@ -180,7 +178,6 @@ function render_bigbox(container) {
     container.appendChild(bigbox);
     return bigbox;
 };
-
 
 function render_box(bigbox) {
     const smallbox = document.createElement("div");

@@ -6,23 +6,35 @@ services:
             - "3000:3000"
         links:
             - mysql
+            - proxy
         networks:
-            - second-stage-project
+            - backnet
+            - frontnet
 
     mysql:
         image: mysql
         environment:
             MYSQL_ROOT_PASSWORD: 'root'
-        ports:
-            - "3306:3306"
         expose:
             - "3306"
         volumes:
             - /home/ubuntu/db/data:/var/lib/mysql
+            - /etc/localtime:/etc/localtime:ro # 時間和外面相通
         networks:
-            - second-stage-project
+            - backnet
+
+    proxy:
+        build: proxy
+        restart: always
+        ports:
+            - "80:80"
+        volumes:
+            - /etc/localtime:/etc/localtime:ro # 時間和外面相通
+        networks:
+            - frontnet
 
 networks:
-    second-stage-project:
+    backnet:
+    frontnet:
 volumes:
     data:

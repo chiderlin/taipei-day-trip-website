@@ -25,7 +25,7 @@ class DB_controller:
                 password=password,
                 database=self.db,
             )
-            self.mycursor = self.mydb.cursor()
+            self.mycursor = self.mydb.cursor(buffered=True)
         except Exception as e:
             print(str(e))
 
@@ -109,10 +109,11 @@ class DB_controller:
         except Exception as e:
             return e        
 
-    def update_name(self, origin_name, new_name):
-        '''update name to db'''
+    def update(self, table_name, set, search):
+        '''update row in the specific table'''
         try:
-            sql = f"update user set name='{new_name}' where name='{origin_name}'"
+            self.mycursor.execute(f"use {self.db}")
+            sql = f"update {table_name} set {set} where {search}"
             self.mycursor.execute(sql)
             self.mydb.commit()
             return "db name update successful"
@@ -164,7 +165,6 @@ class DB_controller:
         except Exception as e:
             return eval
 
-
     def close(self):
         ''' close database'''
         try:
@@ -187,23 +187,29 @@ if __name__ == '__main__':
     # print(db.read_db())
     # print(db.create_db("taipeitravel"))
 
-    # print(db.create_table(
-    #     '''
-    #     create table booking (
-    #     bookingId int auto_increment,
-    #     attractionId int not null,
-    #     userId int not null,
-    #     date date not null,
-    #     time varchar(255) not null,
-    #     price int not null,
-    #     create_time datetime not null default now(),
-    #     PRIMARY KEY (bookingId),
-    #     FOREIGN KEY (attractionId) REFERENCES attractions(id) ON DELETE CASCADE,
-    #     FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
-    #     )
-    #     CHARSET=utf8mb4'''))
+    print(db.create_table(
+        '''
+        create table orders (
+        id int auto_increment,
+        order_number varchar(255) not null unique,
+        bank_transaction varchar(255),
+        attractionId int not null,
+        userId int not null,
+        phone varchar(255) not null,
+        date date not null,
+        time varchar(255) not null,
+        price int not null,
+        status int not null,
+        create_time datetime not null default now(),
+        PRIMARY KEY (id),
+        FOREIGN KEY (attractionId) REFERENCES attractions(id) ON DELETE CASCADE,
+        FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE
+        )
+        CHARSET=utf8mb4'''))
     
-    print(db.insert_data(table_name='booking', settingrow='attractionId, userId, date, time, price', settingvalue='"5", "2", "2021-05-13", "afternoon", "2500"'))
+    print(db.insert_data(table_name='orders', settingrow='order_number, bank_transaction, attractionId, userId, phone, date, time, price, status', settingvalue='"202105211813", "TP20210524O7qQOp", "2", "2", "0911111111", "2021-05-13", "afternoon", "2500", "0"'))
+    # print(db.insert_data(table_name='orders', settingrow='order_number, attractionId, userId, phone, date, time, price, status', settingvalue='"202105211814", "2", "2", "0911111111", "2021-05-13", "afternoon", "2500", "0"'))
+    
     # res = db.fetch_all_data("booking", "userId", "2")
     # print(res[0][2])
     # print(db.read_table())

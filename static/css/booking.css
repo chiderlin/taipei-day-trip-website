@@ -144,6 +144,7 @@ main {
 }
 
 .input {
+    width: 200px; height:38px;
     border: 1px solid #E8E8E8;
     border-radius:5px;
     color:#000000;
@@ -197,15 +198,22 @@ main {
     padding:0;
     cursor:pointer;
 }
+.error-msg {
+    display:none;
+    text-align:end;
+    margin-top:10px;
+    color: red;
+}
 
 hr {
     border:1px solid #E8E8E8;
 }
 
 
+
+
 footer{
     align-items:start;
-    /* height:100vh; */
     height:104px;
 }
 

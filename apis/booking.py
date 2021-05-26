@@ -2,7 +2,6 @@ from flask import Blueprint
 from flask import request, jsonify, make_response, session
 import json
 import sys
-import datetime
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 # sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 from model.db import DB_controller
@@ -15,14 +14,18 @@ booking = Blueprint("booking", __name__)
 
 
 def selectOneImage(images):
+    '''etl images data, pick first picture'''
     images = images.replace("[","").replace("]","").replace("\'","")
     images = images.split(", ")
     return images[0]
 
 
+
 @booking.route("/booking", methods=["GET"])
-def uncheck_booking_list():
-    # 搜尋attractionId，如果該id存在，表示按過開始預定行程
+def uncheck_booking():
+    '''user scheduled trip record'''
+
+    # 搜尋userId，如果該id存在，表示按過開始預定行程
     if request.method == "GET":
         user_email = session.get("email")
         if not user_email:
@@ -69,6 +72,8 @@ def uncheck_booking_list():
 
 @booking.route("/booking", methods=["POST"])
 def build_booking():
+    '''build a trip if interested'''
+
     if request.method == "POST":
         post_data = request.get_json()
         print("post_data",post_data)
@@ -97,10 +102,10 @@ def build_booking():
                 user_data = db.show_data("user", "email", user_email)
                 print("user_data", user_data)
                 userId = user_data[0]
-                # 先判斷booking table裡面是否已經有資料了，
                 
                 booking_data = db.show_data("booking", "userId", userId)
                 print("check booking db", booking_data)
+                # 先判斷booking table裡面是否已經有資料了，
                 if booking_data: # 如果有 => 刪除原本的 insert此筆
                     delete = db.delete("booking", "userId", userId)
                     insert = db.insert_data(table_name="booking", settingrow='attractionId, userId, date, time, price', settingvalue=f'"{attractionId}","{userId}","{date}", "{time}", "{price}"')
@@ -120,6 +125,8 @@ def build_booking():
 
 @booking.route("/booking", methods=["DELETE"])
 def delete_booking():
+    '''want to delete a scheduled'''
+
     if request.method == "DELETE":
         user_email = session.get("email")
         if not user_email:
@@ -138,5 +145,5 @@ def delete_booking():
             res = make_response(jsonify({"ok":True}))
             return res
         except Exception as e:
-            return jsonify({"error":True, "message":str(e)})
+            return jsonify({"error":True, "message":str(e)}), 500
         
