@@ -1,5 +1,6 @@
 let url = `/api/user`;
-let item = document.querySelectorAll(".item");
+let item = document.querySelectorAll(".item"); //for gib screen
+let burger_items = document.querySelectorAll(".burger-item"); // for small screen(burger)
 let overlay_login = document.querySelector(".overlay-login");
 let login_status = false;
 init()
@@ -9,7 +10,61 @@ function init() {
     getUserStatus();
 };
 
+/** *for small screen* **/
+// burger按鈕 => 關閉
+let burger_closebtn = document.getElementById("closebtn");
+burger_closebtn.addEventListener("click", ()=> {
+    let burger_overlay = document.querySelector(".burger-overlay");
+    burger_overlay.style.height = "0%";
+});
 
+// burger按鈕=> 開啟
+let burger_openbtn = document.getElementById("openbtn");
+burger_openbtn.addEventListener("click", ()=> {
+    let burger_overlay = document.querySelector(".burger-overlay");
+    burger_overlay.style.height = "100%";
+});
+
+
+// 預定行程
+burger_items[0].addEventListener("click", ()=>{
+    if(login_status === false) {
+        //沒登入 => 跳到登入畫面
+        let burger_overlay = document.querySelector(".burger-overlay");
+        burger_overlay.style.height = "0%";
+        overlay_login.style.display = "block";
+    }else {
+        // 有登入 => 跳轉 (讓booking頁面去判斷有無unbook資料存在)
+        window.location.href = `/booking`
+    }
+});
+
+// 使用者登入
+burger_items[1].addEventListener("click", ()=>{
+    let burger_overlay = document.querySelector(".burger-overlay");
+    burger_overlay.style.height = "0%";
+    overlay_login.style.display = "block";
+});
+
+// 使用者登出
+burger_items[2].addEventListener("click", ()=>{
+    loginOut();
+    item[1].classList.remove("hide");
+    item[2].classList.add("hide");
+});
+// 歷史訂單
+burger_items[3].addEventListener("click", ()=>{
+    if(login_status === false) {
+        //沒登入 => 跳到登入畫面
+        overlay_login.style.display = "block";
+    }else {
+        // 有登入 => 跳轉
+        window.location.href = `/historyorder`
+    }
+});
+
+
+/** *for big screen* **/
 // 歷史訂單
 item[3].addEventListener("click", ()=> {
     if(login_status === false) {
@@ -47,6 +102,7 @@ item[2].addEventListener("click", ()=> {
 });
 
 
+/** *登入畫面or註冊畫面上的功能* **/
 // 登入關閉
 let login_close_btn = document.getElementById("close-btn-for-img-login");
 login_close_btn.addEventListener("click", ()=> {
@@ -194,16 +250,28 @@ function loginOut() {
 function initRenderItem(api_data) {
     //[0]預定行程 [1]登入/註冊 [2]登出系統 [3]歷史訂單
     if(api_data.data !== null) { //登入狀態
+        // big screen
         item[2].classList.remove("hide");
         item[3].classList.remove("hide");
         item[1].classList.add("hide");
+
+        //burger screen
+        burger_items[1].classList.add("hide"); // 登入註冊
+        burger_items[2].classList.remove("hide"); // 登出系統
+        burger_items[3].classList.remove("hide"); // 歷史訂單
+
     } else { //未登入狀態
+        // big screen
         item[1].classList.remove("hide");
         item[2].classList.add("hide");
         item[3].classList.add("hide");
 
+        //burger screen
+        burger_items[1].classList.remove("hide"); // 登入註冊
     }
 };
+
+
 
 function renderRegister(api_data) {
     let register_page = document.querySelector(".register-page");

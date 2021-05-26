@@ -53,54 +53,6 @@ header {
     display: none;
 }
 
-/*購物車*/
-/* .shopping-cart {
-    display:none;
-    justify-content: center;
-    align-items: center;
-    width:165px;
-    height:200px;
-    background-color: #ffffff;
-    opacity: 0.8;
-    margin:0; padding:0;
-    position: absolute;
-    top:54px;right:0;
-    list-style-type:none;
-    border-radius: 5px;
-}
-
-#booking {display:none;}
-
-.null-block {
-    width:100%;height:100%;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-.shopping-cart a {
-    text-decoration:none;
-}
-.shopping-cart li {
-    padding:10px;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    cursor:pointer;
-}
-
-li:hover {
-    background-color: #448899;
-    color: #fff;
-}
-
-@media(max-width:1200px) {
-    .shopping-cart {
-        top:54px;right:0px;
-    }
-} */
-
-
-
 .overlay-login {
     position:fixed;
     width:100%;
@@ -238,12 +190,77 @@ li:hover {
     cursor: pointer;
 }
 
+.burger-overlay {
+    display:none;
+    width:100%;
+    height:0%;
+    position:fixed;
+    z-index:100;
+    top:0;
+    left:0;
+    background-color: rgb(0,0,0);
+    background-color: rgb(0,0,0,0.8);
+    overflow-y:hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position:relative;
+    top:25%;
+    width:100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.menu-format {
+    margin:10px;
+}
+
+.burger-overlay a {
+    padding:8px;
+    text-decoration: none;
+    font-size: 30px;
+    color: #818181;
+    transition:0.3s;
+}
+
+.burger-overlay a:hover {
+    color: #f1f1f1;
+}
+
+.burger-overlay .closebtn {
+    position:absolute;
+    top:20px;
+    right:10px;
+    font-size:60px;
+}
+
+#openbtn {
+    font-size:30px;
+    cursor:pointer;
+    display:none;
+}
+
+@media(max-width:600px) {
+    .items {
+        display:none;
+    }
+    .burger-overlay {
+        display:block;
+    }
+    #openbtn {
+        display:block;
+        position:absolute;
+        top: 5px;
+        right:10px;
+    }
+}
+
 
 main {
     margin-top: 54px;
 
 }
-
 
 footer {
     display:flex;
