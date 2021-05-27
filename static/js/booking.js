@@ -227,22 +227,17 @@ function renderPage(name, image, address, date, price, time) {
     const booking_address = document.getElementById("booking-address");
     const img_block = document.querySelector(".img-block");
     const booking_img = document.createElement("img");
+    const format_time = timeSetting(time);
 
     // last-block
     const price_check = document.querySelector(".price-check");
-
-    if(time === "morning") {
-        time = "早上9點到下午4點";
-    } else if (time === "afternoon") {
-        time = "下午2點到晚上9點";
-    }
-
+    
     booking_img.className = "booking-img";
     price_check.className = "price-check";
     booking_img.setAttribute("src", image);
     booking_title.appendChild(document.createTextNode(`台北一日遊:${name}`));
     booking_date.appendChild(document.createTextNode(date));
-    booking_time.appendChild(document.createTextNode(time));
+    booking_time.appendChild(document.createTextNode(format_time));
     booking_price.appendChild(document.createTextNode(`新台幣${price}元`));
     booking_address.appendChild(document.createTextNode(address));
     price_check.appendChild(document.createTextNode(`新台幣${price}元`));
@@ -264,3 +259,11 @@ function renderNoBooking() {
     fixed.appendChild(nobooking);
 };
 
+function timeSetting(time) {
+    if(time === "morning") {
+        time = "早上9點到下午4點";
+    } else if(time === "afternoon") {
+        time = "下午2點到晚上9點"
+    };
+    return time;
+};
