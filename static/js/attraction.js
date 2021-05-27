@@ -1,4 +1,4 @@
-let login_status = false;
+// let login_status = false; // base.js已經有了
 let get_route = location.pathname
 let images;  //click也抓images
 let attraction_id;
@@ -17,7 +17,6 @@ function bookingProcess(user_info) { //true false切換登入狀態
     } else {
         login_status = false;
     }
-
 };
 
 function disableDayBefore() {
