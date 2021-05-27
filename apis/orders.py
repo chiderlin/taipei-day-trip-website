@@ -26,8 +26,9 @@ def build_order():
             # 創建訂單編號
             now = dt.today()
             order_number = now.strftime("%Y%m%d%H%M%S")
-            order_status = -1 # 記錄訂單付款狀態 -1未付款, 0付款成功, 1付款失敗
-            try: #訂單資訊存到db
+            order_status = -1 # 記錄訂單付款狀態 初始值設-1 0付款成功, 1付款失敗
+            try: 
+                #訂單資訊存到db
                 db = DB_controller(
                     host=conf["HOST"],
                     user=conf["USER"],
@@ -57,16 +58,13 @@ def build_order():
                 return jsonify({"error": True, "message": str(e)}), 500
 
             # 進行付款動作
-            # tayppay.Client(is_sanbox, partner_key, merchant_id) 這裡都用官方提供測試用
+            # tayppay.Client(is_sanbox, partner_key, merchant_id) 這裡都用官方提供測試用 => 沙盒 (要使用自己的key,id需要真的創建公司並且通過審核)
             client = tappay.Client(True, "partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM", "GlobalTesting_CTBC")
-            #client = tappay.Client(True, "partner_PyJKIbMCqgsYpYiouacHI67J0jT0xOdGBGSO9e05OdiB1RHhYSDdjioD", "chi_CTBC")
             card_holder_data = tappay.Models.CardHolderData(post_data["contact"]["phone"], post_data["contact"]["name"], post_data["contact"]["email"])
             
             # client.pay_by_prime(prime, amount, details, card_holder_data)
-            #response_data_dict = client.pay_by_prime(post_data["prime"], post_data["order"]["price"], post_data["order"]["trip"]["attraction"]["name"], card_holder_data)
             response_data_dict = client.pay_by_prime("test_3a2fb2b7e892b914a03c95dd4dd5dc7970c908df67a49527c0a648b2bc9", post_data["order"]["price"], post_data["order"]["trip"]["attraction"]["name"], card_holder_data)
             
-            print("response_data_dict", response_data_dict)
             if response_data_dict["status"] == 0:
                 order_status = 0
                 try: 
@@ -106,7 +104,7 @@ def build_order():
         except Exception as e:
             return jsonify({"error": True, "message": str(e)}), 400
 
-
+        # 想用requests試試看抓資料 但一直JSON FORMAT錯誤??
         #     name = post_data["contact"]["name"]
         #     email = post_data["contact"]["email"]
         #     phone = post_data["contact"]["phone"]
@@ -186,6 +184,7 @@ def order_info(ordernumber):
             return jsonify({"error":True, "message": str(e)}), 500
 
 
+# 自己新增 for historyorder page
 @order.route("/orders/history", methods=["GET"])
 def order_list():
     if request.method == "GET":
