@@ -5,7 +5,7 @@ let attrId;
 let userId;
 init();
 
-// controller
+/* *controller* */ 
 function init() {
     getBookingApi();
     getUserInfo();
@@ -27,7 +27,91 @@ inside_trash_img.addEventListener("click", ()=> {
 });
 
 
-//model
+// payment onclick按鈕
+function checkAndPay(event) {
+    event.preventDefault();
+    //const tappaystatus = TPDirect.card.getTappayFieldsStatus();
+    //console.log(tappaystatus);
+    TPDirect.card.getPrime(function(result) {
+        //console.log(result); //status:0, msg:succrss
+        if(result.status !== 0) {
+            renderCreditError();
+            return;
+        }
+        let prime = result.card.prime;
+        let phone = document.getElementById("client-phonenum");
+        let email = document.getElementById("client-email");
+        let name = document.getElementById("client-name");
+        makeaPayment(prime, phone, email, name);
+    });
+};
+
+// 把order存到全域變數再給makeapayment用
+function cleanup_order_json(api_data) {
+    order = {
+        "price": api_data.data.price,
+        "trip": {
+            "attraction": api_data.data.attraction
+        },
+        "date": api_data.data.date,
+        "time": api_data.data.time
+    };
+};
+
+// 串接金流取prime
+//(appID, appKey, serverType)
+TPDirect.setupSDK(20343, "app_PxPSoHZCppMvxjkyNzFnuRmqtgvENcu1rDkYKxl8ZOZHjJfKOkCtAxpmKKbW", "Sandbox");
+//PDirect.setupSDK(11327, "app_whdEWBH8e8Lzy4N6BysVRRMILYORF6UxXbiOFsICkz0J9j1C0JUlCHv1tVJC", "Sandbox");
+let fields = {
+    number: {
+        element: "#card-number",
+        placeholder: " **** **** **** ****"
+    },
+    expirationDate: {
+        element: "#card-expiration-date",
+        placeholder: " MM / YY"
+    },
+    ccv: {
+        element: "#card-ccv",
+        placeholder: " CCV"
+    }
+};
+
+TPDirect.card.setup({
+    fields: fields,
+    styles: {
+        'input': {
+            'color': 'gray'
+        },
+        'input.ccv': {
+            'font-size': '16px'
+        },
+        'input.expiration-date': {
+            'font-size': '16px'
+        },
+        'input.card-number': {
+            'font-size': '16px'
+        },
+        ':focus': {
+            'color': 'black'
+        },
+        '.valid': {
+            'color': 'green'
+        },
+        '.invalid': {
+            'color': 'red'
+        },
+        '@media screen and (max-width: 400px)': {
+            'input': {
+                'color': 'orange'
+            }
+        }
+    }
+});
+
+
+
+/* *model* */
 function getBookingApi() {
     let url = "/api/booking";
     fetch(url).then(function(res) {
@@ -103,7 +187,7 @@ function makeaPayment(prime, phone, email, name) {
         return res.json();
     }).then(function(api_data){
         if(api_data.error === true) {
-            console.log(api_data);
+            // 付款失敗
             return;
         }
         if(api_data.data.payment.status === 0) { //付款成功，轉到thankyou page 顯示訂單資料
@@ -115,9 +199,6 @@ function makeaPayment(prime, phone, email, name) {
     });
 };
 
-function checkIfPay() {
-    // let url = `/api/order/${}`
-};
 
 
 //view
@@ -181,87 +262,5 @@ function renderNoBooking() {
     nobooking.className = "nobooking";
     nobooking.appendChild(document.createTextNode("目前沒有任何待預定的行程"));
     fixed.appendChild(nobooking);
-};
-
-
-// 串接金流取prime
-//(appID, appKey, serverType)
-TPDirect.setupSDK(20343, "app_PxPSoHZCppMvxjkyNzFnuRmqtgvENcu1rDkYKxl8ZOZHjJfKOkCtAxpmKKbW", "Sandbox");
-//PDirect.setupSDK(11327, "app_whdEWBH8e8Lzy4N6BysVRRMILYORF6UxXbiOFsICkz0J9j1C0JUlCHv1tVJC", "Sandbox");
-let fields = {
-    number: {
-        element: "#card-number",
-        placeholder: " **** **** **** ****"
-    },
-    expirationDate: {
-        element: "#card-expiration-date",
-        placeholder: " MM / YY"
-    },
-    ccv: {
-        element: "#card-ccv",
-        placeholder: " CCV"
-    }
-};
-
-TPDirect.card.setup({
-    fields: fields,
-    styles: {
-        'input': {
-            'color': 'gray'
-        },
-        'input.ccv': {
-            'font-size': '16px'
-        },
-        'input.expiration-date': {
-            'font-size': '16px'
-        },
-        'input.card-number': {
-            'font-size': '16px'
-        },
-        ':focus': {
-            'color': 'black'
-        },
-        '.valid': {
-            'color': 'green'
-        },
-        '.invalid': {
-            'color': 'red'
-        },
-        '@media screen and (max-width: 400px)': {
-            'input': {
-                'color': 'orange'
-            }
-        }
-    }
-});
-
-function checkAndPay(event) {
-    event.preventDefault();
-    //const tappaystatus = TPDirect.card.getTappayFieldsStatus();
-    //console.log(tappaystatus);
-    TPDirect.card.getPrime(function(result) {
-        //console.log(result); //status:0, msg:succrss
-        if(result.status !== 0) {
-            renderCreditError();
-            return;
-        }
-        let prime = result.card.prime;
-        let phone = document.getElementById("client-phonenum");
-        let email = document.getElementById("client-email");
-        let name = document.getElementById("client-name");
-        makeaPayment(prime, phone, email, name);
-    });
-};
-
-function cleanup_order_json(api_data) {
-    //儲存order 全域變數
-    order = {
-        "price": api_data.data.price,
-        "trip": {
-            "attraction": api_data.data.attraction
-        },
-        "date": api_data.data.date,
-        "time": api_data.data.time
-    };
 };
 
