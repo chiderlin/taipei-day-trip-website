@@ -35,7 +35,7 @@ services:
     #         - frontnet
     
     nginx:
-        image: nginx:1.15-alpine
+        image: nginx
         ports:
             - "80:80"
             - "443:443"
