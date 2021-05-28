@@ -1,10 +1,4 @@
 FROM nginx
 
-#VOLUME /usr/share/nginx/html
-#VOLUME /etc/nginx
-
-# 將自己的index.html複製到nginx內 /var/www目錄下
-#COPY ./templates /usr/share/nginx/html
-
 # 複製conf檔到nginx內
 COPY nginx.conf /etc/nginx/conf.d/default.conf
