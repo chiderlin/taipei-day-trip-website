@@ -6,7 +6,6 @@ services:
             - "3000:3000"
         links:
             - mysql
-            # - proxy
             - nginx
         networks:
             - backnet
@@ -23,15 +22,6 @@ services:
             - /etc/localtime:/etc/localtime:ro # 時間和外面相通
         networks:
             - backnet
-    # proxy:
-    #     build: proxy
-    #     restart: always
-    #     ports:
-    #         - "80:80"
-    #     volumes:
-    #         - /etc/localtime:/etc/localtime:ro # 時間和外面相通
-    #     networks:
-    #         - frontnet
 
     nginx:
         image: nginx:1.15-alpine

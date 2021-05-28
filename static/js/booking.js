@@ -35,7 +35,7 @@ function checkAndPay(event) {
     TPDirect.card.getPrime(function(result) {
         //console.log(result); //status:0, msg:succrss
         if(result.status !== 0) {
-            renderCreditError();
+            renderError("信用卡資訊輸入錯誤");
             return;
         }
         let prime = result.card.prime;
@@ -177,6 +177,18 @@ function makeaPayment(prime, phone, email, name) {
             "phone":phone.value
         }
     }
+    if(name.value === "") {
+        renderError("請輸入姓名");
+        return;
+    };
+    if(email.value === "") {
+        renderError("請輸入email");
+        return;
+    };
+    if(phone.value === "") {
+        renderError("請輸入電話號碼");
+        return;
+    };
     fetch(url, {
         method: "POST",
         body: JSON.stringify(build_order),
@@ -244,8 +256,10 @@ function renderPage(name, image, address, date, price, time) {
     img_block.appendChild(booking_img);
 };
 
-function renderCreditError() {
+function renderError(msg) {
     let error_msg = document.querySelector(".error-msg");
+    error_msg.innerHTML = "";
+    error_msg.appendChild(document.createTextNode(`${msg}`));
     error_msg.style.display = "block";
 
 };
