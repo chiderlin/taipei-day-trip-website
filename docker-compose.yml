@@ -6,8 +6,7 @@ services:
             - "3000:3000"
         links:
             - mysql
-            - nginx
-            # - proxy
+            - proxy
         networks:
             - backnet
             - frontnet
