@@ -259,7 +259,7 @@ function renderPage(name, image, address, date, price, time) {
 function renderError(msg) {
     let error_msg = document.querySelector(".error-msg");
     error_msg.innerHTML = "";
-    error_msg.appendChild(document.createTextNode(`${msg}`));
+    error_msg.appendChild(document.createTextNode(msg));
     error_msg.style.display = "block";
 
 };
