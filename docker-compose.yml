@@ -24,29 +24,15 @@ services:
         networks:
             - backnet
 
-    # proxy:
-    #     build: proxy
-    #     restart: always
-    #     ports:
-    #         - "80:80"
-    #     volumes:
-    #         - /etc/localtime:/etc/localtime:ro # 時間和外面相通
-    #     networks:
-    #         - frontnet
-    
-    nginx:
-        image: nginx
+    proxy:
+        build: proxy
+        restart: always
         ports:
             - "80:80"
-            - "443:443"
         volumes:
             - /etc/localtime:/etc/localtime:ro # 時間和外面相通
-            - ./nginx/nginx:/etc/nginx/conf.d
         networks:
             - frontnet
-    
-    certbot:
-        image: certbot/certbot
 
 networks:
     backnet:
