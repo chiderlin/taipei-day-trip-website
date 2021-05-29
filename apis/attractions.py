@@ -23,6 +23,7 @@ attr = Blueprint("attr", __name__,
 # function
 def count_pages(count_data):
     ''' count pages '''
+    count_data = str(count_data)
     count_data = int(count_data)
     if count_data % 12 != 0:  # 12筆一頁
         last_page = count_data // 12 + 1-1  # 餘數+1 page從0開始-1 # 有餘數就表示有下頁
