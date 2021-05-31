@@ -3,6 +3,7 @@ from flask import request, jsonify, session
 import tappay
 import requests
 from datetime import datetime as dt
+import re
 import os
 from dotenv import load_dotenv
 import sys
@@ -27,12 +28,31 @@ def build_order():
         print(post_data)
         if not session.get("email"):
             return jsonify({"error":True, "message": "未登入會員系統"}), 403
-        
-        attractionId = post_data["order"]["trip"]["attraction"]["id"]
+        user_name = post_data["contact"]["name"]
+        email = post_data["contact"]["email"]
         phone = post_data["contact"]["phone"]
+        attractionId = post_data["order"]["trip"]["attraction"]["id"]
         date = post_data["order"]["date"]
         time = post_data["order"]["time"]
         price = post_data["order"]["price"]
+        rex_email = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" # email格式
+        rex_phone = r"\d\d\d\d-\d\d\d-\d\d\d"
+        match_email = re.match(rex_email, email)
+        match_phone = re.match(rex_phone, phone)
+        if user_name == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400
+
+        if email == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400
+        
+        if not match_email:
+            return jsonify({"error": True, "message": "email格式錯誤"}), 400
+
+        if phone == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400
+
+        if not match_phone:
+            return jsonify({"error": True, "message": "手機號碼格式錯誤"}), 400
 
         try:
             # 創建訂單編號

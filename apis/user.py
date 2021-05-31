@@ -64,6 +64,9 @@ def user_register():
         if name == "":
             return jsonify({"error": True, "message": "不可為空值"}), 400 
         
+        if email == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400
+
         if not match:
             return jsonify({"error": True, "message": "請輸入正確email"}), 400 
 
@@ -107,6 +110,9 @@ def user_login():
         pwd = login_data["password"]
         rex_email = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" # email格式
         match = re.match(rex_email, email)
+        if email == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400
+            
         if not match:
             return jsonify({"error": True, "message": "請輸入正確email"}), 400 
 
