@@ -29,7 +29,7 @@ function getHistoryOrder() {
 };
 
 function ProcessList(data_dict) { // 新增多少列資料&多少塊資料
-    for(let i=0; i<data_dict.length; i++) {
+    for(let i=data_dict.length-1; i>=0; i--) { // 最新的資料在最上面
         const create_time = data_dict[i].create_time;
         const number = data_dict[i].number;
         const order_price = data_dict[i].order_price;
