@@ -59,8 +59,8 @@ def user_register():
         name = post_data["name"]
         email = post_data["email"]
         pwd = post_data["password"]
-        rex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" # email格式
-        match = re.match(rex, email)
+        rex_email = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" # email格式
+        match = re.match(rex_email, email)
         if name == "":
             return jsonify({"error": True, "message": "不可為空值"}), 400 
         
@@ -105,8 +105,8 @@ def user_login():
         # 這樣應該就會回傳sessionId到使用者Response Headers
         email = login_data["email"]
         pwd = login_data["password"]
-        rex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" # email格式
-        match = re.match(rex, email)
+        rex_email = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" # email格式
+        match = re.match(rex_email, email)
         if not match:
             return jsonify({"error": True, "message": "請輸入正確email"}), 400 
 

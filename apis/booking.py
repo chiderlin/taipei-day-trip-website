@@ -1,5 +1,6 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response, session
+import re
 import os
 from dotenv import load_dotenv
 import sys
@@ -80,20 +81,29 @@ def build_booking():
 
     if request.method == "POST":
         post_data = request.get_json()
-        print("post_data",post_data)
         attractionId = post_data["attractionId"]
         date = post_data["date"]
         time = post_data["time"]
         price = post_data["price"]
         user_email = session.get("email")
+        rex_date = r"(^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$)" #yyyy-mm-dd
+        match_date = re.match(rex_date, date)
+
         if date == "":
             return jsonify({"error":True, "message":"請選擇日期"}), 400
+
+        if not match_date:
+            return jsonify({"error":True, "message":"日期格式不正確"}), 400
+
         if time == "":
             return jsonify({"error":True, "message":"請選擇時間"}), 400
+        elif time != "afternoon" or time != "morning":
+            return jsonify({"error":True, "message":"時間格式不正確"}), 400
+        
         if price == "":
             return jsonify({"error":True, "message":"請填入費用"}), 400
         
-        if user_email is None:
+        if not user_email:
             return jsonify({"error":True, "message":"請先登入會員"}), 403
         else:
             try:
@@ -104,11 +114,9 @@ def build_booking():
                     db=DB_NAME
                 )
                 user_data = db.show_data("user", "email", user_email)
-                print("user_data", user_data)
                 userId = user_data[0]
                 
                 booking_data = db.show_data("booking", "userId", userId)
-                print("check booking db", booking_data)
                 # 先判斷booking table裡面是否已經有資料了，
                 if booking_data: # 如果有 => 刪除原本的 insert此筆
                     delete = db.delete("booking", "userId", userId)
