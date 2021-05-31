@@ -46,6 +46,16 @@ right_arrow.addEventListener("click",()=> {
     document.querySelector(`#control-${count}`).checked = true;
 });
 
+function autoSlide() {
+    setInterval(function() {
+        count++;
+        if(count === images.length+1) {
+            count = 1;
+        }
+        document.querySelector(`#control-${count}`).checked = true;
+    },5000);
+};
+
 
 // 按上半天 下半天 => 按字就可以觸發效果
 let morning_block = document.getElementById("morning");
@@ -238,7 +248,12 @@ function imageSlider() {
             image_block.appendChild(img);
         }
     }
+    autoSlide();
 };
+
+
+
+
 
 function renderMessage(msg) { //提示訊息
     let booking_area = document.querySelector(".booking-area");

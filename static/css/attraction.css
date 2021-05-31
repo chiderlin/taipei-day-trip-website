@@ -83,6 +83,7 @@ input[type="radio"] {
     cursor:pointer;
 }
 
+/* 黑點點移動 */
 #slider input[type="radio"]:nth-of-type(1):checked ~ .control-dots label:nth-of-type(1) {
     background-color: #000000;
 }
@@ -114,7 +115,7 @@ input[type="radio"] {
     background-color: #000000;
 }
 
-
+/* 圖片移動 */
 #slider input[type="radio"]:nth-of-type(1):checked ~ .slide {
     transform:translateX(0%);
 }
