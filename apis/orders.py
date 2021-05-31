@@ -36,7 +36,7 @@ def build_order():
         time = post_data["order"]["time"]
         price = post_data["order"]["price"]
         rex_email = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" # email格式
-        rex_phone = r"\d\d\d\d-\d\d\d-\d\d\d"
+        rex_phone = r"\d\d\d\d\d\d\d\d\d\d"
         match_email = re.match(rex_email, email)
         match_phone = re.match(rex_phone, phone)
         if user_name == "":
