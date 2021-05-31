@@ -7,9 +7,10 @@ main {
     justify-content:center;
 }
 .head {
+    display:none;
+    /* display:flex; */
     margin:0 10px 0;
     width:100%;
-    display:flex;
     justify-content:center;
 }
 .fix2 {

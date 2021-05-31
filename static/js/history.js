@@ -24,7 +24,7 @@ function getHistoryOrder() {
         } else {
             renderNoHistory();
         }
-
+        checkRender();
     })
 };
 
@@ -137,4 +137,15 @@ function status_format(status) {
         format = "付款失敗"
     }
     return format;
+};
+
+function checkRender() {
+    let loading_circle = document.querySelector(".loading-circle");
+    let flexbox = document.querySelector(".flexbox");
+    let fixed = document.querySelector(".fixed");
+    let footer = document.querySelector("footer");
+    loading_circle.style.display = "none";
+    flexbox.style.display = "flex";
+    fixed.style.display = "flex";
+    footer.style.display = "flex";
 };

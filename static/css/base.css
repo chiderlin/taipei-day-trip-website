@@ -8,6 +8,37 @@
 body {
     margin: 0px;
 }
+.loading-circle {
+    display: flex;
+    position:fixed;
+    top:30%; /* 才會在中間 */
+    width:100%;
+    height:100%;
+    justify-content: center;
+    z-index: 101;
+}
+.loader {
+    position: relative;
+    top:54px; left:10px;
+    border: 14px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 14px solid #66AABB;
+    width: 100px;
+    height: 100px;
+    -wekit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+@-wekit-keyframes spin { /* Safari */
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 header {
     display: flex;
     justify-content: center;
@@ -21,9 +52,10 @@ header {
     color: #448899;
 }
 .flexbox {
+    display:none;
     width:1200px;
     height:54px;
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
 }
@@ -267,7 +299,8 @@ main {
 }
 
 footer {
-    display:flex;
+    display: none;
+    /* display:flex; */
     justify-content:center;
     align-items:center;
     background-color: #757575;

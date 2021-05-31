@@ -37,6 +37,7 @@ function getOrderInfo(ordernum) {
             let trip_time = api_data.data.time;
             renderPaymentDetail(ordernum, bank_transaction, price, attraction_name, attractionId, trip_date, trip_time);
         }
+        checkRender();
     })
 };
 
@@ -90,3 +91,14 @@ function timeSetting(time) {
     return time;
 };
 
+
+function checkRender() {
+    let loading_circle = document.querySelector(".loading-circle");
+    let flexbox = document.querySelector(".flexbox");
+    let fixed = document.querySelector(".fixed");
+    let footer = document.querySelector("footer");
+    loading_circle.style.display = "none";
+    flexbox.style.display = "flex";
+    fixed.style.display = "flex";
+    footer.style.display = "flex";
+};

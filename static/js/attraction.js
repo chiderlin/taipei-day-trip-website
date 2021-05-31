@@ -146,6 +146,7 @@ function getData(path) { // path => /attraction/num
 
         renderUpperBlock(images, name, category, mrt);
         renderDownerBlock(desc, address, transport);
+        checkRender();
     })
 };
 
@@ -252,9 +253,6 @@ function imageSlider() {
 };
 
 
-
-
-
 function renderMessage(msg) { //提示訊息
     let booking_area = document.querySelector(".booking-area");
     let booking_message = document.querySelector(".booking-message");
@@ -265,4 +263,16 @@ function renderMessage(msg) { //提示訊息
     message.className = "booking-message";
     message.appendChild(document.createTextNode(`請選擇${msg}`))
     booking_area.appendChild(message);
+};
+
+
+function checkRender() {
+    let loading_circle = document.querySelector(".loading-circle");
+    let flexbox = document.querySelector(".flexbox");
+    let head = document.querySelector(".head");
+    let footer = document.querySelector("footer");
+    loading_circle.style.display = "none";
+    flexbox.style.display = "flex";
+    head.style.display = "flex";
+    footer.style.display = "flex";
 };

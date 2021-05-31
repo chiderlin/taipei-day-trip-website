@@ -133,6 +133,7 @@ function getBookingApi() {
             layout.style.display = "block";
             renderPage(name, image, address, date, price, time);
         }
+        checkRender();
     });
 };
 
@@ -282,4 +283,13 @@ function timeSetting(time) {
     return time;
 };
 
-
+function checkRender() {
+    let loading_circle = document.querySelector(".loading-circle");
+    let flexbox = document.querySelector(".flexbox");
+    let head = document.querySelector(".head");
+    let footer = document.querySelector("footer");
+    loading_circle.style.display = "none";
+    flexbox.style.display = "flex";
+    head.style.display = "flex";
+    footer.style.display = "flex";
+};

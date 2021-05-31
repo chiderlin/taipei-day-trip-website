@@ -11,7 +11,7 @@ const loading = document.querySelector(".loading"); // for lazy loading
 const attractions = document.getElementById('attractions'); // 為了createElement
 const keyword_tag = document.getElementById("keyword"); // 為了抓keyword的值
 let checkProcess = false;
-
+let loading_process = true;
 init(); // => 接getNextPage
 
 // controller
@@ -66,6 +66,7 @@ function getData(page, keyword) {
         checkProcess = false;
         next_page = api_data.nextPage;
         let data = api_data.data;
+        checkRender();
 
         if(keyword_tag.value !== "") { // 關鍵字查詢
             if(page === 0 && data.length === 0) { // 完全0筆資料
@@ -216,3 +217,14 @@ function renderNoData() {
     no_result.appendChild(document.createTextNode("沒有結果"));
     attractions.appendChild(no_result);
 }
+
+function checkRender() {
+    let loading_circle = document.querySelector(".loading-circle");
+    let flexbox = document.querySelector(".flexbox");
+    let nav = document.querySelector("nav");
+    let footer = document.querySelector("footer");
+    loading_circle.style.display = "none";
+    flexbox.style.display = "flex";
+    nav.style.display = "flex";
+    footer.style.display = "flex";
+};
