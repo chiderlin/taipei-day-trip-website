@@ -24,9 +24,16 @@ MERCHANT_ID = os.getenv("MERCHANT_ID")
 def build_order():
     if request.method == "POST":
         post_data = request.get_json()
+        print(post_data)
         if not session.get("email"):
             return jsonify({"error":True, "message": "未登入會員系統"}), 403
         
+        attractionId = post_data["order"]["trip"]["attraction"]["id"]
+        phone = post_data["contact"]["phone"]
+        date = post_data["order"]["date"]
+        time = post_data["order"]["time"]
+        price = post_data["order"]["price"]
+
         try:
             # 創建訂單編號
             now = dt.today()
@@ -41,14 +48,12 @@ def build_order():
                     db=DB_NAME
                 )
 
-                attractionId = post_data["order"]["trip"]["attraction"]["id"]
+                
                 user_data = db.show_data("user", "email", post_data["contact"]["email"])
                 userId = user_data[0]
                 prev_order_data = db.show_data("orders", "userId", userId)
-                phone = post_data["contact"]["phone"]
-                date = post_data["order"]["date"]
-                time = post_data["order"]["time"]
-                price = post_data["order"]["price"] 
+                
+
                 #還沒有付款成功 => 不用存bank_transaction
                 if not prev_order_data: # 沒有過訂單
                     db.insert_data(table_name='orders', settingrow='order_number, attractionId, userId, phone, date, time, price, status', settingvalue=f'"{order_number}","{attractionId}", "{userId}", "{phone}","{date}", "{time}", "{price}", "{order_status}"')
