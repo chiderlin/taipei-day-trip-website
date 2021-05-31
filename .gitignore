@@ -1,5 +1,5 @@
 #忽略 proxy 目錄下的 nginx 資料夾
-proxy/nginx
+proxy/nginx/
 
 # 忽略 config 目錄下的 config.json 檔案
 data/config.json
