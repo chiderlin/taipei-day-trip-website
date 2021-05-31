@@ -1,24 +1,23 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response
 import json
+import os
+from dotenv import load_dotenv
 import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 # sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 from model.db import DB_controller
 
-with open("./data/config.json", mode="r", encoding="utf-8") as f:
-    conf = json.load(f)
+load_dotenv()
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PWD =  os.getenv("DB_PWD")
+DB_NAME = os.getenv("DB_NAME")
+
 
 attr = Blueprint("attr", __name__,
                        static_folder="static", template_folder="templates")
 
-
-# db = DB_controller(
-#     host=conf["HOST"],
-#     user=conf["USER"],
-#     password=conf["PWD"],
-#     db=conf["DB"]
-# )
 
 # function
 def count_pages(count_data):
@@ -71,10 +70,10 @@ def attractions():
         if keyword:
             try:
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                     )
 
                 result = db.relative_data("attractions", "name", keyword)
@@ -153,10 +152,10 @@ def attractions():
             # 查詢資料庫目前有幾筆資料
             try:
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                 )
             except Exception as e:
                 return jsonify({"error": True, "message": str(e)}), 500
@@ -217,10 +216,10 @@ def view(attractionId):
     if request.method == "GET":
         try:
             db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PWD,
+                db=DB_NAME
             )
             result = db.show_data("attractions", "id", attractionId)
             db.close()

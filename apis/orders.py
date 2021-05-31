@@ -4,6 +4,8 @@ import tappay
 import requests
 from datetime import datetime as dt
 import json
+import os
+from dotenv import load_dotenv
 import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 from model.db import DB_controller
@@ -11,8 +13,11 @@ from apis.booking import selectOneImage
 
 order = Blueprint("order", __name__)
 
-with open("./data/config.json", mode="r", encoding="utf-8") as f:
-    conf = json.load(f)
+load_dotenv()
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PWD = os.getenv("DB_PWD")
+DB_NAME = os.getenv("DB_NAME")
 
 
 @order.route("/orders", methods=["POST"])
@@ -30,10 +35,10 @@ def build_order():
             try: 
                 #訂單資訊存到db
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                 )
 
                 attractionId = post_data["order"]["trip"]["attraction"]["id"]
@@ -141,10 +146,10 @@ def order_info(ordernumber):
             return jsonify({"error": True, "message": "尚未登入系統"}), 403
         try:
             db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PWD,
+                db=DB_NAME
             )
             order_data = db.show_data("orders", "order_number", ordernumber)
             if not order_data:
@@ -194,10 +199,10 @@ def order_list():
         clean_order_list = []
         try:
             db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PWD,
+                db=DB_NAME
             )
             user_data = db.show_data("user", "email", session.get("email"))
             order_list = db.fetch_all_data("orders", "userId", user_data[0])

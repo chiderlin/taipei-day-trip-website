@@ -1,13 +1,18 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response, session
 import json
+import os
+from dotenv import load_dotenv
 import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 # sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 from model.db import DB_controller
 
-with open("./data/config.json", mode="r", encoding="utf-8") as f:
-    conf = json.load(f)
+load_dotenv()
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PWD = os.getenv("DB_PWD")
+DB_NAME = os.getenv("DB_NAME")
 
 
 booking = Blueprint("booking", __name__)
@@ -33,10 +38,10 @@ def uncheck_booking():
         else:
             try:
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                 )
                 user_data = db.show_data("user", "email", user_email)
                 booking_data = db.show_data("booking", "userId", user_data[0]) #此使用人的booking資料
@@ -94,10 +99,10 @@ def build_booking():
         else:
             try:
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                 )
                 user_data = db.show_data("user", "email", user_email)
                 print("user_data", user_data)
@@ -134,10 +139,10 @@ def delete_booking():
         
         try:
             db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PWD,
+                db=DB_NAME
             )
             user_data = db.show_data("user", "email", user_email) # 查詢使用者
             booking_data = db.show_data("booking", "userId", user_data[0]) #此使用人的booking資料

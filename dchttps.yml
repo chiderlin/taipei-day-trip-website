@@ -30,6 +30,7 @@ services:
             - "443:443"
         volumes:
             - ./proxy/nginx:/etc/nginx/conf.d #.conf互通
+            # let's Encrypt要跟certbot做連接 
             - ./proxy/certbot/conf:/etc/letsencrypt
             - ./proxy/certbot/www:/var/www/certbot
             - /etc/localtime:/etc/localtime:ro # 時間和外面相通
@@ -41,6 +42,7 @@ services:
     certbot:
         image: certbot/certbot
         volumes:
+            # let's Encrypt要跟certbot做連接 
             - ./proxy/certbot/conf:/etc/letsencrypt
             - ./proxy/certbot/www:/var/www/certbot
         # check if your certificate is up for renewal every 12 hours (Automatic Certificate Renewal)

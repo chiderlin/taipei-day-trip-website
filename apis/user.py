@@ -2,14 +2,22 @@ from flask import Blueprint
 from flask import request, jsonify, make_response, session
 import json
 import hashlib
+import os 
+from dotenv import load_dotenv
 import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 # sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 from model.db import DB_controller
 
 
-with open("./data/config.json", mode="r", encoding="utf-8") as f: # 在app執行程式，所以依照app.py的位置來寫路徑
-    conf = json.load(f)
+load_dotenv()
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PWD = os.getenv("DB_PWD")
+DB_NAME = os.getenv("DB_NAME")
+HASH = os.getenv("HASH")
+# with open("./data/config.json", mode="r", encoding="utf-8") as f: # 在app執行程式，所以依照app.py的位置來寫路徑
+#     conf = json.load(f)
 
 user = Blueprint("user", __name__)
 # user.secret_key = "test@test.com" //要在app設secret_key才對
@@ -26,10 +34,10 @@ def get_logined_user():
         else:
             try:
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                 )
                 data = db.show_data("user", "email", session.get("email"))
                 db.close()
@@ -57,16 +65,16 @@ def user_register():
         pwd = post_data["password"]
         try:
             db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PWD,
+                db=DB_NAME
             )
             email_check = db.show_data("user", "email", email)
             name_check = db.show_data("user", "name", name)
             if not email_check:
                 if not name_check:
-                    hash_ = conf["HASH"]
+                    hash_ = HASH
                     hash_pwd = pwd + hash_
                     hash_pwd = hashlib.sha256(
                         hash_pwd.encode("utf-8")).hexdigest()
@@ -95,16 +103,16 @@ def user_login():
         pwd = login_data["password"]
         try:
             db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PWD,
+                db=DB_NAME
             )
             data = db.show_data("user", "email", email)
             db.close()
             if data:
                 if data[2] == email: # 帳號大小寫比對
-                    hash_ = conf["HASH"]
+                    hash_ = HASH
                     hash_pwd = pwd + hash_
                     hash_pwd = hashlib.sha256(hash_pwd.encode("utf-8")).hexdigest()
                     if hash_pwd == data[3]:

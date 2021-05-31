@@ -1,5 +1,5 @@
 let url = `/api/user`;
-let item = document.querySelectorAll(".item"); //for gib screen
+let item = document.querySelectorAll(".item"); //for big screen
 let burger_items = document.querySelectorAll(".burger-item"); // for small screen(burger)
 let overlay_login = document.querySelector(".overlay-login");
 let login_status = false;
