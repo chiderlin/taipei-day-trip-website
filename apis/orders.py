@@ -18,7 +18,8 @@ DB_HOST = os.getenv("DB_HOST")
 DB_USER = os.getenv("DB_USER")
 DB_PWD = os.getenv("DB_PWD")
 DB_NAME = os.getenv("DB_NAME")
-
+PARTNER_KEY =  os.getenv("PARTNER_KEY")
+MERCHANT_ID = os.getenv("MERCHANT_ID")
 
 @order.route("/orders", methods=["POST"])
 def build_order():
@@ -64,7 +65,7 @@ def build_order():
 
             # 進行付款動作
             # tayppay.Client(is_sanbox, partner_key, merchant_id) 這裡都用官方提供測試用 => 沙盒 (要使用自己的key,id需要真的創建公司並且通過審核)
-            client = tappay.Client(True, "partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM", "GlobalTesting_CTBC")
+            client = tappay.Client(True, PARTNER_KEY, MERCHANT_ID)
             card_holder_data = tappay.Models.CardHolderData(post_data["contact"]["phone"], post_data["contact"]["name"], post_data["contact"]["email"])
             
             # client.pay_by_prime(prime, amount, details, card_holder_data)
