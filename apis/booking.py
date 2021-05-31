@@ -1,6 +1,5 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response, session
-import json
 import os
 from dotenv import load_dotenv
 import sys

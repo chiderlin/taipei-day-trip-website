@@ -3,7 +3,6 @@ from flask import request, jsonify, session
 import tappay
 import requests
 from datetime import datetime as dt
-import json
 import os
 from dotenv import load_dotenv
 import sys

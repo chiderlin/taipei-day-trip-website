@@ -1,6 +1,5 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response
-import json
 import os
 from dotenv import load_dotenv
 import sys
@@ -100,7 +99,6 @@ def attractions():
                             "data": tmp_db,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
                         return res
                     else:
                         one_page = {
@@ -108,7 +106,6 @@ def attractions():
                             "data": None,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
                         return res
 
                 else: # 大於12筆資料
@@ -122,7 +119,6 @@ def attractions():
                             "data": data,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
                         return res
 
                     elif page == last_page: # 最後一頁
@@ -134,7 +130,6 @@ def attractions():
                             "data": data,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
                         return res
                     else:  # page > last_page
                         one_page = {
@@ -142,7 +137,6 @@ def attractions():
                             "data": None,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
                         return res
 
             except Exception as e:
@@ -185,7 +179,6 @@ def attractions():
                     "data": data,
                 }
                 res = make_response(jsonify(one_page))
-                res.headers['Access-Control-Allow-Origin'] = '*'
                 return res
 
             elif page == last_page:  # 最後一頁
@@ -194,7 +187,6 @@ def attractions():
                     "data": data,
                 }
                 res = make_response(jsonify(one_page))
-                res.headers['Access-Control-Allow-Origin'] = '*'
                 return res
 
             elif page > last_page:  # 大於現有頁數
@@ -203,7 +195,6 @@ def attractions():
                     "data": None,
                 }
                 res = make_response(jsonify(one_page))
-                res.headers['Access-Control-Allow-Origin'] = '*'
                 return res
 
             else:
@@ -240,9 +231,7 @@ def view(attractionId):
                     "images": result[9],
                 }
             }
-            res = make_response(jsonify(data))
-            res.headers['Access-Control-Allow-Origin'] = '*'
-            
+            res = make_response(jsonify(data))      
             return res
         except Exception as e:
             return jsonify({"error": True, "message": str(e)}), 500

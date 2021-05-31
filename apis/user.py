@@ -1,8 +1,8 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response, session
-import json
 import hashlib
-import os 
+import re
+import os
 from dotenv import load_dotenv
 import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
@@ -26,7 +26,6 @@ user = Blueprint("user", __name__)
 @user.route("/user", methods=["GET"])
 def get_logined_user():
     '''logined user infomation'''
-
     if request.method == "GET":
         # 判斷有sessionId  => 取得db裡的資料 => 回傳使用者資料
         if session.get("email") is None:
@@ -46,8 +45,6 @@ def get_logined_user():
                     "name": data[1],
                     "email": data[2]
                 }}))
-
-                # res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
                 return res
             except Exception as e:
                 return jsonify({"error": True, "message": str(e)}), 500
@@ -56,13 +53,22 @@ def get_logined_user():
 @user.route("/user", methods=["POST"])
 def user_register():
     '''new user register process'''
-
     if request.method == "POST":
         post_data = request.get_json()
         # 登入才要給一個sessionId
         name = post_data["name"]
         email = post_data["email"]
         pwd = post_data["password"]
+        rex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" # email格式
+        match = re.match(rex, email)
+        if name == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400 
+        
+        if not match:
+            return jsonify({"error": True, "message": "請輸入正確email"}), 400 
+
+        if pwd == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400 
         try:
             db = DB_controller(
                 host=DB_HOST,
@@ -82,7 +88,6 @@ def user_register():
                                    f'"{name}","{email}","{hash_pwd}"')
                     db.close()
                     res = make_response(jsonify({"ok": True}))
-                    # res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
                     return res
                 else:
                     return jsonify({"error": True, "message": "此暱稱已被使用"}), 400
@@ -95,12 +100,19 @@ def user_register():
 @user.route("/user", methods=["PATCH"])
 def user_login():
     '''user login process'''
-
     if request.method == "PATCH":
         login_data = request.get_json()
         # 這樣應該就會回傳sessionId到使用者Response Headers
         email = login_data["email"]
         pwd = login_data["password"]
+        rex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" # email格式
+        match = re.match(rex, email)
+        if not match:
+            return jsonify({"error": True, "message": "請輸入正確email"}), 400 
+
+        if pwd == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400 
+        
         try:
             db = DB_controller(
                 host=DB_HOST,
@@ -118,9 +130,6 @@ def user_login():
                     if hash_pwd == data[3]:
                         session["email"] = email # 確認email&密碼輸入正確才會存session
                         res = make_response(jsonify({"ok": True}))
-                        # res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
-                        # res.headers['Access-Control-Allow-Methods'] = 'PATCH'
-                        # res.headers['Access-Control-Allow-Credentials'] = True
                         return res
                     else:
                         return jsonify({"error": True, "message": "帳號或密碼錯誤"}), 400
@@ -135,11 +144,7 @@ def user_login():
 @user.route("/user", methods=["DELETE"])
 def user_logout():
     '''user logout process'''
-
     if request.method == "DELETE":
         res = make_response(jsonify({"ok": True}))
-        # res.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:3000'
-        # res.headers['Access-Control-Allow-Methods'] = 'DELETE'
-        # res.headers['Access-Control-Allow-Credentials'] = True
         session.pop("email", None)
         return res
