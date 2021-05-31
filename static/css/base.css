@@ -49,6 +49,10 @@ header {
     cursor: pointer;
 }
 
+.item:hover {
+    color: #448899;
+}
+
 .hide {
     display: none;
 }

@@ -80,6 +80,7 @@ input[type="radio"] {
     display:inline-block;
     margin: 0 6px;
     border-radius: 50%;
+    cursor:pointer;
 }
 
 #slider input[type="radio"]:nth-of-type(1):checked ~ .control-dots label:nth-of-type(1) {
@@ -291,6 +292,10 @@ input[type="radio"] {
     border-radius: 5px;
     position:absolute;left:20px;bottom: 15px;
     cursor:pointer;
+}
+
+#booking-trip-btn:hover {
+    background-color: #66AABB;
 }
 
 .booking-message {

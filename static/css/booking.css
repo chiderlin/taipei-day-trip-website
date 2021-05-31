@@ -109,6 +109,7 @@ main {
     cursor:pointer;
 }
 
+
 @media(max-width:850px) {
     #trash-img {display:none;}
     #inside-trash-img {display:block;}
@@ -198,6 +199,11 @@ main {
     padding:0;
     cursor:pointer;
 }
+
+#booking-btn:hover {
+    background-color: #66AABB;
+}
+
 .error-msg {
     display:none;
     text-align:end;

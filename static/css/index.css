@@ -73,6 +73,11 @@ nav {
     justify-content: center;
     align-items: center;
 }
+
+.search-icon-block:hover {
+    background-color: #66AABB;
+}
+
 #search-icon-img{cursor:pointer;}
 
 #search-icon-button {display:none;}
