@@ -1,7 +1,7 @@
 import mysql.connector
 from mysql.connector import pooling  # 還在測試中
 import json
-
+import logging
 
 class DB_controller:
     '''connect to your mysql, using connection pool'''
@@ -11,13 +11,7 @@ class DB_controller:
         self.user = user
         self.password = password
         self.db = db
-
-        dbconfig = {
-            "host": self.host,
-            "user": self.user,
-            "password": self.password,
-            "db": self.db
-        }
+        logging.info("connecting mysql...")
         try:
             self.mydb = mysql.connector.connect(  # 一開始mydb沒有self，連不到資料庫
                 host=host,
@@ -25,7 +19,9 @@ class DB_controller:
                 password=password,
                 database=self.db,
             )
+            logging.info("mydb:", self.mydb)
             self.mycursor = self.mydb.cursor(buffered=True)
+            logging.info("mydb:", self.mycursor)
         except Exception as e:
             print(str(e))
 
