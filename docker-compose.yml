@@ -36,5 +36,3 @@ services:
 networks:
     backnet:
     frontnet:
-volumes:
-    data:
