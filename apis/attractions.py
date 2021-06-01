@@ -1,7 +1,6 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response
 import os
-import logging
 from dotenv import load_dotenv
 import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
@@ -22,7 +21,6 @@ attr = Blueprint("attr", __name__,
 # function
 def count_pages(count_data):
     ''' count pages '''
-    logging.info("in count_pages:",count_data)
     count_data = int(count_data)
     if count_data % 12 != 0:  # 12筆一頁
         last_page = count_data // 12 + 1-1  # 餘數+1 page從0開始-1 # 有餘數就表示有下頁
@@ -156,7 +154,6 @@ def attractions():
                 return jsonify({"error": True, "message": str(e)}), 500
 
             count_data = db.count_data("attractions")
-            logging.info("no keyword:", count_data)
             last_page, last_page_data = count_pages(count_data)
             result = db.limit_data("attractions", start, 12)  # 改limit分頁 LIMITE優點是假如最後一頁不足12筆資料也不會報錯，就顯示剩下的全部
             db.close() 
