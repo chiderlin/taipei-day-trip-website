@@ -187,7 +187,10 @@ function makeaPayment(prime, phone, email, name) {
         return;
     };
     if(phone.value === "") {
-        renderError("請輸入電話號碼");
+        renderError("請輸入手機號碼");
+        return;
+    }else if(phone.value.length !== 10) {
+        renderError("手機號碼格式錯誤");
         return;
     };
     fetch(url, {

@@ -88,8 +88,7 @@ def build_booking():
         user_email = session.get("email")
         rex_date = r"(^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$)" #yyyy-mm-dd
         match_date = re.match(rex_date, date)
-        print(date)
-        print(match_date)
+
         if date == "":
             return jsonify({"error":True, "message":"請選擇日期"}), 400
 
