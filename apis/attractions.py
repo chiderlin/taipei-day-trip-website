@@ -1,24 +1,22 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response
-import json
+import os
+from dotenv import load_dotenv
 import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 # sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 from model.db import DB_controller
 
-with open("./data/config.json", mode="r", encoding="utf-8") as f:
-    conf = json.load(f)
+load_dotenv()
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PWD =  os.getenv("DB_PWD")
+DB_NAME = os.getenv("DB_NAME")
+
 
 attr = Blueprint("attr", __name__,
                        static_folder="static", template_folder="templates")
 
-
-# db = DB_controller(
-#     host=conf["HOST"],
-#     user=conf["USER"],
-#     password=conf["PWD"],
-#     db=conf["DB"]
-# )
 
 # function
 def count_pages(count_data):
@@ -70,10 +68,10 @@ def attractions():
         if keyword:
             try:
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                     )
 
                 result = db.relative_data("attractions", "name", keyword)
@@ -100,7 +98,6 @@ def attractions():
                             "data": tmp_db,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
                         return res
                     else:
                         one_page = {
@@ -108,12 +105,11 @@ def attractions():
                             "data": None,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
                         return res
 
                 else: # 大於12筆資料
                     last_page, last_page_data = count_pages(count_data)
-                    if page < last_page: # 但不是最後一頁
+                    if page < last_page: # 不是最後一頁
                         for i in range(start, end):
                             data.append(tmp_db[i])
 
@@ -122,7 +118,6 @@ def attractions():
                             "data": data,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
                         return res
 
                     elif page == last_page: # 最後一頁
@@ -134,7 +129,6 @@ def attractions():
                             "data": data,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
                         return res
                     else:  # page > last_page
                         one_page = {
@@ -142,7 +136,6 @@ def attractions():
                             "data": None,
                         }
                         res = make_response(jsonify(one_page))
-                        res.headers['Access-Control-Allow-Origin'] = '*'
                         return res
 
             except Exception as e:
@@ -152,10 +145,10 @@ def attractions():
             # 查詢資料庫目前有幾筆資料
             try:
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                 )
             except Exception as e:
                 return jsonify({"error": True, "message": str(e)}), 500
@@ -185,7 +178,6 @@ def attractions():
                     "data": data,
                 }
                 res = make_response(jsonify(one_page))
-                res.headers['Access-Control-Allow-Origin'] = '*'
                 return res
 
             elif page == last_page:  # 最後一頁
@@ -194,7 +186,6 @@ def attractions():
                     "data": data,
                 }
                 res = make_response(jsonify(one_page))
-                res.headers['Access-Control-Allow-Origin'] = '*'
                 return res
 
             elif page > last_page:  # 大於現有頁數
@@ -203,7 +194,6 @@ def attractions():
                     "data": None,
                 }
                 res = make_response(jsonify(one_page))
-                res.headers['Access-Control-Allow-Origin'] = '*'
                 return res
 
             else:
@@ -216,10 +206,10 @@ def view(attractionId):
     if request.method == "GET":
         try:
             db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PWD,
+                db=DB_NAME
             )
             result = db.show_data("attractions", "id", attractionId)
             db.close()
@@ -240,9 +230,7 @@ def view(attractionId):
                     "images": result[9],
                 }
             }
-            res = make_response(jsonify(data))
-            res.headers['Access-Control-Allow-Origin'] = '*'
-            
+            res = make_response(jsonify(data))      
             return res
         except Exception as e:
             return jsonify({"error": True, "message": str(e)}), 500

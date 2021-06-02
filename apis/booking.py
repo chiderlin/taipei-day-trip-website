@@ -1,13 +1,19 @@
 from flask import Blueprint
 from flask import request, jsonify, make_response, session
-import json
+from datetime import datetime
+import re
+import os
+from dotenv import load_dotenv
 import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 # sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 from model.db import DB_controller
 
-with open("./data/config.json", mode="r", encoding="utf-8") as f:
-    conf = json.load(f)
+load_dotenv()
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PWD = os.getenv("DB_PWD")
+DB_NAME = os.getenv("DB_NAME")
 
 
 booking = Blueprint("booking", __name__)
@@ -33,10 +39,10 @@ def uncheck_booking():
         else:
             try:
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                 )
                 user_data = db.show_data("user", "email", user_email)
                 booking_data = db.show_data("booking", "userId", user_data[0]) #此使用人的booking資料
@@ -47,7 +53,6 @@ def uncheck_booking():
                     images = attraction_data[9]
                     image = selectOneImage(images)
                     date = booking_data[3]
-
                     date_format = date.strftime("%Y-%m-%d")
                     data = {
                         "data": {
@@ -76,35 +81,43 @@ def build_booking():
 
     if request.method == "POST":
         post_data = request.get_json()
-        print("post_data",post_data)
         attractionId = post_data["attractionId"]
         date = post_data["date"]
         time = post_data["time"]
         price = post_data["price"]
         user_email = session.get("email")
+        rex_date = r"(^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$)" #yyyy-mm-dd
+        match_date = re.match(rex_date, date)
+        date_today_check = datetime.now().strftime("%Y-%m-%d")
+
         if date == "":
             return jsonify({"error":True, "message":"請選擇日期"}), 400
+        elif date < date_today_check:
+            return jsonify({"error":True, "message":"不可預定今天以前的日期"}), 400
+
+        if not match_date:
+            return jsonify({"error":True, "message":"日期格式不正確"}), 400
+
         if time == "":
             return jsonify({"error":True, "message":"請選擇時間"}), 400
+        
         if price == "":
             return jsonify({"error":True, "message":"請填入費用"}), 400
         
-        if user_email is None:
+        if not user_email:
             return jsonify({"error":True, "message":"請先登入會員"}), 403
         else:
             try:
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                 )
                 user_data = db.show_data("user", "email", user_email)
-                print("user_data", user_data)
                 userId = user_data[0]
                 
                 booking_data = db.show_data("booking", "userId", userId)
-                print("check booking db", booking_data)
                 # 先判斷booking table裡面是否已經有資料了，
                 if booking_data: # 如果有 => 刪除原本的 insert此筆
                     delete = db.delete("booking", "userId", userId)
@@ -134,10 +147,10 @@ def delete_booking():
         
         try:
             db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PWD,
+                db=DB_NAME
             )
             user_data = db.show_data("user", "email", user_email) # 查詢使用者
             booking_data = db.show_data("booking", "userId", user_data[0]) #此使用人的booking資料

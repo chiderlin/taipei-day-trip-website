@@ -7,9 +7,10 @@ main {
     justify-content:center;
 }
 .head {
+    display:none;
+    /* display:flex; */
     margin:0 10px 0;
     width:100%;
-    display:flex;
     justify-content:center;
 }
 .fix2 {
@@ -109,6 +110,7 @@ main {
     cursor:pointer;
 }
 
+
 @media(max-width:850px) {
     #trash-img {display:none;}
     #inside-trash-img {display:block;}
@@ -198,6 +200,11 @@ main {
     padding:0;
     cursor:pointer;
 }
+
+#booking-btn:hover {
+    background-color: #66AABB;
+}
+
 .error-msg {
     display:none;
     text-align:end;

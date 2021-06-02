@@ -13,6 +13,7 @@ main {
 }
 
 .head {
+    display: none;
     width:1200px;height:auto;
 }
 
@@ -80,8 +81,10 @@ input[type="radio"] {
     display:inline-block;
     margin: 0 6px;
     border-radius: 50%;
+    cursor:pointer;
 }
 
+/* 黑點點移動 */
 #slider input[type="radio"]:nth-of-type(1):checked ~ .control-dots label:nth-of-type(1) {
     background-color: #000000;
 }
@@ -113,7 +116,7 @@ input[type="radio"] {
     background-color: #000000;
 }
 
-
+/* 圖片移動 */
 #slider input[type="radio"]:nth-of-type(1):checked ~ .slide {
     transform:translateX(0%);
 }
@@ -291,6 +294,10 @@ input[type="radio"] {
     border-radius: 5px;
     position:absolute;left:20px;bottom: 15px;
     cursor:pointer;
+}
+
+#booking-trip-btn:hover {
+    background-color: #66AABB;
 }
 
 .booking-message {

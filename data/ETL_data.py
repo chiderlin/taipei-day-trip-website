@@ -1,18 +1,23 @@
-from model.db import DB_controller  # 原本會有紅紅的底線，但在該檔案中加上__init__.py 錯誤就消失了
 import json
 import sys
 # sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 sys.path.append("/home/ubuntu/root/taipei-day-trip-website")
 # sys.path.append("/app") # 容器裡面
+from model.db import DB_controller  # 原本會有紅紅的底線，但在該檔案中加上__init__.py 錯誤就消失了
+import os
+from dotenv import load_dotenv
 
-with open("config.json", mode="r", encoding="utf-8") as config:
-    conf = json.load(config)
+load_dotenv()
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PWD =  os.getenv("DB_PWD")
+DB_NAME = os.getenv("DB_NAME")
 
 db = DB_controller(
-    host=conf["HOST"],
-    user=conf["USER"],
-    password=conf["PWD"],
-    db=conf["DB"])
+    host=DB_HOST,
+    user=DB_USER,
+    password=DB_PWD,
+    db=DB_NAME)
 
 with open("taipei-attractions.json", mode="r", encoding="utf-8") as f:
     data = json.load(f)

@@ -1,8 +1,9 @@
-from flask import Flask, render_template, session
+from flask import Flask, render_template
 from apis.attractions import attr
 from apis.user import user
 from apis.booking import booking
 from apis.orders import order
+
 
 app = Flask(__name__, static_url_path="/", static_folder="static")
 app.register_blueprint(attr, url_prefix="/api")

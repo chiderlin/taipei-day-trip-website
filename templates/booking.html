@@ -90,7 +90,7 @@
                             <div class="client-format">
                                 手機號碼 :
                             </div>
-                            <input class="input" type="text" name="client-phonenum" id="client-phonenum">
+                            <input class="input" type="text" maxlength="10" onchange ="value=value.replace(/[^\d]/g,'')" name="client-phonenum" id="client-phonenum">
                         </div>
                         <div class="state">
                             請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
@@ -132,7 +132,7 @@
                             <!-- <input type="submit" value="確認訂購並付款" id="booking-btn"> -->
                             <button id="booking-btn" onclick="checkAndPay(event);">確認訂購並付款</button>
                         </div>
-                        <div class="error-msg">信用卡資訊輸入錯誤</div>
+                        <div class="error-msg"></div>
 
                     </div>
                 </div>

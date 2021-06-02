@@ -3,7 +3,9 @@ from flask import request, jsonify, session
 import tappay
 import requests
 from datetime import datetime as dt
-import json
+import re
+import os
+from dotenv import load_dotenv
 import sys
 sys.path.append("C:\\Users\\user\\Desktop\\GitHub\\taipei-day-trip-website")
 from model.db import DB_controller
@@ -11,38 +13,67 @@ from apis.booking import selectOneImage
 
 order = Blueprint("order", __name__)
 
-with open("./data/config.json", mode="r", encoding="utf-8") as f:
-    conf = json.load(f)
-
+load_dotenv()
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PWD = os.getenv("DB_PWD")
+DB_NAME = os.getenv("DB_NAME")
+PARTNER_KEY =  os.getenv("PARTNER_KEY")
+MERCHANT_ID = os.getenv("MERCHANT_ID")
 
 @order.route("/orders", methods=["POST"])
 def build_order():
     if request.method == "POST":
         post_data = request.get_json()
+        print(post_data)
         if not session.get("email"):
             return jsonify({"error":True, "message": "未登入會員系統"}), 403
+        user_name = post_data["contact"]["name"]
+        email = post_data["contact"]["email"]
+        phone = post_data["contact"]["phone"]
+        attractionId = post_data["order"]["trip"]["attraction"]["id"]
+        date = post_data["order"]["date"]
+        time = post_data["order"]["time"]
+        price = post_data["order"]["price"]
+        rex_email = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)" # email格式
+        rex_phone = r"\d\d\d\d\d\d\d\d\d\d"
+        match_email = re.match(rex_email, email)
+        match_phone = re.match(rex_phone, phone)
+        if user_name == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400
+
+        if email == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400
         
+        if not match_email:
+            return jsonify({"error": True, "message": "email格式錯誤"}), 400
+
+        if phone == "":
+            return jsonify({"error": True, "message": "不可為空值"}), 400
+
+        if not match_phone:
+            return jsonify({"error": True, "message": "手機號碼格式錯誤"}), 400
+
         try:
             # 創建訂單編號
             now = dt.today()
             order_number = now.strftime("%Y%m%d%H%M%S")
-            order_status = -1 # 記錄訂單付款狀態 -1未付款, 0付款成功, 1付款失敗
-            try: #訂單資訊存到db
+            order_status = -1 # 記錄訂單付款狀態 初始值設-1 0付款成功, 1付款失敗
+            try: 
+                #訂單資訊存到db
                 db = DB_controller(
-                    host=conf["HOST"],
-                    user=conf["USER"],
-                    password=conf["PWD"],
-                    db=conf["DB"]
+                    host=DB_HOST,
+                    user=DB_USER,
+                    password=DB_PWD,
+                    db=DB_NAME
                 )
 
-                attractionId = post_data["order"]["trip"]["attraction"]["id"]
+                
                 user_data = db.show_data("user", "email", post_data["contact"]["email"])
                 userId = user_data[0]
                 prev_order_data = db.show_data("orders", "userId", userId)
-                phone = post_data["contact"]["phone"]
-                date = post_data["order"]["date"]
-                time = post_data["order"]["time"]
-                price = post_data["order"]["price"] 
+                
+
                 #還沒有付款成功 => 不用存bank_transaction
                 if not prev_order_data: # 沒有過訂單
                     db.insert_data(table_name='orders', settingrow='order_number, attractionId, userId, phone, date, time, price, status', settingvalue=f'"{order_number}","{attractionId}", "{userId}", "{phone}","{date}", "{time}", "{price}", "{order_status}"')
@@ -57,16 +88,13 @@ def build_order():
                 return jsonify({"error": True, "message": str(e)}), 500
 
             # 進行付款動作
-            # tayppay.Client(is_sanbox, partner_key, merchant_id) 這裡都用官方提供測試用
-            client = tappay.Client(True, "partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM", "GlobalTesting_CTBC")
-            #client = tappay.Client(True, "partner_PyJKIbMCqgsYpYiouacHI67J0jT0xOdGBGSO9e05OdiB1RHhYSDdjioD", "chi_CTBC")
+            # tayppay.Client(is_sanbox, partner_key, merchant_id) 這裡都用官方提供測試用 => 沙盒 (要使用自己的key,id需要真的創建公司並且通過審核)
+            client = tappay.Client(True, PARTNER_KEY, MERCHANT_ID)
             card_holder_data = tappay.Models.CardHolderData(post_data["contact"]["phone"], post_data["contact"]["name"], post_data["contact"]["email"])
             
             # client.pay_by_prime(prime, amount, details, card_holder_data)
-            #response_data_dict = client.pay_by_prime(post_data["prime"], post_data["order"]["price"], post_data["order"]["trip"]["attraction"]["name"], card_holder_data)
             response_data_dict = client.pay_by_prime("test_3a2fb2b7e892b914a03c95dd4dd5dc7970c908df67a49527c0a648b2bc9", post_data["order"]["price"], post_data["order"]["trip"]["attraction"]["name"], card_holder_data)
             
-            print("response_data_dict", response_data_dict)
             if response_data_dict["status"] == 0:
                 order_status = 0
                 try: 
@@ -106,7 +134,7 @@ def build_order():
         except Exception as e:
             return jsonify({"error": True, "message": str(e)}), 400
 
-
+        # 想用requests試試看抓資料 但一直JSON FORMAT錯誤??
         #     name = post_data["contact"]["name"]
         #     email = post_data["contact"]["email"]
         #     phone = post_data["contact"]["phone"]
@@ -143,10 +171,10 @@ def order_info(ordernumber):
             return jsonify({"error": True, "message": "尚未登入系統"}), 403
         try:
             db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PWD,
+                db=DB_NAME
             )
             order_data = db.show_data("orders", "order_number", ordernumber)
             if not order_data:
@@ -186,6 +214,7 @@ def order_info(ordernumber):
             return jsonify({"error":True, "message": str(e)}), 500
 
 
+# 自己新增 for historyorder page
 @order.route("/orders/history", methods=["GET"])
 def order_list():
     if request.method == "GET":
@@ -195,10 +224,10 @@ def order_list():
         clean_order_list = []
         try:
             db = DB_controller(
-                host=conf["HOST"],
-                user=conf["USER"],
-                password=conf["PWD"],
-                db=conf["DB"]
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PWD,
+                db=DB_NAME
             )
             user_data = db.show_data("user", "email", session.get("email"))
             order_list = db.fetch_all_data("orders", "userId", user_data[0])

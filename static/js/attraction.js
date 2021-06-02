@@ -1,4 +1,4 @@
-let login_status = false;
+// let login_status = false; // base.js已經有了
 let get_route = location.pathname
 let images;  //click也抓images
 let attraction_id;
@@ -17,7 +17,6 @@ function bookingProcess(user_info) { //true false切換登入狀態
     } else {
         login_status = false;
     }
-
 };
 
 function disableDayBefore() {
@@ -46,6 +45,16 @@ right_arrow.addEventListener("click",()=> {
     }
     document.querySelector(`#control-${count}`).checked = true;
 });
+
+function autoSlide() {
+    setInterval(function() {
+        count++;
+        if(count === images.length+1) {
+            count = 1;
+        }
+        document.querySelector(`#control-${count}`).checked = true;
+    },5000);
+};
 
 
 // 按上半天 下半天 => 按字就可以觸發效果
@@ -137,6 +146,7 @@ function getData(path) { // path => /attraction/num
 
         renderUpperBlock(images, name, category, mrt);
         renderDownerBlock(desc, address, transport);
+        checkRender();
     })
 };
 
@@ -239,7 +249,9 @@ function imageSlider() {
             image_block.appendChild(img);
         }
     }
+    autoSlide();
 };
+
 
 function renderMessage(msg) { //提示訊息
     let booking_area = document.querySelector(".booking-area");
@@ -251,4 +263,16 @@ function renderMessage(msg) { //提示訊息
     message.className = "booking-message";
     message.appendChild(document.createTextNode(`請選擇${msg}`))
     booking_area.appendChild(message);
+};
+
+
+function checkRender() {
+    let loading_circle = document.querySelector(".loading-circle");
+    let flexbox = document.querySelector(".flexbox");
+    let head = document.querySelector(".head");
+    let footer = document.querySelector("footer");
+    loading_circle.style.display = "none";
+    flexbox.style.display = "flex";
+    head.style.display = "flex";
+    footer.style.display = "flex";
 };

@@ -22,7 +22,7 @@ services:
             - /etc/localtime:/etc/localtime:ro # 時間和外面相通
         networks:
             - backnet
-
+    
     proxy:
         build: proxy
         restart: always
@@ -36,5 +36,3 @@ services:
 networks:
     backnet:
     frontnet:
-volumes:
-    data:

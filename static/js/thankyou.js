@@ -1,12 +1,14 @@
-
-
 init();
+
+/* *controller* */
 function init() {
     let get_query_string = location.search;
     let ordernum = "";
     if(get_query_string === "") {
+        // thankyou後面沒有?number 就會直接被導回首頁
         window.location.href="/"
     }else {
+        // 取number號碼
         for(let i=8; i<get_query_string.length; i++) {
             ordernum += get_query_string[i];
         }
@@ -14,12 +16,12 @@ function init() {
     getOrderInfo(ordernum);
 };
 
+/* *model* */
 function getOrderInfo(ordernum) {
     let url = `api/order/${ordernum}`;
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(api_data) {
-        console.log(api_data);
         if(api_data.data === null){ // 直接進入thankyou頁面，但是無此number
             renderNoOrder(); 
 
@@ -35,9 +37,11 @@ function getOrderInfo(ordernum) {
             let trip_time = api_data.data.time;
             renderPaymentDetail(ordernum, bank_transaction, price, attraction_name, attractionId, trip_date, trip_time);
         }
+        checkRender();
     })
 };
 
+/* *view* */
 function renderPaymentDetail(number, bank_transaction, price, attraction, attractionId, date, time) {
     let container = document.querySelector(".container");
     let payment_state = document.querySelector(".payment-state");
@@ -49,6 +53,7 @@ function renderPaymentDetail(number, bank_transaction, price, attraction, attrac
     let trip_date = document.getElementById("trip_date");
     let trip_time = document.getElementById("trip_time");
     let footer = document.querySelector("footer");
+    let format_time = timeSetting(time);
     container.style.display = "block";
     link_attraction.style.color = "#66AABB";
     payment_state.appendChild(document.createTextNode("付款成功"));
@@ -59,13 +64,9 @@ function renderPaymentDetail(number, bank_transaction, price, attraction, attrac
     link_attraction.appendChild(document.createTextNode(attraction));
     attraction_name.appendChild(link_attraction);
     trip_date.appendChild(document.createTextNode(date));
-    if(time === "morning") {
-        time = "早上9點到下午4點";
-    } else if(time === "afternoon") {
-        time = "下午2點到晚上9點"
-    };
+    
 
-    trip_time.appendChild(document.createTextNode(time));
+    trip_time.appendChild(document.createTextNode(format_time));
     footer.style.height="100vh";
 };
 
@@ -79,4 +80,25 @@ function renderNoOrder() {
     payment_state.appendChild(document.createTextNode("查無此訂單資訊"));
     fixed.appendChild(payment_state);
     footer.style.height="100vh";
+};
+
+function timeSetting(time) {
+    if(time === "morning") {
+        time = "早上9點到下午4點";
+    } else if(time === "afternoon") {
+        time = "下午2點到晚上9點"
+    };
+    return time;
+};
+
+
+function checkRender() {
+    let loading_circle = document.querySelector(".loading-circle");
+    let flexbox = document.querySelector(".flexbox");
+    let fixed = document.querySelector(".fixed");
+    let footer = document.querySelector("footer");
+    loading_circle.style.display = "none";
+    flexbox.style.display = "flex";
+    fixed.style.display = "flex";
+    footer.style.display = "flex";
 };

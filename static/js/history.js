@@ -1,14 +1,17 @@
 init()
+/* *controller* */
 function init() {
     getHistoryOrder();
 };
 
+
+
+/* *model* */
 function getHistoryOrder() {
     let url = "api/orders/history"
     fetch(url).then(function(res) {
         return res.json();
     }).then(function(order_list) {
-        console.log(order_list);
         if(order_list.error === true) {
             window.location.href = "/";
             return;
@@ -21,12 +24,12 @@ function getHistoryOrder() {
         } else {
             renderNoHistory();
         }
-
+        checkRender();
     })
 };
 
-function ProcessList(data_dict) { // 新增多少列資料
-    for(let i=0; i<data_dict.length; i++) {
+function ProcessList(data_dict) { // 新增多少列資料&多少塊資料
+    for(let i=data_dict.length-1; i>=0; i--) { // 最新的資料在最上面
         const create_time = data_dict[i].create_time;
         const number = data_dict[i].number;
         const order_price = data_dict[i].order_price;
@@ -37,6 +40,9 @@ function ProcessList(data_dict) { // 新增多少列資料
     }
 };
 
+
+
+/* *view* */
 function renderCells(create_time, number, order_price, status) {
     let tbody = document.querySelector("tbody");
     let order_info = document.createElement("tr");
@@ -55,12 +61,10 @@ function renderCells(create_time, number, order_price, status) {
     order_info.children[1].appendChild(document.createTextNode(create_time));
     order_info.children[2].appendChild(document.createTextNode(`台幣 ${order_price} 元`));
     format_status = status_format(status);
-    
     order_info.children[3].appendChild(document.createTextNode(format_status));
     tbody.appendChild(order_info);
     footer.style.height = "75vh";
 };
-
 
 function renderSmallContainer(create_time, number, order_price, status) {
     let small_container = document.querySelector(".small-container");
@@ -103,7 +107,6 @@ function renderSmallContainer(create_time, number, order_price, status) {
             tr.children[0].appendChild(document.createTextNode("訂單狀態"));
             tr.children[1].appendChild(document.createTextNode(format_status));
         };
-        //console.log(tr.children[0]);
     }
     small_table_block.appendChild(small_table);
     small_container.appendChild(small_table_block);
@@ -134,4 +137,15 @@ function status_format(status) {
         format = "付款失敗"
     }
     return format;
+};
+
+function checkRender() {
+    let loading_circle = document.querySelector(".loading-circle");
+    let flexbox = document.querySelector(".flexbox");
+    let fixed = document.querySelector(".fixed");
+    let footer = document.querySelector("footer");
+    loading_circle.style.display = "none";
+    flexbox.style.display = "flex";
+    fixed.style.display = "flex";
+    footer.style.display = "flex";
 };

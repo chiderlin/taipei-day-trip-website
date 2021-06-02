@@ -1,4 +1,5 @@
 nav {
+    display: none;
     margin-top:54px;
     height: 320px;
     /* 為了讓漸層效果表現成功率更高，建議使用各種瀏覽器適用前綴 */
@@ -6,7 +7,7 @@ nav {
     background: -moz-linear-gradient(bottom right, #AADDEE, #66AABB); /* Mozilla FireFox 使用 -moz- */
     background: -o-linear-gradient(bottom right, #AADDEE, #66AABB); /* Opera 使用 -o- */
     background: linear-gradient(to bottom right, #AADDEE, #66AABB);
-    display:flex;
+    /* display:flex; */
     justify-content: center;
     align-items: center;
     position:relative;
@@ -73,6 +74,11 @@ nav {
     justify-content: center;
     align-items: center;
 }
+
+.search-icon-block:hover {
+    background-color: #66AABB;
+}
+
 #search-icon-img{cursor:pointer;}
 
 #search-icon-button {display:none;}
