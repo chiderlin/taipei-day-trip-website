@@ -25,7 +25,6 @@ MERCHANT_ID = os.getenv("MERCHANT_ID")
 def build_order():
     if request.method == "POST":
         post_data = request.get_json()
-        print(post_data)
         if not session.get("email"):
             return jsonify({"error":True, "message": "未登入會員系統"}), 403
         user_name = post_data["contact"]["name"]
