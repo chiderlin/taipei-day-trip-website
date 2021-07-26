@@ -35,7 +35,7 @@ CCV: 123
 ### 1.首頁
 ![index](./github-png/1-1index.jpeg)
 
-RWD:
+#### 首頁RWD:
 ![index](./github-png/1-2index.png)
 
 ### 2.登入頁面
@@ -44,23 +44,23 @@ RWD:
 ### 3.景點介紹頁面
 ![attraction](./github-png/3-1attraction.jpeg)
 
-RWD:
+#### 景點頁面RWD:
 ![attraction](./github-png/3-2attraction.jpeg)
 
 ### 4.預定行程頁面
 ![booking](./github-png/4-1booking.jpeg)
 
-RWD:
+#### 預定行程頁面RWD:
 ![booking](./github-png/4-2booking.jpeg)
 
 ### 5.付款完成頁面
 ![thankyou](./github-png/5-1thankyou.jpeg)
 
-RWD:
+#### 付款完成RWD:
 ![thankyou](./github-png/5-2thankyou.png)
 
 ### 6.歷史訂單紀錄頁面
 ![history](./github-png/6-1history.png)
 
-RWD:
+#### 歷史訂單頁面RWD:
 ![history](./github-png/6-2history.png)
