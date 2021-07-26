@@ -22,23 +22,27 @@
 web: https://taipeitrip.site
 
 測試帳號：test@test.com
+
 密碼：123
+
 Credit Card: 4242 4242 4242 4242
+
 Date: 01/23
+
 CCV: 123
 
 ## 頁面預覽
 ### 1.首頁
-![index](./github-png/1-1 index.jepg)
+![index png](./github-png/1-1 index.jpeg)
 
 RWD:
-![index](./github-png/1-2 index.png)
+![index png](./github-png/1-2 index.png)
 
 ### 2.登入頁面
-![login](./github-png/2-1 login.png)
+![login png](./github-png/2-1 login.png)
 
 ### 3.景點介紹頁面
-![attraction](./github-png/3-1 attraction.jpeg)
+![attraction png](./github-png/3-1 attraction.jpeg)
 
 RWD:
 ![attraction](./github-png/3-2 attraction.jpeg)
