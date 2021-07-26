@@ -33,34 +33,34 @@ CCV: 123
 
 ## 頁面預覽
 ### 1.首頁
-![index png](./github-png/1-1 index.jpeg)
+![index](./github-png/1-1index.jpeg)
 
 RWD:
-![index png](./github-png/1-2 index.png)
+![index](./github-png/1-2index.png)
 
 ### 2.登入頁面
-![login png](./github-png/2-1 login.png)
+![login](./github-png/2-1login.png)
 
 ### 3.景點介紹頁面
-![attraction png](./github-png/3-1 attraction.jpeg)
+![attraction](./github-png/3-1attraction.jpeg)
 
 RWD:
-![attraction](./github-png/3-2 attraction.jpeg)
+![attraction](./github-png/3-2attraction.jpeg)
 
 ### 4.預定行程頁面
-![booking](./github-png/4-1 booking.jpeg)
+![booking](./github-png/4-1booking.jpeg)
 
 RWD:
-![booking](./github-png/4-2 booking.jpeg)
+![booking](./github-png/4-2booking.jpeg)
 
 ### 5.付款完成頁面
-![thankyou](./github-png/5-1 thankyou.jpeg)
+![thankyou](./github-png/5-1thankyou.jpeg)
 
 RWD:
-![thankyou](./github-png/5-2 thankyou.png)
+![thankyou](./github-png/5-2thankyou.png)
 
 ### 6.歷史訂單紀錄頁面
-![history](./github-png/6-1 history.png)
+![history](./github-png/6-1history.png)
 
 RWD:
-![history](./github-png/6-2 history.png)
+![history](./github-png/6-2history.png)
