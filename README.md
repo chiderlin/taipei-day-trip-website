@@ -13,7 +13,7 @@
 - 前端 HTML, CSS, JS
 - 後端 Python - Flask Framework
 - 部署nginx反向代理、 加入 Docker （附加）
-- tappay金流串接
+- Tappay金流串接
 - SSL憑證實踐HTTPS
 - RESTful API 設計架構
 - MVC 設計模式
@@ -21,7 +21,7 @@
 ## Demo
 web: https://taipeitrip.site
 
-測試帳號：test@test.com
+測試帳號：test@test.com (或自行註冊)
 
 密碼：123
 
