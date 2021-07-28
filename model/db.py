@@ -151,15 +151,15 @@ class DB_controller:
         except Exception as e:
             return e
 
-    def delete(self, table_name, cloumn_name, value):
+    def delete(self, table_name, column_name, value):
         '''delete data from database'''
         try:
             self.mycursor.execute(f"use {self.db}")
-            self.mycursor.execute(f"delete from {table_name} where {cloumn_name} = {value}")
+            self.mycursor.execute(f"delete from {table_name} where {column_name} = {value}")
             self.mydb.commit()
             return (self.mycursor.rowcount, "records deleted.")
         except Exception as e:
-            return eval
+            return str(e)
 
     def close(self):
         ''' close database'''
