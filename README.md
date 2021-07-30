@@ -12,7 +12,7 @@
 - 使用AWS EC2雲端架站、資料庫使用MySQL
 - 前端 HTML, CSS, JS
 - 後端 Python - Flask Framework
-- 部署nginx反向代理、 加入 Docker （附加）
+- 部署nginx反向代理、Docker 
 - Tappay金流串接
 - SSL憑證實踐HTTPS
 - RESTful API 設計架構
